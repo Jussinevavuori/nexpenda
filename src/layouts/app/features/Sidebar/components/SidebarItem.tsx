@@ -26,6 +26,8 @@ export function SidebarItem(props: SidebarItemProps) {
 
 	const router = useRouter();
 
+	// TODO: Hover Overlay
+
 	useOnKeyCombination(props.shortcut ?? { key: "never" }, () => {
 		console.log("Goto", props.href);
 		router.push(props.href);
