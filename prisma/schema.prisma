@@ -1,0 +1,174 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ################
+// Nexpenda Models
+// ################
+
+model Transaction {
+  id            String               @id @default(uuid())
+  comment       String?
+  integerAmount Int                  @map("integer_amount")
+  time          DateTime
+  categoryId    String               @map("category_id")
+  userId        String               @map("user_id")
+  scheduleId    String?              @map("schedule_id")
+  user          User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
+  category      Category             @relation(fields: [categoryId], references: [id])
+  schedule      TransactionSchedule? @relation(fields: [scheduleId], references: [id])
+  createdAt     DateTime             @default(now()) @map("created_at")
+  updatedAt     DateTime             @default(now()) @updatedAt @map("updated_at")
+
+  @@map(name: "transactions")
+}
+
+model TransactionSchedule {
+  id                      String        @id @default(uuid())
+  latestCreatedOccurrence DateTime?     @map("latest_created_occurrence")
+  userId                  String        @map("user_id")
+  integerAmount           Int           @map("integer_amount")
+  comment                 String?
+  categoryId              String        @map("category_id")
+  category                Category      @relation(fields: [categoryId], references: [id])
+  intervals               IntervalType
+  every                   Int           @default(1)
+  firstOccurrence         DateTime      @map("first_occurrence")
+  occurrences             Int?
+  user                    User          @relation(fields: [userId], references: [id])
+  transactions            Transaction[]
+  createdAt               DateTime      @default(now()) @map("created_at")
+  updatedAt               DateTime      @default(now()) @updatedAt @map("updated_at")
+
+  @@map(name: "transaction_schedules")
+}
+
+enum IntervalType {
+  DAY
+  WEEK
+  MONTH
+  YEAR
+}
+
+model Category {
+  id                  String                @id @default(uuid())
+  userId              String                @map("user_id")
+  value               String
+  icon                String?
+  transactions        Transaction[]
+  transactionSchedule TransactionSchedule[]
+  user                User                  @relation(fields: [userId], references: [id])
+  createdAt           DateTime              @default(now()) @map("created_at")
+  updatedAt           DateTime              @default(now()) @updatedAt @map("updated_at")
+
+  @@unique([userId, value], name: "unique_uid_value")
+  @@unique([userId, id], name: "unique_uid_id")
+  @@map(name: "categories")
+}
+
+model Feedback {
+  id        String   @id @default(uuid())
+  message   String?
+  userId    String   @map("user_id")
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+
+  @@map(name: "feedback")
+}
+
+model Preference {
+  key       String
+  value     String
+  userId    String   @map("user_id")
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+
+  @@id([userId, key])
+  @@map(name: "preferences")
+}
+
+// ################
+// Next Auth Models
+// ################
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String  @map("user_id")
+  type              String
+  provider          String
+  providerAccountId String  @map("provider_account_id")
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  refresh_token_expires_in Int?
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique @map("session_token")
+  userId       String   @map("user_id")
+  expires      DateTime
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime? @map("email_verified")
+  image         String?
+  role          UserRole  @default(USER)
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+
+  accounts             Account[]
+  sessions             Session[]
+  preferences          Preference[]
+  transactions         Transaction[]
+  transactionSchedules TransactionSchedule[]
+  categories           Category[]
+  feedback             Feedback[]
+
+  @@map("users")
+}
+
+enum UserRole {
+  USER
+  ADMIN
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+  @@map("verification_tokens")
+}
