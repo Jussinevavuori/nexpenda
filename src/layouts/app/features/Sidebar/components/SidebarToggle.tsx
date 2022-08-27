@@ -7,9 +7,11 @@ export interface SidebarToggleProps {
 }
 
 export function SidebarToggle(props: SidebarToggleProps) {
+
+	// TODO: Hover Overlay
 	return <button
 		onClick={props.onClick}
-		className="absolute group top-0 left-0 bottom-0 w-6 hover:slate-100 active:slate-200"
+		className="absolute group top-0 left-0 bottom-0 w-6 hover:bg-slate-100 active:bg-slate-200 dark:hover:bg-slate-800 dark:active:bg-slate-700"
 	>
 		<div className={c("opacity-0 group-hover:opacity-100 transition-[opacity,transform]", props.isSidebarOpen ? "rotate-0" : "rotate-180")}>
 			<Icon.Material icon="chevron_left" className="text-slate-500" />

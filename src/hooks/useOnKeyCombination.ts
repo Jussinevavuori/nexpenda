@@ -10,7 +10,10 @@ export function useOnKeyCombination(
 ) {
   return useListenToKeypress((ev) => {
     if (
-      ev.key?.toLowerCase() === combination.key.toLowerCase() &&
+      ev.code
+        ?.toLowerCase()
+        .replace(/^digit/, "")
+        .replace(/^key/, "") === combination.key.toLowerCase() &&
       !!ev.shiftKey === !!combination.shift &&
       !!ev.altKey === !!combination.alt &&
       !!ev.ctrlKey === !!combination.ctrl
