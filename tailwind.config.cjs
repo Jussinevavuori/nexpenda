@@ -78,7 +78,7 @@ module.exports = {
 					DEFAULT: "#ffffff",
 					hover: slate[100],
 					pressed: slate[200],
-					secondary: "#ffffff" + hexopacity(0.80),
+					secondary: "#ffffff" + hexopacity(0.75),
 					disabled: "#ffffff" + hexopacity(0.55),
 				},
 
@@ -86,7 +86,7 @@ module.exports = {
 					DEFAULT: slate[900],
 					hover: "#080C15",
 					pressed: "#000000",
-					secondary: slate[900] + hexopacity(0.80),
+					secondary: slate[900] + hexopacity(0.75),
 					disabled: slate[900] + hexopacity(0.55),
 					pure: "#000000",
 				},

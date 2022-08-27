@@ -38,7 +38,7 @@ export const Button = Object.assign(function Button({
 	return <button
 		{...htmlProps}
 		disabled={loading || htmlProps.disabled}
-		className={getClassName({ loading, variant, color, className, disabled: htmlProps.disabled })}
+		className={getClassName({ loading, variant, color, className, disabled: htmlProps.disabled, startIcon, endIcon })}
 	>
 		{
 			// Loading icon
@@ -47,7 +47,11 @@ export const Button = Object.assign(function Button({
 			</div>
 		}
 
+		{startIcon}
+
 		{children}
+
+		{endIcon}
 	</button>
 }, {
 	Link: function LinkButton({
@@ -56,66 +60,77 @@ export const Button = Object.assign(function Button({
 		variant,
 		color,
 		className,
+		children,
 		...htmlProps
 	}: ButtonLinkProps) {
 
 		return <Link
 			{...htmlProps}
-			className={getClassName({ variant, color, className })}
-		/>
+			className={getClassName({ variant, color, className, startIcon, endIcon })}
+		>
+
+			{children}
+		</Link>
 	},
 
 })
 
-function getClassName({ className, loading, disabled, variant, color }: {
+/**
+ * Large custom tailwind styles are extracted into this function.
+ */
+function getClassName(props: {
 	loading?: boolean;
 	disabled?: boolean;
 	variant?: ButtonVariant;
 	color?: ButtonColor;
 	className?: string;
+	startIcon?: any;
+	endIcon?: any;
 }) {
 	return c(
-		"relative px-4 py-2 rounded-lg transition-colors active:transition-none",
-		c.if(loading)("opacity-60"),
-		c.if(disabled)(
-			c("cursor-default", c.variant(variant ?? "default")({
+		"relative flex flex-row gap-4 items-centered justify-center px-4 py-2 rounded-lg transition-colors active:transition-none",
+		"font-medium",
+		c.if(props.startIcon)(""),
+		c.if(props.loading)("opacity-60"),
+		c.if(props.disabled)(
+			c("cursor-default", c.variant(props.variant ?? "default")({
 				default: "text-black-disabled bg-slate-200",
 				bordered: "text-black-disabled border border-slate-300",
 				ghost: "text-black-disabled border border-slate-300",
 				text: "text-black-disabled",
 				flat: "text-black-disabled bg-slate-100"
 			}))
-		).elseIf(loading)(
-			c("cursor-default", c.variant(variant ?? "default")({
-				default: c("border text-white", c.variant(color ?? "primary")({
+		).elseIf(props.loading)(
+			c("cursor-default", c.variant(props.variant ?? "default")({
+				default: c("border text-white", c.variant(props.color ?? "primary")({
 					primary: "bg-primary",
 					monochrome: "bg-black",
 					success: "bg-success",
 					warning: "bg-warning",
 					danger: "bg-danger",
 				})),
-				bordered: c("border", c.variant(color ?? "primary")({
+				bordered: c("border", c.variant(props.color ?? "primary")({
 					primary: "border-primary text-primary",
 					monochrome: "border-black text-black",
 					success: "border-success text-success",
 					warning: "border-warning text-warning",
 					danger: "border-danger text-danger",
 				})),
-				flat: c("border bg-opacity-30", c.variant(color ?? "primary")({
+				flat: c("border bg-opacity-30", c.variant(props.color ?? "primary")({
 					primary: "bg-primary-200 text-primary",
-					monochrome: "bg-slate-900 text-black-hover",
+					monochrome: "bg-slate-500 text-black-hover",
 					success: "bg-success text-success-hover",
 					warning: "bg-warning text-warning-hover",
 					danger: "bg-danger text-danger-hover",
 				})),
-				ghost: c("border", c.variant(color ?? "primary")({
+				ghost: c("border", c.variant(props.color ?? "primary")({
 					primary: "border-primary text-primary",
 					monochrome: "border-black text-black",
 					success: "border-success text-success",
 					warning: "border-warning text-warning",
 					danger: "border-danger text-danger",
 				})),
-				text: c("bg-opacity-0", c.variant(color ?? "primary")({
+				text: c("bg-opacity-0", c.variant(props.color ?? "primary")({
 					primary: "text-primary",
 					monochrome: "bg-slate-900 text-black-hover",
 					success: "bg-success text-success-hover",
@@ -124,36 +139,36 @@ function getClassName({ className, loading, disabled, variant, color }: {
 				})),
 			})),
 		).else(
-			c("cursor-pointer", c.variant(variant ?? "default")({
-				default: c("border text-white", c.variant(color ?? "primary")({
+			c("cursor-pointer", c.variant(props.variant ?? "default")({
+				default: c("border text-white", c.variant(props.color ?? "primary")({
 					primary: "bg-primary hover:bg-primary-hover active:bg-primary-pressed",
 					monochrome: "bg-black hover:bg-black-hover active:bg-black-pressed",
 					success: "bg-success hover:bg-success-hover active:bg-success-pressed",
 					warning: "bg-warning hover:bg-warning-hover active:bg-warning-pressed",
 					danger: "bg-danger hover:bg-danger-hover active:bg-danger-pressed",
 				})),
-				bordered: c("border hover:ring-1 hover:ring-inset", c.variant(color ?? "primary")({
+				bordered: c("border hover:ring-1 hover:ring-inset", c.variant(props.color ?? "primary")({
 					primary: "border-primary text-primary hover:ring-primary active:text-primary-pressed active:ring-primary-pressed active:border-primary-pressed",
-					monochrome: "border-black text-black hover:ring-black active:text-black-pressed active:ring-black-pressed active:border-black-pressed",
+					monochrome: "border-black text-black hover:ring-black active:text-black-pressed active:ring-black-pressed active:border-black-pressed active:bg-black active:bg-opacity-5",
 					success: "border-success text-success hover:ring-success active:text-success-pressed active:ring-success-pressed active:border-success-pressed",
 					warning: "border-warning text-warning hover:ring-warning active:text-warning-pressed active:ring-warning-pressed active:border-warning-pressed",
 					danger: "border-danger text-danger hover:ring-danger active:text-danger-pressed active:ring-danger-pressed active:border-danger-pressed",
 				})),
-				flat: c("border bg-opacity-30 hover:bg-opacity-40 active:bg-opacity-50", c.variant(color ?? "primary")({
+				flat: c("border bg-opacity-30 hover:bg-opacity-40 active:bg-opacity-50", c.variant(props.color ?? "primary")({
 					primary: "bg-primary-200 hover:bg-primary-300 active:bg-primary-400 text-primary",
-					monochrome: "bg-slate-900 text-black-hover",
+					monochrome: "bg-slate-500 text-black-hover",
 					success: "bg-success text-success-hover",
 					warning: "bg-warning text-warning-hover",
 					danger: "bg-danger text-danger-hover",
 				})),
-				ghost: c("border hover:text-white active:text-white", c.variant(color ?? "primary")({
+				ghost: c("border hover:text-white active:text-white", c.variant(props.color ?? "primary")({
 					primary: "border-primary text-primary hover:bg-primary active:bg-primary-hover",
 					monochrome: "border-black text-black hover:bg-black active:bg-black-pressed",
 					success: "border-success text-success hover:bg-success active:bg-success-hover",
 					warning: "border-warning text-warning hover:bg-warning active:bg-warning-hover",
 					danger: "border-danger text-danger hover:bg-danger active:bg-danger-hover",
 				})),
-				text: c("bg-opacity-0 hover:bg-opacity-10 active:bg-opacity-20", c.variant(color ?? "primary")({
+				text: c("bg-opacity-0 hover:bg-opacity-10 active:bg-opacity-20", c.variant(props.color ?? "primary")({
 					primary: "text-primary hover:bg-primary-100 active:bg-primary-200",
 					monochrome: "bg-slate-900 text-black-hover",
 					success: "bg-success text-success-hover",
@@ -162,6 +177,6 @@ function getClassName({ className, loading, disabled, variant, color }: {
 				})),
 			})),
 		),
-		className,
+		props.className,
 	)
 }

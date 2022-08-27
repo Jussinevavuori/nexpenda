@@ -15,5 +15,20 @@ function defineNextConfig(config) {
 export default defineNextConfig({
 	reactStrictMode: true,
 	swcMinify: true,
-	experimental: { newNextLinkBehavior: true }
+	experimental: {
+		newNextLinkBehavior: true,
+		images: { allowFutureImage: true }
+	},
+	async rewrites() {
+		return [
+			{
+				source: "/login",
+				destination: "/auth/login",
+			},
+			{
+				source: "/app",
+				destination: "/app/dashboard",
+			}
+		]
+	}
 });

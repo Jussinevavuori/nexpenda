@@ -33,6 +33,7 @@ export const userRouter = createProtectedRouter()
     async resolve({ ctx }) {
       const user = await ctx.prisma.user.findFirst({
         select: {
+          name: true,
           id: true,
           email: true,
           emailVerified: true,
@@ -96,6 +97,7 @@ export const userRouter = createProtectedRouter()
       // Update and return updated user
       return ctx.prisma.user.update({
         select: {
+          name: true,
           id: true,
           email: true,
           emailVerified: true,

@@ -3,12 +3,15 @@ import GoogleProvider from "next-auth/providers/google";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { prisma } from "../../../server/db/client";
 import { env } from "../../../env/server.mjs";
+import { pages } from "@/utils/pages";
 
 export const authOptions: NextAuthOptions = {
   pages: {
-    error: "/auth/error",
-    signIn: "/auth/login",
-    signOut: "/auth/signout",
+    error: pages.auth.login,
+    signIn: pages.auth.login,
+    signOut: pages.auth.signout,
+    verifyRequest: pages.auth.verify_request,
+    newUser: pages.welcome,
   },
   // Include user.id on session
   callbacks: {
