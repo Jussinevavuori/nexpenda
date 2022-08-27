@@ -1,6 +1,9 @@
+import { AppLayout } from "@/layouts/app/AppLayout";
+
 export default function WelcomePage() {
 
-	return <>
-	</>
+	return <AppLayout>
+		DashboardPage
+	</AppLayout>
 
 }

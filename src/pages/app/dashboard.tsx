@@ -1,5 +1,7 @@
+import { AppLayout } from "@/layouts/app/AppLayout";
+
 export default function DashboardPage() {
-	return <>
+	return <AppLayout active="dashboard">
 		DashboardPage
-	</>
+	</AppLayout>
 }

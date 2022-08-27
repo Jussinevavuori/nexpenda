@@ -4,7 +4,7 @@ import { NexpendaLogo } from "@/components/NexpendaLogo/NexpendaLogo";
 import { pages } from "@/utils/pages";
 import Image from "next/future/image";
 import Link from "next/link";
-import BgImage from "../../public/assets/images/landing-bg.jpg";
+import BgImage from "../../../public/assets/images/landing-bg.jpg";
 
 export type AuthLayoutProps = {
 	children?: React.ReactNode;

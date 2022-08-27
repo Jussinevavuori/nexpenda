@@ -1,10 +1,7 @@
-import { getWindow } from "@/utils/dom/getWindow";
 import { useEffect, useState } from "react";
 
 export function useMatchMedia(query: string) {
-  const [matches, setMatches] = useState<boolean | undefined>(
-    getWindow()?.matchMedia(query).matches
-  );
+  const [matches, setMatches] = useState<boolean | undefined>();
 
   useEffect(() => {
     const media = window.matchMedia(query);

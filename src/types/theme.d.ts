@@ -1,3 +1,8 @@
+// Dark-light theme
+
+type Theme = "dark" | "light";
+type SelectableTheme = "dark" | "light" | "system";
+
 // Main color varinats
 
 type ColorVariant = "primary" | "success" | "warning" | "danger";

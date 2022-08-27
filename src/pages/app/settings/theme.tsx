@@ -1,3 +1,7 @@
+import { AppLayout } from "@/layouts/app/AppLayout";
+
 export default function ThemeSettingsPage() {
-	return <></>
+	return <AppLayout active="settings">
+		Settings Theme
+	</AppLayout>
 }

@@ -1,6 +1,6 @@
 import { LoadingSpinner } from "@/components/LoadingSpinner/LoadingSpinner";
 import { useRedirectWithTimeout } from "@/hooks/useRedirectWithTimeout";
-import { AuthLayout } from "@/layouts/AuthLayout";
+import { AuthLayout } from "@/layouts/auth/AuthLayout";
 import { pages } from "@/utils/pages";
 
 

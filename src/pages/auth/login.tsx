@@ -3,7 +3,7 @@ import { Button } from "@/components/Button/Button";
 import { Icon } from "@/components/Icon/Icon";
 import { LoadingSpinner } from "@/components/LoadingSpinner/LoadingSpinner";
 import { useQueryParam } from "@/hooks/useSearchParam";
-import { AuthLayout } from "@/layouts/AuthLayout";
+import { AuthLayout } from "@/layouts/auth/AuthLayout";
 import { pages } from "@/utils/pages";
 import { trpc } from "@/utils/trpc";
 import { signIn, signOut, useSession } from "next-auth/react";
