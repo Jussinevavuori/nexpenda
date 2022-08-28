@@ -15,7 +15,7 @@ export interface SidebarUserProps {
 export function SidebarUser(props: SidebarUserProps) {
 	const { data: user } = trpc.useQuery(["user.me"])
 
-	return <Link href={pages.settings.account} className={c("bg-transparent group relative w-full px-4 py-4 inline-flex items-center gap-4 rounded hover:bg-slate-200 dark:hover:bg-slate-840 transition-colors duration-100")}>
+	return <Link href={pages.settings.root} className={c("bg-transparent group relative w-full px-4 py-4 inline-flex items-center gap-4 rounded hover:bg-slate-200 dark:hover:bg-slate-840 transition-colors duration-100")}>
 		<HoverOverlay />
 		<motion.span
 			initial={false}
@@ -37,7 +37,7 @@ export function SidebarUser(props: SidebarUserProps) {
 					className={c("absolute left-16 right-4 max-w-full")}
 				>
 					<span
-						className="block dark:text-slate-100 font-semibold text-sm truncate text-ellipsis"
+						className="block font-medium text-sm truncate text-ellipsis"
 					>
 						{user?.name ?? "..."}
 					</span>

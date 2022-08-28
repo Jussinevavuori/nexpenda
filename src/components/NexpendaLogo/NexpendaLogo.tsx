@@ -1,7 +1,9 @@
 import { c } from "@/utils/generic/classnames";
+import { textSizeVariants } from "@/utils/stylevariants/textsize";
 
 export type NexpendaLogoTypeProps = {
 	className?: string;
+	size?: TextSize;
 }
 
 export type NexpendaLogoIconProps = {
@@ -17,7 +19,11 @@ export const NexpendaLogo = {
 	},
 
 	Type: function NexpendaLogoType(props: NexpendaLogoTypeProps) {
-		return <span className={c("text-xl transition-all lg:text-2xl font-bold")}>
+		return <span className={c(
+			"transition-all font-bold",
+			c.if(props.size)(c.variant(props.size!)(textSizeVariants)).else("text-xl lg:text-2xl"),
+			props.className
+		)}>
 			<span className={"text-black dark:text-white"}>N</span>
 			<span className={"text-black dark:text-white"}>e</span>
 			<span className={"text-primary"}>x</span>
@@ -38,7 +44,7 @@ export const NexpendaLogo = {
 			className={props.className}
 		>
 			<path d={NexpendaLogo.svg.basePath} className={`fill-slate-900 dark:fill-white`} />
-			<path d={NexpendaLogo.svg.highlightPath} className={`fill-primary-500`} />
+			<path d={NexpendaLogo.svg.highlightPath} className={`fill-primary-600`} />
 		</svg >
 	}
 }

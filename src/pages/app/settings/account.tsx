@@ -4,7 +4,9 @@ import { SettingsLayout } from "@/layouts/settings/SettingsLayout";
 export default function AccountSettingsPage() {
 	return <AppLayout active="settings">
 		<SettingsLayout title="Active settings">
-			Account
+			<p className="text-sm font-semibold text-slate-500">
+				Avatar
+			</p>
 		</SettingsLayout>
 	</AppLayout>
 }

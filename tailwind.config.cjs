@@ -13,6 +13,10 @@ function applyTextOpacity(color) {
 	return `rgba(${color}, var(--tw-text-opacity, 1))`
 }
 
+function applyBorderOpacity(color) {
+	return `rgba(${color}, var(--tw-border-opacity, 1))`
+}
+
 function applyOpacities(propertyname, colors) {
 	return {
 		[propertyname]: Object.fromEntries(
@@ -20,6 +24,9 @@ function applyOpacities(propertyname, colors) {
 		),
 		[propertyname + "-text"]: Object.fromEntries(
 			Object.entries(colors).map(entry => [entry[0], applyTextOpacity(entry[1])])
+		),
+		[propertyname + "-border"]: Object.fromEntries(
+			Object.entries(colors).map(entry => [entry[0], applyBorderOpacity(entry[1])])
 		),
 	}
 }
@@ -103,6 +110,11 @@ module.exports = {
 						hover: applyTextOpacity("241,245,249"), // slate 100
 						pressed: applyTextOpacity("225,231,239"), // slate 200
 					},
+					border: {
+						DEFAULT: applyBorderOpacity("255,255,255"),
+						hover: applyBorderOpacity("241,245,249"), // slate 100
+						pressed: applyBorderOpacity("225,231,239"), // slate 200
+					},
 					secondary: withOpacity("#ffffff", 0.75),
 					disabled: withOpacity("#ffffff", 0.55),
 				},
@@ -118,11 +130,17 @@ module.exports = {
 						pure: applyTextOpacity("0,0,0"),
 						pressed: applyTextOpacity("0,0,0"),
 					},
+					border: {
+						DEFAULT: applyBorderOpacity("15,23,42"),
+						hover: applyBorderOpacity("8,12,21"),
+						pure: applyBorderOpacity("0,0,0"),
+						pressed: applyBorderOpacity("0,0,0"),
+					},
 					secondary: withOpacity(slate[900], 0.75),
 					disabled: withOpacity(slate[900], 0.55),
 				},
 
-				divider: withOpacity(slate[500], 0.15),
+				divider: withOpacity(slate[500], 0.08),
 
 				// Extend slate palette
 				slate: {

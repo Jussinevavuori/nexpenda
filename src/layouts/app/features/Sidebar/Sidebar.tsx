@@ -26,12 +26,12 @@ export const Sidebar = React.memo(function (props: SidebarProps) {
 	})
 
 	return <motion.div
-		className={c("relative h-screen dark:bg-slate-840", isSidebarOpen ? "w-[320px]" : "w-[110px]")}
+		className={c("relative h-screen dark:bg-slate-840")}
 		initial={false}
-		animate={{ width: isSidebarOpen ? "320px" : "110px" }}
+		animate={{ width: isSidebarOpen ? "280px" : "110px" }}
 	>
 
-		<div className="absolute -inset-8 right-0 shadow-inset-lg" />
+		<div className="absolute -inset-8 right-0 bg-slate-50 dark:bg-slate-850" />
 
 		<div className="relative h-screen flex flex-col overflow-y-auto overflow-x-hidden">
 

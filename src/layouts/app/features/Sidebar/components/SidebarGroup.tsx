@@ -28,7 +28,7 @@ export function SidebarGroup(props: SidebarGroupProps) {
 			</div>
 		}
 
-		<ul className="px-6 flex flex-col">
+		<ul className="px-6 flex flex-col gap-1">
 			{props.children}
 		</ul>
 	</div>

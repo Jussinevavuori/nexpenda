@@ -90,7 +90,6 @@ function getClassName(props: {
 	return c(
 		"relative flex flex-row gap-4 items-centered justify-center px-4 py-2 rounded-lg",
 		"font-medium transition-colors active:transition-none",
-		c.if(props.startIcon)(""),
 		c.if(props.loading)("opacity-60"),
 		c.if(props.disabled)(
 			c("cursor-default", c.variant(props.variant ?? "default")({

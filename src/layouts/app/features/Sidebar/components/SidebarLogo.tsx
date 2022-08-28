@@ -8,11 +8,11 @@ export interface SidebarLogoProps {
 }
 
 export function SidebarLogo(props: SidebarLogoProps) {
-	return <div className="px-10 pt-12 pb-4">
-		<motion.div className="flex" initial={false} animate={{ transform: `translateX(${props.isSidebarOpen ? 0 : 4}px)` }}>
-			<NexpendaLogo.Icon />
-			<span className={c("absolute left-12 m:opacity-0", c.if(!props.isSidebarOpen)("opacity-0"))}>
-				<NexpendaLogo.Type />
+	return <div className="px-[2.25rem] pt-8 pb-12">
+		<motion.div className="flex items-center" initial={false} animate={{ transform: `translateX(${props.isSidebarOpen ? 0 : 4}px)` }}>
+			<NexpendaLogo.Icon size={20} />
+			<span className={c("absolute left-[2.75rem] m:opacity-0", c.if(!props.isSidebarOpen)("opacity-0"))}>
+				<NexpendaLogo.Type size="base" />
 			</span>
 		</motion.div>
 	</div>

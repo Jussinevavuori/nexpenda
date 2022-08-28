@@ -7,6 +7,7 @@ import { Icon } from '@/components/Icon/Icon';
 import { c } from '@/utils/generic/classnames';
 import { Tooltip } from '@/components/Tooltip/Tooltip';
 import { HoverOverlay } from '@/components/HoverOverlay/HoverOverlay';
+import { KeyCombination } from '@/components/KeyCombination/KeyCombination';
 
 const { motion, AnimatePresence } = require("framer-motion");
 
@@ -27,8 +28,6 @@ export function SidebarItem(props: SidebarItemProps) {
 
 	const router = useRouter();
 
-	// TODO: Hover Overlay
-
 	useOnKeyCombination(props.shortcut ?? { key: "never" }, () => {
 		console.log("Goto", props.href);
 		router.push(props.href);
@@ -41,7 +40,7 @@ export function SidebarItem(props: SidebarItemProps) {
 		}} side="right" sideOffset={2}>
 			<li
 				className={c(
-					"group relative w-full px-4 py-4 inline-flex items-center gap-4 rounded transition-colors duration-100",
+					"group relative w-full px-3 py-2 inline-flex items-center gap-4 rounded-lg transition-colors duration-100",
 					active ? "bg-primary-500" : "bg-transparent",
 				)}
 			>
@@ -54,11 +53,12 @@ export function SidebarItem(props: SidebarItemProps) {
 						justifySelf: props.isSidebarOpen ? "stretch" : "start",
 						transform: `translateX(${props.isSidebarOpen ? 0 : 4}px)`
 					}}
-					className={c("inline text-primary-500", active ? "text-white dark:text-slate-900" : "")}
+					className={c("inline")}
 				>
 					<Icon.Material
 						icon={props.icon}
-						className={active ? "text-slate-100 dark:text-slate-900" : "text-slate-900 dark:text-slate-100"}
+						size={20}
+						className={c(c.if(active)("text-white").else("text-black-secondary dark:text-white-secondary"))}
 					/>
 				</motion.span>
 				<AnimatePresence>
@@ -69,8 +69,9 @@ export function SidebarItem(props: SidebarItemProps) {
 							animate={{ scaleX: 1, opacity: 1 }}
 							exit={{ scaleX: 0, opacity: 0 }}
 							className={c(
-								"font-semibold absolute left-14",
-								active ? "text-white dark:text-slate-900" : "text-slate-800 dark:text-slate-200"
+								"text-sm absolute left-14",
+								c.if(active)("font-normal").else("font-medium"),
+								c.if(active)("text-white").else("text-black-secondary dark:text-white-secondary")
 							)}
 						>
 							{props.label}

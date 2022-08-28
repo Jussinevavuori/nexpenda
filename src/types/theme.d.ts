@@ -52,3 +52,21 @@ type DynamicColor = `${DynamicPalette}-${Shade}`;
 type AnyColor = StaticColor | DynamicColor;
 
 type AnyPalette = DynamicPalette | StaticPalette;
+
+/**
+ * Any text size
+ */
+type TextSize =
+  | "xs"
+  | "sm"
+  | "base"
+  | "lg"
+  | "xl"
+  | "2xl"
+  | "3xl"
+  | "4xl"
+  | "5xl"
+  | "6xl"
+  | "7xl"
+  | "8xl"
+  | "9xl";

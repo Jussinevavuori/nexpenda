@@ -11,7 +11,7 @@ export type PaletteSelectorProps = {
 
 }
 
-const EFFECT_DURATION = 1200;
+const EFFECT_DURATION = 900;
 
 export function PaletteSelector(props: PaletteSelectorProps) {
 
@@ -27,23 +27,17 @@ export function PaletteSelector(props: PaletteSelectorProps) {
 		}, EFFECT_DURATION / 2)
 	}
 
-	return <ul className="flex flex-col gap-4">
+	return <ul className="flex flex-row flex-wrap gap-4">
 
-		<FullscreenSplash ref={splash.ref} />
+		<FullscreenSplash ref={splash.ref} defaultDurationMs={EFFECT_DURATION} />
 
 		{
 			palettes.staticColor.map(palette => (
-				<Color color={palette}>
+				<Color color={palette} key={palette}>
 					<PaletteSelectorButton
-						icon={<Icon.Material
-							icon={"palette"}
-							className={currentPalette === palette ? "text-white" : "text-primary"}
-						/>}
 						onClick={() => select(palette)}
 						isSelected={currentPalette === palette}
-					>
-						{capitalize(palette)}
-					</PaletteSelectorButton>
+					/>
 				</Color>
 			))
 		}

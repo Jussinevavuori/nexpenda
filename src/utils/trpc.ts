@@ -2,6 +2,7 @@
 import type { AppRouter } from "../server/router";
 import { createReactQueryHooks } from "@trpc/react";
 import type { inferProcedureOutput, inferProcedureInput } from "@trpc/server";
+import { createSSGHelpers } from "@trpc/react/ssg";
 
 export const trpc = createReactQueryHooks<AppRouter>();
 

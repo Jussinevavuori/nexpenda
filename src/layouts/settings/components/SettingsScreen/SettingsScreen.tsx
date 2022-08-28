@@ -49,10 +49,10 @@ export function SettingsScreen(props: SettingsScreenProps) {
 			</p>
 			<div className="flex flex-col items-stretch gap-1">
 				<SettingsButton
-					href={pages.settings.theme}
+					href={pages.settings.appearance}
 					icon={<Icon.Material icon="brush" />}
 				>
-					Theme
+					Appearance
 				</SettingsButton>
 				<SettingsButton
 					href={pages.settings.preferences}

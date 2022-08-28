@@ -10,7 +10,7 @@ export function Divider(props: DividerProps) {
 
 	return <div
 		className={c(
-			"relative bg-slate-200 dark:bg-slate-760",
+			"relative bg-divider",
 			c.variant(props.variant ?? "horizontal")({
 				horizontal: "w-full h-px my-4",
 				vertical: "w-px mx-4"

@@ -17,15 +17,19 @@ export function SettingsLayout(props: SettingsLayoutProps) {
 
 	// Split screen
 	if (isLargeScreen) {
-		return <div className="px-10 py-6 flex items-stretch">
-			<div className={c("", isPanelOpen ? "w-1/2" : "w-full")}>
+		return <div className="px-10 py-6 flex">
+			<div className={c("", isPanelOpen ? "w-1/3 sticky top-0" : "w-full")}>
 				<SettingsScreen />
 			</div>
 			{
 				isPanelOpen && <>
 					<Divider variant="vertical" className="mx-10" />
-					<div className={c("w-1/2", isPanelOpen ? "" : "")}>
+					<div className={c("w-2/3", isPanelOpen ? "" : "")}>
 						<div className="bg-white dark:bg-slate-800 h-full">
+							<h1 className="pb-8">
+								{props.title}
+							</h1>
+
 							{props.children}
 						</div>
 					</div>
@@ -40,13 +44,13 @@ export function SettingsLayout(props: SettingsLayoutProps) {
 			isPanelOpen
 				? <div className="bg-white dark:bg-slate-800 h-full">
 
-					<header className="flex gap-4 items-center">
+					<header className="flex gap-4 items-center pb-4">
 						<IconButton.Link href={pages.settings.root} variant="bordered">
 							<Icon.Material icon="arrow_back" />
 						</IconButton.Link>
-						<p className="">
+						<h1>
 							{props.title}
-						</p>
+						</h1>
 					</header>
 
 					{props.children}
