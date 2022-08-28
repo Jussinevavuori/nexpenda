@@ -8,7 +8,6 @@ export interface SidebarLogoProps {
 }
 
 export function SidebarLogo(props: SidebarLogoProps) {
-
 	return <div className="px-10 pt-12 pb-4">
 		<motion.div className="flex" initial={false} animate={{ transform: `translateX(${props.isSidebarOpen ? 0 : 4}px)` }}>
 			<NexpendaLogo.Icon />

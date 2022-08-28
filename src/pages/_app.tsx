@@ -10,6 +10,7 @@ import { ThemedFavicon } from "@/components/ThemedFavicon/ThemedFavicon";
 import { useInitializePreferences } from "@/hooks/useInitializePreferences";
 import { Provider as RadixTooltipProvider } from '@radix-ui/react-tooltip';
 import { ThemeProvider } from "@/features/Theme/Theme";
+import { DefaultStyles } from "@/components/DefaultStyles/DefaultStyles";
 
 const MyApp: AppType = ({
 	Component,
@@ -23,8 +24,10 @@ const MyApp: AppType = ({
 		<SessionProvider session={session}>
 			<ThemeProvider>
 				<RadixTooltipProvider>
-					<ThemedFavicon dark="/favicon-dark-theme.ico" light="/favicon-light-theme.ico" />
-					<Component {...pageProps} />
+					<ThemedFavicon />
+					<DefaultStyles>
+						<Component {...pageProps} />
+					</DefaultStyles>
 				</RadixTooltipProvider>
 			</ThemeProvider>
 		</SessionProvider>

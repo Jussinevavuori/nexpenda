@@ -1,6 +1,8 @@
+import { useClientSideMemo } from '@/hooks/useClientSideMemo';
 import { usePrefersColorSchemeDark } from '@/hooks/usePrefersColorSchemeDark';
+import { exposeToWindow } from '@/utils/dom/exposeToWindow';
 import { themeMemory } from '@/utils/themes/themeMemory';
-import React, { createContext, ReactNode, useCallback, useContext, useMemo } from 'react';
+import React, { createContext, ReactNode, useCallback, useContext, useEffect, useMemo } from 'react';
 
 export interface ThemeContextValue {
 	currentTheme: SelectableTheme;
@@ -29,11 +31,13 @@ export function ThemeProvider(props: ThemeContextProviderProps) {
 	// Current mode is latest saved mode. Default to light mode when none available
 	const currentTheme = useMemo(() => savedMode ?? "light", [savedMode]);
 
+	useEffect(() => exposeToWindow({ toggle: () => themeMemory.set(currentTheme === "dark" ? "light" : "dark") }), [currentTheme])
+
 	// Check whether the current mode is dark or the system setting is dark when
 	// system setting enabled
-	const isDarkTheme = useMemo(() => {
+	const isDarkTheme = useClientSideMemo(() => {
 		return currentTheme === "dark" || (currentTheme === "system" && prefersDark === true);
-	}, [prefersDark, currentTheme])
+	}, [prefersDark, currentTheme]) ?? false;
 
 	// Utility function to toggle the mode
 	const setTheme = useCallback((value: Theme) => {

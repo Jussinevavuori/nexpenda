@@ -21,7 +21,7 @@ export function AuthLayout(props: AuthLayoutProps) {
 			<GradientOverlay />
 		</div>
 
-		<main className="bg-white max-w-xl shadow min-h-screen">
+		<main className="bg-white dark:bg-slate-900 max-w-xl shadow min-h-screen">
 
 			<header>
 				<Link href={pages.home} className="flex flex-row gap-4 items-center p-8">
