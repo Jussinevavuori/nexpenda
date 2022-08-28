@@ -59,3 +59,22 @@ export function getColorValue(
   // By default fetch static colors from color map
   return colorValuesMap[palette][shade]!;
 }
+
+export function getColorHex(color: AnyColor): string;
+export function getColorHex(palette: AnyPalette, shade: Shade): string;
+export function getColorHex(...args: [AnyColor] | [AnyPalette, Shade]): string {
+  const value =
+    args.length === 1
+      ? getColorValue(args[0])
+      : getColorValue(args[0], args[1]);
+
+  if (value.startsWith("#")) return value;
+
+  return (
+    "#" +
+    value
+      .split(",")
+      .map((str) => Number.parseInt(str).toString(16).padStart(2, "0"))
+      .join("")
+  );
+}

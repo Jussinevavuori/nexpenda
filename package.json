@@ -48,6 +48,7 @@
     "@types/react-dom": "18.0.5",
     "@types/sharp": "^0.30.5",
     "@types/shortid": "^0.0.29",
+    "@types/uuid": "^8.3.4",
     "@typescript-eslint/eslint-plugin": "^5.33.0",
     "@typescript-eslint/parser": "^5.33.0",
     "autoprefixer": "^10.4.8",

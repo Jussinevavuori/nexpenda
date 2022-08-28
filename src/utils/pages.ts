@@ -4,11 +4,9 @@ export const pages = {
   dashboard: "/app/dashboard",
   analytics: "/app/analytics",
   schedules: "/app/schedules",
-  auth: {
-    login: "/auth/login",
-    signout: "/auth/signout",
-    verify_request: "/auth/verify_request",
-  },
+  login: "/auth/login",
+  signout: "/auth/signout",
+  verify_request: "/auth/verify_request",
   settings: {
     root: "/app/settings",
     account: "/app/settings/account",

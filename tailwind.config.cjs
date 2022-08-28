@@ -1,7 +1,27 @@
+
 const { rose, emerald, amber, slate } = require("tailwindcss/colors");
 
-const hexopacity = (number) => {
-	return Math.round(255 * number).toString(16);
+const withOpacity = (color, opacity = "--tw-bg-opacity") => {
+	return color + Math.round(255 * opacity).toString(16).padStart(2, "0")
+}
+
+function applyBgOpacity(color) {
+	return `rgba(${color}, var(--tw-bg-opacity, 1))`
+}
+
+function applyTextOpacity(color) {
+	return `rgba(${color}, var(--tw-text-opacity, 1))`
+}
+
+function applyOpacities(propertyname, colors) {
+	return {
+		[propertyname]: Object.fromEntries(
+			Object.entries(colors).map(entry => [entry[0], applyBgOpacity(entry[1])])
+		),
+		[propertyname + "-text"]: Object.fromEntries(
+			Object.entries(colors).map(entry => [entry[0], applyTextOpacity(entry[1])])
+		),
+	}
 }
 
 /** @type {import('tailwindcss').Config} */
@@ -75,25 +95,36 @@ module.exports = {
 			colors: {
 
 				white: {
-					DEFAULT: "#ffffff",
-					hover: slate[100],
-					pressed: slate[200],
-					secondary: "#ffffff" + hexopacity(0.75),
-					disabled: "#ffffff" + hexopacity(0.55),
+					DEFAULT: applyBgOpacity("255,255,255"),
+					hover: applyBgOpacity("241,245,249"), // slate 100
+					pressed: applyBgOpacity("225,231,239"), // slate 200
+					text: {
+						DEFAULT: applyTextOpacity("255,255,255"),
+						hover: applyTextOpacity("241,245,249"), // slate 100
+						pressed: applyTextOpacity("225,231,239"), // slate 200
+					},
+					secondary: withOpacity("#ffffff", 0.75),
+					disabled: withOpacity("#ffffff", 0.55),
 				},
 
 				black: {
-					DEFAULT: slate[900],
-					hover: "#080C15",
-					pressed: "#000000",
-					secondary: slate[900] + hexopacity(0.75),
-					disabled: slate[900] + hexopacity(0.55),
-					pure: "#000000",
+					DEFAULT: applyBgOpacity("15,23,42"),
+					hover: applyBgOpacity("8,12,21"),
+					pure: applyBgOpacity("0,0,0"),
+					pressed: applyBgOpacity("0,0,0"),
+					text: {
+						DEFAULT: applyTextOpacity("15,23,42"),
+						hover: applyTextOpacity("8,12,21"),
+						pure: applyTextOpacity("0,0,0"),
+						pressed: applyTextOpacity("0,0,0"),
+					},
+					secondary: withOpacity(slate[900], 0.75),
+					disabled: withOpacity(slate[900], 0.55),
 				},
 
-				divider: slate[500] + hexopacity(0.15),
+				divider: withOpacity(slate[500], 0.15),
 
-				// Add more shades to slate palette
+				// Extend slate palette
 				slate: {
 					710: "#313F52",
 					720: "#2F3C50",
@@ -115,26 +146,7 @@ module.exports = {
 					890: "#11192C",
 				},
 
-				// CSS-variable based dynamic primary color
-				primary: {
-					DEFAULT: "var(--color-primary-600)",
-					hover: "var(--color-primary-700)",
-					pressed: "var(--color-primary-800)",
-					outline: "var(--color-primary-200)",
-
-					50: "var(--color-primary-50)",
-					100: "var(--color-primary-100)",
-					200: "var(--color-primary-200)",
-					300: "var(--color-primary-300)",
-					400: "var(--color-primary-400)",
-					500: "var(--color-primary-500)",
-					600: "var(--color-primary-600)",
-					700: "var(--color-primary-700)",
-					800: "var(--color-primary-800)",
-					900: "var(--color-primary-900)",
-				},
-
-				// Utility colors
+				// Success colors
 				success: {
 					...emerald,
 					DEFAULT: emerald[600],
@@ -142,6 +154,8 @@ module.exports = {
 					pressed: emerald[800],
 					outline: emerald[200],
 				},
+
+				// Warning colors
 				warning: {
 					...amber,
 					DEFAULT: amber[600],
@@ -149,6 +163,8 @@ module.exports = {
 					pressed: amber[800],
 					outline: amber[200],
 				},
+
+				// Danger colors
 				danger: {
 					...rose,
 					DEFAULT: rose[600],
@@ -157,43 +173,62 @@ module.exports = {
 					outline: rose[200],
 				},
 
-				// CSS-variable based dynamic primary offset color main variant
-				"off-primary": {
-					DEFAULT: "var(--color-off-primary-600)",
-					hover: "var(--color-off-primary-700)",
-					pressed: "var(--color-off-primary-800)",
-					outline: "var(--color-off-primary-200)",
+				// Dynamic primary color which obides --tw-bg-opacity and
+				// text variant with -text postfix which obides --tw-text-opacity
+				...applyOpacities("primary", {
+					DEFAULT: ("var(--color-primary-600)"),
+					hover: ("var(--color-primary-700)"),
+					pressed: ("var(--color-primary-800)"),
+					outline: ("var(--color-primary-200)"),
+					50: ("var(--color-primary-50)"),
+					100: ("var(--color-primary-100)"),
+					200: ("var(--color-primary-200)"),
+					300: ("var(--color-primary-300)"),
+					400: ("var(--color-primary-400)"),
+					500: ("var(--color-primary-500)"),
+					600: ("var(--color-primary-600)"),
+					700: ("var(--color-primary-700)"),
+					800: ("var(--color-primary-800)"),
+					900: ("var(--color-primary-900)"),
+				}),
 
-					50: "var(--color-off-primary-50)",
-					100: "var(--color-off-primary-100)",
-					200: "var(--color-off-primary-200)",
-					300: "var(--color-off-primary-300)",
-					400: "var(--color-off-primary-400)",
-					500: "var(--color-off-primary-500)",
-					600: "var(--color-off-primary-600)",
-					700: "var(--color-off-primary-700)",
-					800: "var(--color-off-primary-800)",
-					900: "var(--color-off-primary-900)",
-				},
+				// Dynamic off-primary color which obides --tw-bg-opacity and
+				// text variant with -text postfix which obides --tw-text-opacity
+				...applyOpacities("off-primary", {
+					DEFAULT: ("var(--color-off-primary-600)"),
+					hover: ("var(--color-off-primary-700)"),
+					pressed: ("var(--color-off-primary-800)"),
+					outline: ("var(--color-off-primary-200)"),
+					50: ("var(--color-off-primary-50)"),
+					100: ("var(--color-off-primary-100)"),
+					200: ("var(--color-off-primary-200)"),
+					300: ("var(--color-off-primary-300)"),
+					400: ("var(--color-off-primary-400)"),
+					500: ("var(--color-off-primary-500)"),
+					600: ("var(--color-off-primary-600)"),
+					700: ("var(--color-off-primary-700)"),
+					800: ("var(--color-off-primary-800)"),
+					900: ("var(--color-off-primary-900)"),
+				}),
 
-				// CSS-variable based dynamic primary offset color alternative variant
-				"off-primary-alt": {
-					DEFAULT: "var(--color-off-primary-alt-600)",
-					hover: "var(--color-off-primary-alt-700)",
-					pressed: "var(--color-off-primary-alt-800)",
-					outline: "var(--color-off-primary-alt-200)",
-
-					50: "var(--color-off-primary-alt-50)",
-					100: "var(--color-off-primary-alt-100)",
-					200: "var(--color-off-primary-alt-200)",
-					300: "var(--color-off-primary-alt-300)",
-					400: "var(--color-off-primary-alt-400)",
-					500: "var(--color-off-primary-alt-500)",
-					600: "var(--color-off-primary-alt-600)",
-					700: "var(--color-off-primary-alt-700)",
-					800: "var(--color-off-primary-alt-800)",
-					900: "var(--color-off-primary-alt-900)",
-				},
+				// Dynamic off-primary alt color which obides --tw-bg-opacity and
+				// text variant with -text postfix which obides --tw-text-opacity
+				...applyOpacities("off-primarya-t", {
+					DEFAULT: ("var(--color-off-primary-alt-600)"),
+					hover: ("var(--color-off-primary-alt-700)"),
+					pressed: ("var(--color-off-primary-alt-800)"),
+					outline: ("var(--color-off-primary-alt-200)"),
+					50: ("var(--color-off-primary-alt-50)"),
+					100: ("var(--color-off-primary-alt-100)"),
+					200: ("var(--color-off-primary-alt-200)"),
+					300: ("var(--color-off-primary-alt-300)"),
+					400: ("var(--color-off-primary-alt-400)"),
+					500: ("var(--color-off-primary-alt-500)"),
+					600: ("var(--color-off-primary-alt-600)"),
+					700: ("var(--color-off-primary-alt-700)"),
+					800: ("var(--color-off-primary-alt-800)"),
+					900: ("var(--color-off-primary-alt-900)"),
+				}),
 			}
 		},
 	},

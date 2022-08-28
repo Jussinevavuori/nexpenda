@@ -11,6 +11,7 @@ import { useInitializePreferences } from "@/hooks/useInitializePreferences";
 import { Provider as RadixTooltipProvider } from '@radix-ui/react-tooltip';
 import { ThemeProvider } from "@/features/Theme/Theme";
 import { DefaultStyles } from "@/components/DefaultStyles/DefaultStyles";
+import { NotificationsProvider } from "@/features/Notifications/contexts/NotificationContext";
 
 const MyApp: AppType = ({
 	Component,
@@ -24,10 +25,12 @@ const MyApp: AppType = ({
 		<SessionProvider session={session}>
 			<ThemeProvider>
 				<RadixTooltipProvider>
-					<ThemedFavicon />
-					<DefaultStyles>
-						<Component {...pageProps} />
-					</DefaultStyles>
+					<NotificationsProvider>
+						<ThemedFavicon />
+						<DefaultStyles>
+							<Component {...pageProps} />
+						</DefaultStyles>
+					</NotificationsProvider>
 				</RadixTooltipProvider>
 			</ThemeProvider>
 		</SessionProvider>

@@ -7,10 +7,10 @@ import { pages } from "@/utils/pages";
 
 export const authOptions: NextAuthOptions = {
   pages: {
-    error: pages.auth.login,
-    signIn: pages.auth.login,
-    signOut: pages.auth.signout,
-    verifyRequest: pages.auth.verify_request,
+    error: pages.login,
+    signIn: pages.login,
+    signOut: pages.signout,
+    verifyRequest: pages.verify_request,
     newUser: pages.welcome,
   },
   // Include user.id on session

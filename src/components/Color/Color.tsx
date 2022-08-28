@@ -10,7 +10,7 @@ export interface ColorProps extends React.DetailedHTMLProps<
 
 export function Color({ color, ...divProps }: ColorProps) {
 	const callbackRef = useCallback((el: HTMLDivElement) => {
-		if (color) setPrimaryColor(color, el)
+		if (color && el) setPrimaryColor(color, el)
 	}, [color])
 
 	return <div ref={callbackRef} {...divProps} />

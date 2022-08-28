@@ -5,7 +5,7 @@ import { pages } from "@/utils/pages";
 
 
 export default function SignoutPage() {
-	const secondsToRedirect = useRedirectWithTimeout(pages.auth.login, 3);
+	const secondsToRedirect = useRedirectWithTimeout(pages.login, 3);
 
 	return <AuthLayout>
 

@@ -1,5 +1,5 @@
 import { useClientSideMemo } from '@/hooks/useClientSideMemo';
-import { getColorValue } from '@/utils/color/getColorValue';
+import { getColorHex } from '@/utils/color/getColorValue';
 import { BarLoader, PuffLoader } from 'react-spinners';
 
 export type LoadingSpinnerVariant = "puff" | "bar"
@@ -15,7 +15,7 @@ export interface LoadingSpinnerProps {
 export function LoadingSpinner(props: LoadingSpinnerProps) {
 
 	const size = props.size ?? 36;
-	const color = useClientSideMemo(() => getColorValue(props.color ?? "primary-500"), [props.color]);
+	const color = useClientSideMemo(() => getColorHex(props.color ?? "primary-500"), [props.color]);
 
 	switch (props.variant ?? "puff") {
 		case "puff":
