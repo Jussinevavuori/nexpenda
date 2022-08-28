@@ -1,7 +1,10 @@
 import { AppLayout } from "@/layouts/app/AppLayout";
+import { SettingsLayout } from "@/layouts/settings/SettingsLayout";
 
 export default function PreferencesSettingsPage() {
 	return <AppLayout active="settings">
-		Settings Preferences
+		<SettingsLayout title="User preferences">
+			Preferences
+		</SettingsLayout>
 	</AppLayout>
 }

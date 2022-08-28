@@ -14,7 +14,7 @@ export const pages = {
     feedback: "/app/settings/feedback",
     preferences: "/app/settings/preferences",
     theme: "/app/settings/theme",
-    upload: "/app/settinsg/upload",
+    upload: "/app/settings/upload",
   },
   admin: {
     feedback: "/app/admin/feedback",

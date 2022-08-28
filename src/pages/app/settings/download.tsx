@@ -1,7 +1,10 @@
 import { AppLayout } from "@/layouts/app/AppLayout";
+import { SettingsLayout } from "@/layouts/settings/SettingsLayout";
 
-export default function DownloadSettingsPage() {
+export default function AccountSettingsPage() {
 	return <AppLayout active="settings">
-		Settings Download
+		<SettingsLayout title="Download transactions">
+			Download
+		</SettingsLayout>
 	</AppLayout>
 }

@@ -1,3 +1,27 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Fullscreen splash */
+.animate-radiate-circle {
+  animation: animation_animate_radiate_circle 1000ms forwards;
+}
+
+@keyframes animation_animate_radiate_circle {
+  0% {
+    clip-path: circle(0);
+    opacity: 100%;
+  }
+  50% {
+    clip-path: circle(100%);
+    opacity: 100%;
+  }
+  70% {
+    clip-path: circle(100%);
+    opacity: 100%;
+  }
+  100% {
+    clip-path: circle(100%);
+    opacity: 0%;
+  }
+}
