@@ -18,7 +18,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>((props, ref)
 		<input
 			{...htmlProps}
 			className={c("bg-transparent py-2 text-black dark:text-white outline-none",
-				"placeholder:text-black-disabled dark:placeholder:text-white-disabled",
+				"placeholder:text-black-disabled dark:placeholder:text-white-disabled w-full",
 				c.variant(props.variant ?? "default")({
 					bordered: "px-2",
 					default: "px-2",

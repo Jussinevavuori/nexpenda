@@ -1,5 +1,4 @@
 import { c } from "@/utils/generic/classnames";
-
 export type InputBaseVariant = "default" | "bordered" | "underlined";
 
 export type ExtensionInputBaseProps = {
@@ -78,20 +77,25 @@ export const InputBase = Object.assign(function InputBase(props: InputBaseProps)
 
 		{props.children}
 
-		{props.endLabel && <span className="px-2 text-black-disabled dark:text-white-disabled">
+		{props.endLabel && <span className="ml-auto px-2 text-black-disabled dark:text-white-disabled">
 			{props.endLabel}
 		</span>}
 
-		{props.endIcon && <span className="px-2 text-slate-500">
+		{props.endIcon && <span className="ml-auto px-2 text-slate-500">
 			{props.endIcon}
 		</span>}
 	</div>
-
 }, {
-
+	extractInputBaseProps<T extends InputBaseProps>(props: T): InputBaseProps {
+		const { children, readOnly, fullWidth, startIcon, startLabel, endIcon, endLabel, variant, error, disabled } = props;
+		return { children, readOnly, fullWidth, startIcon, startLabel, endIcon, endLabel, variant, error, disabled }
+	},
 	removeExtensionInputBaseProps<T extends ExtensionInputBaseProps>(props: T): Omit<T, keyof ExtensionInputBaseProps> {
 		const { fullWidth, startIcon, startLabel, endIcon, endLabel, variant, error, disabled, ...rest } = props;
 		return rest;
+	},
+	removeInputBaseProps<T extends InputBaseProps>(props: T): Omit<T, keyof InputBaseProps> {
+		const { children, readOnly, fullWidth, startIcon, startLabel, endIcon, endLabel, variant, error, disabled, ...rest } = props;
+		return rest;
 	}
-
 })

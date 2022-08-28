@@ -13,7 +13,6 @@ export const pages = {
     download: "/app/settings/download",
     feedback: "/app/settings/feedback",
     preferences: "/app/settings/preferences",
-    appearance: "/app/settings/appearance",
     upload: "/app/settings/upload",
   },
   admin: {

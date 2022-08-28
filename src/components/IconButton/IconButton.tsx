@@ -82,7 +82,7 @@ function getClassName(props: {
 				default: "text-black-disabled bg-slate-200 dark:text-white-disabled dark:bg-slate-800",
 				bordered: "text-black-disabled border border-slate-300 dark:text-white-disabled dark:border-slate-700",
 				ghost: "text-black-disabled border border-slate-300 dark:text-white-disabled dark:border-slate-700",
-				text: "text-black-disabled dark:text-white-disabled",
+				text: "text-black-disabled dark:text-white-disabled opacity-50",
 				flat: "text-black-disabled bg-slate-100 dark:text-white-disabled dark:bg-slate-800/50"
 			}))
 		).elseIf(props.loading)(

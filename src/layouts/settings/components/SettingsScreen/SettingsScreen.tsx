@@ -20,7 +20,7 @@ export function SettingsScreen(props: SettingsScreenProps) {
 				Account
 			</p>
 			<div className="flex flex-col items-stretch gap-1">
-				<div className="w-full flex flex-col items-center xl:flex-row gap-4 xl:gap-6 mx-auto px-4 py-6 bg-slate-100 dark:bg-slate-780 rounded">
+				<div className="w-full flex flex-col items-center xl:flex-row gap-4 xl:gap-6 mx-auto px-4 py-6 bg-slate-50 dark:bg-slate-780 rounded-lg">
 					<Avatar size={84} image={user?.image} name={user?.name} />
 					<div className="flex flex-col items-center xl:items-start">
 						<p className="dark:text-slate-100">
@@ -37,22 +37,6 @@ export function SettingsScreen(props: SettingsScreenProps) {
 					icon={<Icon.Material icon="account_circle" />}
 				>
 					Account
-				</SettingsButton>
-			</div>
-		</section>
-
-		<Divider />
-
-		<section className="flex flex-col items-stretch gap-4">
-			<p className="text-sm font-semibold text-slate-500">
-				Preferences
-			</p>
-			<div className="flex flex-col items-stretch gap-1">
-				<SettingsButton
-					href={pages.settings.appearance}
-					icon={<Icon.Material icon="brush" />}
-				>
-					Appearance
 				</SettingsButton>
 				<SettingsButton
 					href={pages.settings.preferences}
@@ -86,7 +70,7 @@ export function SettingsScreen(props: SettingsScreenProps) {
 					href={pages.settings.feedback}
 					icon={<Icon.Material icon="rate_review" />}
 				>
-					Feedback
+					Contact
 				</SettingsButton>
 			</div>
 		</section>
@@ -126,7 +110,7 @@ export function SettingsScreen(props: SettingsScreenProps) {
 			<div className="flex flex-col items-stretch gap-1">
 				<SettingsButton
 					href={pages.home}
-					icon={<Icon.Material icon="file_download" />}
+					icon={<Icon.Material icon="home" />}
 					indicator={<Icon.Material icon="link" />}
 				>
 					Home

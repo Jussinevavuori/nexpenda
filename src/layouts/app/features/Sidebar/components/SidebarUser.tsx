@@ -42,7 +42,7 @@ export function SidebarUser(props: SidebarUserProps) {
 						{user?.name ?? "..."}
 					</span>
 					<span className="block text-slate-700 dark:text-slate-400 text-sm truncate text-ellipsis">
-						{"Default account"}
+						{"Signed in"}
 					</span>
 				</motion.p>
 			}

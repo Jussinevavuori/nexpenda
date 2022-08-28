@@ -46,3 +46,8 @@ type KeyCombination = {
  * Setter
  */
 type Setter<T> = T | ((t: T) => T);
+
+/**
+ * Action type for reducers
+ */
+type ReducerAction<TType extends string, TData> = { type: TType; data: TData };
