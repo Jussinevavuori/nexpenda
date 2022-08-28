@@ -9,6 +9,7 @@ import { useVhFix } from "../hooks/useVhFix";
 import { ThemedFavicon } from "@/components/ThemedFavicon/ThemedFavicon";
 import { useInitializePreferences } from "@/hooks/useInitializePreferences";
 import { Provider as RadixTooltipProvider } from '@radix-ui/react-tooltip';
+import { ThemeProvider } from "@/features/Theme/Theme";
 
 const MyApp: AppType = ({
 	Component,
@@ -20,10 +21,12 @@ const MyApp: AppType = ({
 
 	return (
 		<SessionProvider session={session}>
-			<RadixTooltipProvider>
-				<ThemedFavicon dark="/favicon-dark-theme.ico" light="/favicon-light-theme.ico" />
-				<Component {...pageProps} />
-			</RadixTooltipProvider>
+			<ThemeProvider>
+				<RadixTooltipProvider>
+					<ThemedFavicon dark="/favicon-dark-theme.ico" light="/favicon-light-theme.ico" />
+					<Component {...pageProps} />
+				</RadixTooltipProvider>
+			</ThemeProvider>
 		</SessionProvider>
 	);
 };

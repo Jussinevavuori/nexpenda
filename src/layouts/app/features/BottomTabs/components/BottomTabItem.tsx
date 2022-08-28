@@ -2,6 +2,7 @@ import { SidebarItemKey } from '../../Sidebar/Sidebar';
 import Link from 'next/link';
 import { AppLayoutProps } from '@/layouts/app/AppLayout';
 import { c } from '@/utils/generic/classnames';
+import { HoverOverlay } from '@/components/HoverOverlay/HoverOverlay';
 
 const { motion, AnimatePresence } = require("framer-motion");
 
@@ -21,6 +22,8 @@ export function BottomTabItem(props: BottomTabItemProps) {
 		onClick={props.onClick}
 		className="group relative h-full w-full flex items-center justify-center"
 	>
+
+		<HoverOverlay />
 
 		<div className={c(active ? "text-primary-600" : "text-slate-600")}>
 			{props.icon}

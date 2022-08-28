@@ -6,6 +6,7 @@ import { useOnKeyCombination } from '@/hooks/useOnKeyCombination';
 import { Icon } from '@/components/Icon/Icon';
 import { c } from '@/utils/generic/classnames';
 import { Tooltip } from '@/components/Tooltip/Tooltip';
+import { HoverOverlay } from '@/components/HoverOverlay/HoverOverlay';
 
 const { motion, AnimatePresence } = require("framer-motion");
 
@@ -44,6 +45,9 @@ export function SidebarItem(props: SidebarItemProps) {
 					active ? "bg-primary-500" : "bg-transparent",
 				)}
 			>
+
+				<HoverOverlay />
+
 				<motion.span
 					initial={false}
 					animate={{
