@@ -21,7 +21,7 @@ export default function FeedbackSettingsPage() {
 
 	return <AppLayout active="settings">
 		<SettingsLayout title="Send Feedback">
-			<section className="flex flex-col py-4">
+			<section className="flex flex-col">
 				<p>
 					Contact us
 				</p>

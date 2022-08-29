@@ -78,8 +78,7 @@ export function SettingsScreen(props: SettingsScreenProps) {
 		<Divider />
 
 		{
-			user?.role === "USER" && <>
-
+			user?.role === "ADMIN" && <>
 				<section className="flex flex-col items-stretch gap-4">
 					<p className="text-sm text-black-secondary dark:text-white-secondary">
 						Admin

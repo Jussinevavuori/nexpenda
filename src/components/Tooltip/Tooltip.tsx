@@ -31,7 +31,7 @@ export function Tooltip({ children, value, side, sideOffset, ...tooltipProps }: 
 				>
 					{
 						typeof value === "string" ? (
-							<p className="text-slate-900 dark:text-white text-sm">
+							<p className="text-sm">
 								{value}
 							</p>
 						) : ((value && typeof value === "object" && "title" in value) ? (

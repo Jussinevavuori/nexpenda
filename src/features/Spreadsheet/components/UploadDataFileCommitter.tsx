@@ -19,7 +19,7 @@ export function UploadDataFileCommitter(props: UploadDataFileCommitterProps) {
 
 	return <div className="flex flex-col items-stretch gap-4">
 
-		<p className="dark:text-slate-100">
+		<p className="text-sm text-black-secondary dark:text-white-secondary">
 			Preview the uploaded file. If your data seems to have been
 			uploaded correctly, you can upload your data to Nexpenda.
 		</p>

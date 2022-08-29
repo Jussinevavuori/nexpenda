@@ -99,12 +99,14 @@ export default function AccountSettingsPage() {
 						fullWidth
 						readOnly
 						value={"No password"}
-						endIcon={<IconButton variant="text" color="primary">
-							<p className="-mr-2 text-sm">
-								Change
-							</p>
-							<Icon.Material icon="lock_reset" />
-						</IconButton>}
+						endIcon={<Tooltip value="Request password change email">
+							<IconButton variant="text" color="primary">
+								<p className="-mr-2 text-sm">
+									Change
+								</p>
+								<Icon.Material icon="lock_reset" />
+							</IconButton>
+						</Tooltip>}
 					/>
 				</div>
 
