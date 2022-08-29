@@ -16,7 +16,7 @@ export function SettingsScreen(props: SettingsScreenProps) {
 	return <div className="w-full max-w-2xl mx-auto flex flex-col gap-4">
 
 		<section className="flex flex-col items-stretch gap-4">
-			<p className="text-sm font-semibold text-slate-500">
+			<p className="text-sm text-black-secondary dark:text-white-secondary">
 				Account
 			</p>
 			<div className="flex flex-col items-stretch gap-1">
@@ -50,7 +50,7 @@ export function SettingsScreen(props: SettingsScreenProps) {
 		<Divider />
 
 		<section className="flex flex-col items-stretch gap-4">
-			<p className="text-sm font-semibold text-slate-500">
+			<p className="text-sm text-black-secondary dark:text-white-secondary">
 				Options
 			</p>
 			<div className="flex flex-col items-stretch gap-1">
@@ -81,7 +81,7 @@ export function SettingsScreen(props: SettingsScreenProps) {
 			user?.role === "USER" && <>
 
 				<section className="flex flex-col items-stretch gap-4">
-					<p className="text-sm font-semibold text-slate-500">
+					<p className="text-sm text-black-secondary dark:text-white-secondary">
 						Admin
 					</p>
 					<div className="flex flex-col items-stretch gap-1">
@@ -104,7 +104,7 @@ export function SettingsScreen(props: SettingsScreenProps) {
 		}
 
 		<section className="flex flex-col items-stretch gap-4">
-			<p className="text-sm font-semibold text-slate-500">
+			<p className="text-sm text-black-secondary dark:text-white-secondary">
 				Other
 			</p>
 			<div className="flex flex-col items-stretch gap-1">

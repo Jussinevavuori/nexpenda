@@ -18,7 +18,8 @@ export function SidebarGroup(props: SidebarGroupProps) {
 					{
 						props.isSidebarOpen &&
 						<motion.span
-							className="absolute left-20 text-sm font-semibold text-slate-500"
+
+							className="absolute left-20 text-sm text-slate-500"
 							exit={{ opacity: 0 }}
 						>
 							{props.label}

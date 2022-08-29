@@ -21,8 +21,8 @@ export function PaletteSelector(props: PaletteSelectorProps) {
 	const select = (next: StaticPalette) => {
 		splash.animate({ color: next })
 		setTimeout(() => {
-			setPrimaryColor(next);
 			setPalette(next);
+			setPrimaryColor(next)
 		}, EFFECT_DURATION / 2)
 	}
 

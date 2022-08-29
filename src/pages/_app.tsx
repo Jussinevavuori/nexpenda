@@ -7,11 +7,12 @@ import { SessionProvider } from "next-auth/react";
 import "../styles/globals.css";
 import { useVhFix } from "../hooks/useVhFix";
 import { ThemedFavicon } from "@/components/ThemedFavicon/ThemedFavicon";
-import { useInitializePreferences } from "@/hooks/useInitializePreferences";
 import { Provider as RadixTooltipProvider } from '@radix-ui/react-tooltip';
 import { ThemeProvider } from "@/features/Theme/Theme";
 import { DefaultStyles } from "@/components/DefaultStyles/DefaultStyles";
 import { NotificationsProvider } from "@/features/Notifications/contexts/NotificationContext";
+import { ThemedMeta } from "@/components/ThemedMeta/ThemedMeta";
+import { useInitialize } from "@/hooks/useInitialize";
 
 const MyApp: AppType = ({
 	Component,
@@ -19,7 +20,7 @@ const MyApp: AppType = ({
 }) => {
 
 	useVhFix();
-	useInitializePreferences();
+	useInitialize();
 
 	return (
 		<SessionProvider session={session}>
@@ -27,6 +28,7 @@ const MyApp: AppType = ({
 				<RadixTooltipProvider>
 					<NotificationsProvider>
 						<ThemedFavicon />
+						<ThemedMeta />
 						<DefaultStyles>
 							<Component {...pageProps} />
 						</DefaultStyles>

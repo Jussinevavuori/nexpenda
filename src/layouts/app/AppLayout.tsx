@@ -1,5 +1,4 @@
 import { useBreakpoint } from "@/hooks/useBreakpoint";
-import { useRequireAuth } from "@/hooks/useRequireAuth";
 import { AppLayoutHeader } from "./components/AppLayoutHeader/AppLayoutHeader";
 import { RoundedMobileCorners } from "./components/RoundedMobileCorners/RoundedMobileCorners";
 import { BottomTabs } from "./features/BottomTabs/BottomTabs";
@@ -11,8 +10,6 @@ export type AppLayoutProps = {
 }
 
 export const AppLayout = Object.assign(function AppLayout(props: AppLayoutProps) {
-	useRequireAuth();
-
 	const isDesktop = useBreakpoint("desktop");
 
 	if (isDesktop === true) {

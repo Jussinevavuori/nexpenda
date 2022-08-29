@@ -1,19 +1,19 @@
 import { Autocomplete } from "@/components/Autocomplete/Autocomplete";
 import { Divider } from "@/components/Divider/Divider";
-import { Icon } from "@/components/Icon/Icon";
-import { IconButton } from "@/components/IconButton/IconButton";
 import { Switch } from "@/components/Switch/Switch";
 import { PaletteSelector } from "@/features/PaletteSelector/PaletteSelector";
 import { usePreference } from "@/features/Preferences/hooks/usePreference";
 import { useUpdatePreference } from "@/features/Preferences/hooks/useUpdatePreference";
 import { ThemeSelector } from "@/features/ThemeSelector/ThemeSelector";
 import { useFormatMoney } from "@/hooks/useFormatMoney";
+import { useRequireAuth } from "@/hooks/useRequireAuth";
 import { AppLayout } from "@/layouts/app/AppLayout";
 import { SettingsLayout } from "@/layouts/settings/SettingsLayout";
 import { selectableCurrencies, SelectableCurrency } from "@/utils/currency/selectableCurrencies";
 import { useState } from "react";
 
 export default function PreferencesSettingsPage() {
+	useRequireAuth();
 
 	// Select currency
 	const currency = usePreference("currency");

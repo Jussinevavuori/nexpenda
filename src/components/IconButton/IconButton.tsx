@@ -74,8 +74,8 @@ function getClassName(props: {
 	className?: string;
 }) {
 	return c(
-		"relative flex flex-row gap-4 items-centered justify-center p-2 rounded-full",
-		"font-medium transition-colors active:transition-none",
+		"relative flex flex-row gap-4 items-center justify-center p-2 rounded-full",
+		"transition-colors active:transition-none",
 		c.if(props.loading)("opacity-60"),
 		c.if(props.disabled)(
 			c("cursor-default", c.variant(props.variant ?? "default")({

@@ -1,9 +1,11 @@
 import { DesktopView } from "@/components/DesktopView/DesktopView";
 import { MobileView } from "@/components/MobileView/MobileView";
 import { IntervalSelector } from "@/features/Interval/IntervalSelector";
+import { useRequireAuth } from "@/hooks/useRequireAuth";
 import { AppLayout } from "@/layouts/app/AppLayout";
 
 export default function DashboardPage() {
+	useRequireAuth();
 
 
 	return <AppLayout active="dashboard">

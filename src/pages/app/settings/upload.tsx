@@ -4,8 +4,11 @@ import { AppLayout } from "@/layouts/app/AppLayout";
 import { SettingsLayout } from "@/layouts/settings/SettingsLayout";
 import { UploadDataFileCommitter } from "@/features/Spreadsheet/components/UploadDataFileCommitter";
 import { UploadDataFileUploader } from "@/features/Spreadsheet/components/UploadDataFileUploader";
+import { useRequireAuth } from "@/hooks/useRequireAuth";
 
 export default function UploadSettingsPage() {
+	useRequireAuth();
+
 	const state = useUploadDataState();
 	const file = useUploadDataFile(state, () => { });
 

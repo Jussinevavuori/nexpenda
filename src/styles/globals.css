@@ -2,6 +2,70 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+  .absolute-centered {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+@media (min-width: 900px) {
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    display: unset;
+  }
+  ::-webkit-scrollbar-button {
+    height: 0;
+    width: 0;
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-primary-500);
+    transition: background-color 100;
+  }
+  ::-webkit-scrollbar-track {
+    /* Slate 200 */
+    background: theme("colors.slate.200");
+  }
+  .dark ::-webkit-scrollbar-track {
+    /* Slate 840 */
+    background: theme("colors.slate.840");
+  }
+}
+
+input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-calendar-picker-indicator {
+  display: none;
+  -webkit-appearance: none;
+}
+
+.flasher {
+  animation: animation_animate-flash 1000ms forwards;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+@keyframes animation_animate-flash {
+  0% {
+    background: theme("colors.emerald.500");
+    opacity: 50;
+  }
+  100% {
+    background: transparent;
+    opacity: 0;
+  }
+}
+
 /* Fullscreen splash */
 .animate-radiate-circle {
   animation: animation_animate_radiate_circle 1000ms forwards;

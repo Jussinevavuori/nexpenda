@@ -2,12 +2,15 @@ import { Button } from "@/components/Button/Button";
 import { Icon } from "@/components/Icon/Icon";
 import { useNotify } from "@/features/Notifications/hooks/useNotify";
 import { createTransactionSpreadsheet } from "@/features/Spreadsheet/utils/TransactionSpreadsheet";
+import { useRequireAuth } from "@/hooks/useRequireAuth";
 import { AppLayout } from "@/layouts/app/AppLayout";
 import { SettingsLayout } from "@/layouts/settings/SettingsLayout";
 import { trpc } from "@/utils/trpc";
 import { useCallback, useState } from "react";
 
 export default function AccountSettingsPage() {
+	useRequireAuth();
+
 	const notify = useNotify();
 	const [isLoading, setIsLoading] = useState(false);
 

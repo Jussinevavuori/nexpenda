@@ -10,13 +10,12 @@ export function useRequireAuth(role?: UserRole) {
   const router = useRouter();
 
   switch (session.status) {
-    case "loading": {
-      return;
-    }
+    case "loading":
+      break;
 
-    case "authenticated": {
+    case "authenticated":
       if (role) {
-        if (!user.data) return;
+        if (!user.data) break;
         if (role !== user.data.role) {
           router.push(
             pages.login +
@@ -25,13 +24,12 @@ export function useRequireAuth(role?: UserRole) {
           );
         }
       }
-      return;
-    }
+      break;
 
-    case "unauthenticated": {
+    case "unauthenticated":
       router.push(
         pages.login + "?error=" + encodeURIComponent("You have to be signed in")
       );
-    }
+      break;
   }
 }

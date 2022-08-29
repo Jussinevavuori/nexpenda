@@ -1,12 +1,15 @@
 import { Button } from "@/components/Button/Button";
 import { TextArea } from "@/components/TextArea/TextArea";
 import { useNotify } from "@/features/Notifications/hooks/useNotify";
+import { useRequireAuth } from "@/hooks/useRequireAuth";
 import { AppLayout } from "@/layouts/app/AppLayout";
 import { SettingsLayout } from "@/layouts/settings/SettingsLayout";
 import { trpc } from "@/utils/trpc";
 import { useState } from "react";
 
 export default function FeedbackSettingsPage() {
+	useRequireAuth();
+
 	const notify = useNotify();
 	const [message, setMessage] = useState("");
 	const mutation = trpc.useMutation(["feedback.send"], {
