@@ -33,8 +33,6 @@ export function formatMoney(
     .filter((char) => !char.match(nonNumericRegex) && char !== "-")
     .join("");
 
-  console.log({ numeric, nonnumeric, result: formatResult });
-
   // Format:
   // $ stands for the symbol
   // # stands for the numeric part

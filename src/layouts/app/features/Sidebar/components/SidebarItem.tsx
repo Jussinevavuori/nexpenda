@@ -29,7 +29,6 @@ export function SidebarItem(props: SidebarItemProps) {
 	const router = useRouter();
 
 	useOnKeyCombination(props.shortcut ?? { key: "never" }, () => {
-		console.log("Goto", props.href);
 		router.push(props.href);
 	})
 

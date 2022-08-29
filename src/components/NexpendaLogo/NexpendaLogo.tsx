@@ -1,5 +1,5 @@
 import { c } from "@/utils/generic/classnames";
-import { textSizeVariants } from "@/utils/stylevariants/textsize";
+import { textSizeVariants } from "@/utils/styles/textsize";
 
 export type NexpendaLogoTypeProps = {
 	className?: string;

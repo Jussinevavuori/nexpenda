@@ -1,17 +1,18 @@
 import { useClientSideMemo } from '@/hooks/useClientSideMemo';
 import { usePrefersColorSchemeDark } from '@/hooks/usePrefersColorSchemeDark';
 import { exposeToWindow } from '@/utils/dom/exposeToWindow';
-import { themeMemory } from '@/utils/themes/themeMemory';
-import React, { createContext, ReactNode, useCallback, useContext, useEffect, useMemo } from 'react';
+import React, { createContext, ReactNode, useContext, useEffect } from 'react';
+import { usePreference } from '../Preferences/hooks/usePreference';
+import { useUpdatePreference } from '../Preferences/hooks/useUpdatePreference';
 
 export interface ThemeContextValue {
-	currentTheme: SelectableTheme;
+	theme: SelectableTheme;
 	isDarkTheme: boolean;
 	setTheme(value: Theme): void;
 }
 
 export const defaultTehemContextValue: ThemeContextValue = {
-	currentTheme: "system",
+	theme: "system",
 	isDarkTheme: false,
 	setTheme() { },
 }
@@ -25,26 +26,19 @@ export interface ThemeContextProviderProps {
 export function ThemeProvider(props: ThemeContextProviderProps) {
 
 	// Subscribe to latest saved mode and system preferred color scheme
-	const savedMode = themeMemory.useValue();
+	const theme = usePreference("theme");
+	const setTheme = useUpdatePreference("theme");
 	const prefersDark = usePrefersColorSchemeDark();
 
-	// Current mode is latest saved mode. Default to light mode when none available
-	const currentTheme = useMemo(() => savedMode ?? "light", [savedMode]);
-
-	useEffect(() => exposeToWindow({ toggle: () => themeMemory.set(currentTheme === "dark" ? "light" : "dark") }), [currentTheme])
+	useEffect(() => exposeToWindow({ toggle: () => setTheme(theme === "dark" ? "light" : "dark") }), [theme, setTheme])
 
 	// Check whether the current mode is dark or the system setting is dark when
 	// system setting enabled
 	const isDarkTheme = useClientSideMemo(() => {
-		return currentTheme === "dark" || (currentTheme === "system" && prefersDark === true);
-	}, [prefersDark, currentTheme]) ?? false;
+		return theme === "dark" || (theme === "system" && prefersDark === true);
+	}, [prefersDark, theme]) ?? false;
 
-	// Utility function to toggle the mode
-	const setTheme = useCallback((value: Theme) => {
-		themeMemory.set(value);
-	}, [])
-
-	return <ThemeContext.Provider value={{ currentTheme, isDarkTheme, setTheme }}>
+	return <ThemeContext.Provider value={{ theme, isDarkTheme, setTheme }}>
 		{/* Provide tailwind CSS with dark and light theme */}
 		<div className={isDarkTheme ? "dark" : "light"}>
 			{props.children}

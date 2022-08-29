@@ -1,18 +1,20 @@
 import { Button } from "@/components/Button/Button";
 import { Icon } from "@/components/Icon/Icon";
 import { Input } from "@/components/Input/Input";
-import { themeMemory } from "@/utils/themes/themeMemory";
+import { usePreference } from "@/features/Preferences/hooks/usePreference";
+import { useUpdatePreference } from "@/features/Preferences/hooks/useUpdatePreference";
 import { useState } from "react";
 
 export default function TestInputsPage() {
 
+	const theme = usePreference("theme");
+	const setTheme = useUpdatePreference("theme");
 	const [disabled, setDisabled] = useState(false);
 	const [readOnly, setReadOnly] = useState(false);
 	const [error, setError] = useState(false);
 	const [icons, setIcons] = useState(false);
 	const [labels, setLabels] = useState(false);
 	const [helperText, setHelperText] = useState(false);
-	const theme = themeMemory.useValue();
 	const [input, setInput] = useState("")
 
 	return (
@@ -24,7 +26,7 @@ export default function TestInputsPage() {
 				<Button color={readOnly ? "primary" : "monochrome"} onClick={() => setReadOnly(_ => !_)}>Read-only</Button>
 				<Button color={icons ? "primary" : "monochrome"} onClick={() => setIcons(_ => !_)}>Icons</Button>
 				<Button color={labels ? "primary" : "monochrome"} onClick={() => setLabels(_ => !_)}>Labels</Button>
-				<Button color={theme === "dark" ? "primary" : "monochrome"} onClick={() => themeMemory.set(theme === "dark" ? "light" : "dark")}>Dark Mode</Button>
+				<Button color={theme === "dark" ? "primary" : "monochrome"} onClick={() => setTheme(theme === "dark" ? "light" : "dark")}>Dark Mode</Button>
 			</div>
 			<div className="p-4" />
 			<table className="">

@@ -5,7 +5,7 @@ import { readPersistedPreference } from "../utils/readPersistedPreference";
 
 export function usePreference<Key extends PreferenceKey>(
   key: Key
-): z.TypeOf<typeof preferencesSchema[Key]["schema"]> | undefined {
+): z.TypeOf<typeof preferencesSchema[Key]["schema"]> {
   const query = trpc.useQuery(["preferences.get", key], {
     initialData: readPersistedPreference(key),
     initialDataUpdatedAt: -1,

@@ -1,11 +1,16 @@
 import { useCallback } from "react";
-import { sidebarMemory } from "../utils/sidebarMemory";
+import { atomWithStorage } from "jotai/utils";
+import { useAtom } from "jotai";
+
+const sidebarAtom = atomWithStorage("@nexpenda/sidebar", true);
 
 export function useSidebarState() {
-  const isOpen = sidebarMemory.useValue() ?? false;
+  const [isOpen, setIsOpen] = useAtom(sidebarAtom);
 
-  const toggleIsOpen = useCallback(() => sidebarMemory.set(!isOpen), [isOpen]);
-  const setIsOpen = useCallback((v: boolean) => sidebarMemory.set(v), []);
+  const toggleIsOpen = useCallback(
+    () => setIsOpen(!isOpen),
+    [isOpen, setIsOpen]
+  );
 
   return {
     isOpen,

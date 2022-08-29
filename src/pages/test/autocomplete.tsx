@@ -1,7 +1,8 @@
 import { Autocomplete } from "@/components/Autocomplete/Autocomplete";
 import { Button } from "@/components/Button/Button";
 import { KeySymbol } from "@/components/KeySymbol/KeySymbol";
-import { themeMemory } from "@/utils/themes/themeMemory";
+import { usePreference } from "@/features/Preferences/hooks/usePreference";
+import { useUpdatePreference } from "@/features/Preferences/hooks/useUpdatePreference";
 import { useState } from "react";
 
 const allOptions = [
@@ -34,7 +35,8 @@ const allOptions = [
 type Value = typeof allOptions[number]["value"];
 
 export default function TestInputsPage() {
-	const theme = themeMemory.useValue();
+	const theme = usePreference("theme");
+	const setTheme = useUpdatePreference("theme");
 	const [input, setInput] = useState("")
 	const [value, setValue] = useState<Value | undefined>(undefined)
 
@@ -45,7 +47,7 @@ export default function TestInputsPage() {
 	return (
 		<div className="p-8 bg-white dark:bg-slate-800">
 			<div className="flex gap-4">
-				<Button color={theme === "dark" ? "primary" : "monochrome"} onClick={() => themeMemory.set(theme === "dark" ? "light" : "dark")}>Dark Mode</Button>
+				<Button color={theme === "dark" ? "primary" : "monochrome"} onClick={() => setTheme(theme === "dark" ? "light" : "dark")}>Dark Mode</Button>
 			</div>
 
 			<div className="p-4" />

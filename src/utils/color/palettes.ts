@@ -52,4 +52,4 @@ export const palettes: {
   staticGrayscale: ["gray", "neutral", "slate", "stone", "zinc"],
 
   dynamic: ["primary", "off-primary", "off-primary-alt"],
-};
+} as const;

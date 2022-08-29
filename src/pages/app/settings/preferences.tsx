@@ -5,7 +5,7 @@ import { IconButton } from "@/components/IconButton/IconButton";
 import { Switch } from "@/components/Switch/Switch";
 import { PaletteSelector } from "@/features/PaletteSelector/PaletteSelector";
 import { usePreference } from "@/features/Preferences/hooks/usePreference";
-import { useUpdatePreferenceMutation } from "@/features/Preferences/hooks/useUpdatePreference";
+import { useUpdatePreference } from "@/features/Preferences/hooks/useUpdatePreference";
 import { ThemeSelector } from "@/features/ThemeSelector/ThemeSelector";
 import { useFormatMoney } from "@/hooks/useFormatMoney";
 import { AppLayout } from "@/layouts/app/AppLayout";
@@ -17,9 +17,8 @@ export default function PreferencesSettingsPage() {
 
 	// Select currency
 	const currency = usePreference("currency");
-	const updateCurrency = useUpdatePreferenceMutation("currency")
+	const updateCurrency = useUpdatePreference("currency")
 	const [currencyQuery, setCurrencyQuery] = useState("");
-	console.log({ currencyQuery, currency })
 	const selectedCurrency = selectableCurrencies.find(_ => _.code.toLowerCase() === currency?.toLowerCase())
 	const filteredCurrencies = currencyQuery.trim() === ''
 		? selectableCurrencies
@@ -33,11 +32,11 @@ export default function PreferencesSettingsPage() {
 
 	// Hide currency
 	const hideCurrency = usePreference("hideCurrency");
-	const updateHideCurrency = useUpdatePreferenceMutation("hideCurrency")
+	const updateHideCurrency = useUpdatePreference("hideCurrency")
 
 	// Currency formatting
 	const currencyFormatting = usePreference("currencyFormatting");
-	const updateCurrencyFormatting = useUpdatePreferenceMutation("currencyFormatting")
+	const updateCurrencyFormatting = useUpdatePreference("currencyFormatting")
 
 	return <AppLayout active="settings">
 		<SettingsLayout title="User preferences">

@@ -1,6 +1,7 @@
 import { FullscreenSplash, useFullscreenSplashController } from "@/components/FullscreenSplash/FullscreenSplash";
 import { getSystemThemeMode } from "@/utils/dom/getSystemThemeMode";
-import { themeMemory } from "@/utils/themes/themeMemory"
+import { usePreference } from "../Preferences/hooks/usePreference";
+import { useUpdatePreference } from "../Preferences/hooks/useUpdatePreference";
 import { ThemeSelectorButton } from "./components/ThemeSelectorButton";
 
 export type ThemeSelectorProps = {
@@ -10,14 +11,14 @@ export type ThemeSelectorProps = {
 const EFFECT_DURATION = 1200;
 
 export function ThemeSelector(props: ThemeSelectorProps) {
-
-	const currentTheme = themeMemory.useValue();
+	const theme = usePreference("theme");
+	const setTheme = useUpdatePreference("theme");
 
 	const splash = useFullscreenSplashController();
 
-	const select = (theme: SelectableTheme) => {
-		splash.animate({ color: theme === "system" ? getSystemThemeMode() : theme })
-		setTimeout(() => themeMemory.set(theme), EFFECT_DURATION / 2)
+	const select = (next: SelectableTheme) => {
+		splash.animate({ color: next === "system" ? getSystemThemeMode() : next })
+		setTimeout(() => setTheme(next), EFFECT_DURATION / 2);
 	}
 
 	return <ul className="flex flex-row flex-wrap gap-6">
@@ -27,19 +28,19 @@ export function ThemeSelector(props: ThemeSelectorProps) {
 		<ThemeSelectorButton
 			variant="light"
 			onClick={() => select("light")}
-			isSelected={currentTheme === "light"}
+			isSelected={theme === "light"}
 		/>
 
 		<ThemeSelectorButton
 			variant="dark"
 			onClick={() => select("dark")}
-			isSelected={currentTheme === "dark"}
+			isSelected={theme === "dark"}
 		/>
 
 		<ThemeSelectorButton
 			variant="system"
 			onClick={() => select("system")}
-			isSelected={currentTheme === "system"}
+			isSelected={theme === "system"}
 		/>
 
 	</ul>

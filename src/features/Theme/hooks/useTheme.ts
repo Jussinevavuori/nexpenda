@@ -2,7 +2,7 @@ import { usePrefersColorSchemeDark } from "@/hooks/usePrefersColorSchemeDark";
 import { useMemo } from "react";
 import { useThemeContext } from "../Theme";
 
-export function useCurrentTheme(theme?: SelectableTheme) {
+export function useTheme(theme?: SelectableTheme) {
   const defaultDarkModeContext = useThemeContext();
   const systemPrefersColorSchemeDark = usePrefersColorSchemeDark();
 

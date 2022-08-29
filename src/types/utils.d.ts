@@ -1,6 +1,13 @@
 // This file defines common TypeScript generic utility types
 
 /**
+ * Array<T | undefined>.filter(Boolean) => Array<T>
+ */
+interface Array<T> {
+  filter(predicate: BooleanConstructor): NonNullable<T>[];
+}
+
+/**
  * Utility type to extract the resolved value T
  * from a promise of type Promise<T>
  */

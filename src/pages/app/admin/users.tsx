@@ -1,7 +1,10 @@
+import { AdminLayout } from "@/layouts/admin/AdminLayout";
 import { AppLayout } from "@/layouts/app/AppLayout";
 
 export default function AdminUsersPage() {
 	return <AppLayout active="settings">
-		Admin Users
+		<AdminLayout title="Manage users">
+			Admin Users
+		</AdminLayout>
 	</AppLayout>
 }
