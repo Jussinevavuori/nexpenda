@@ -30,7 +30,7 @@ export default function LoginPage() {
 
 		{
 			authError &&
-			<div className="flex gap-4 my-4 bg-danger-100 border border-danger-outline rounded-lg p-4">
+			<div className="flex gap-4 my-4 bg-danger-500/10 border border-danger-500/20 rounded-lg p-4">
 				<Icon.Feather icon="alertCircle" className="text-danger" />
 				<div>
 					{JSON.stringify(authError).replaceAll("\"", "")}

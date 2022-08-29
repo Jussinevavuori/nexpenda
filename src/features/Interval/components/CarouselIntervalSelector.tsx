@@ -10,6 +10,10 @@ import { cssTranslate } from '@/utils/styles/cssTranslate';
 import { getMin } from '@/utils/generic/getMin';
 import { mapValue } from '@/utils/generic/mapValue';
 import { cssScale } from '@/utils/styles/cssScale';
+import { IntervalLength, useIntervalStore } from '../store/useIntervalStore';
+import { addMonths, addYears, isSameMonth, isSameYear, subMonths, subYears } from 'date-fns';
+import { formatDateInterval } from '@/utils/dates/formatInterval';
+import { intervalIncludesToday } from '@/utils/dates/intervalIncludesToday';
 
 const LEFT_OFFSET = 24;
 
@@ -20,18 +24,24 @@ const LEFT_OFFSET = 24;
 type ParagraphWrapper = {
 	el: HTMLParagraphElement;
 	offset: number;
-	intervalStart: Date;
-	intervalEnd: Date;
+	intervalDate: Date;
+	intervalLength: IntervalLength;
 	x: number;
 }
 
 export interface CarouselIntervalSelectorProps extends IntervalSelectorProps { }
 
 export function CarouselIntervalSelector(props: CarouselIntervalSelectorProps) {
-	const interval = useIntervalContext();
+
+	const reset = useIntervalStore(_ => _.reset);
+	const forward = useIntervalStore(_ => _.forward);
+	const back = useIntervalStore(_ => _.back);
+	const intervalDate = useIntervalStore(_ => _.date);
+	const intervalLength = useIntervalStore(_ => _.intervalLength);
+	const changeIntervalTo = useIntervalStore(_ => _.changeTo)
 
 	// How many components should be rendered on each side of the current interval
-	const ghosts = useMemo(() => interval.isAll ? 0 : 10, [interval.isAll])
+	const ghosts = useMemo(() => intervalLength === "all" ? 0 : 10, [intervalLength])
 
 	// Ref to hold all paragraphs and utility function to access all currently
 	// existing refs and only those (from -offset to +offset inclusive) and
@@ -54,11 +64,11 @@ export function CarouselIntervalSelector(props: CarouselIntervalSelectorProps) {
 	// release offset ref's value.
 	const commit = useCallback((specifiedOffset?: number) => {
 		const offset = specifiedOffset ?? releaseOffsetRef.current
-		if (offset < 0) interval.setPreviousInterval(Math.abs(offset) - 1)
-		if (offset > 0) interval.setNextInterval(Math.abs(offset) - 1);
+		if (offset < 0) forward(Math.abs(offset))
+		if (offset > 0) back(Math.abs(offset));
 		releaseOffsetRef.current = 0;
 		return offset;
-	}, [releaseOffsetRef, interval])
+	}, [releaseOffsetRef, forward, back])
 
 	// Dragging state tells whether the user is currently dragging, the applied
 	// drag offset and when the drag started / ended.
@@ -102,24 +112,26 @@ export function CarouselIntervalSelector(props: CarouselIntervalSelectorProps) {
 		if (offset === "now") {
 			// Attempt to find paragraph to scroll to if one exists and scroll to it
 			// if found
-			const nowInterval = IntervalUtils.getNowInterval(interval.start, interval.end);
-			const paragraph = getParagraphs().find(p => (
-				compareDate(p.intervalStart, "=", nowInterval[0])
-				&& compareDate(p.intervalEnd, "=", nowInterval[1])
-			));
-			if (paragraph) {
-				draggingRef.current.offset = paragraph.x;
+			const nowParagraph = getParagraphs().find(p => {
+				switch (intervalLength) {
+					case "all": return false;
+					case "year": return p.intervalLength === intervalLength && isSameYear(p.intervalDate, intervalDate);
+					case "month": return p.intervalLength === intervalLength && isSameMonth(p.intervalDate, intervalDate);
+				}
+			});
+			if (nowParagraph) {
+				draggingRef.current.offset = nowParagraph.x;
 			}
 
 			// Manually set now interval
-			interval.setNowInterval();
+			reset()
 		} else {
 			if (offset === 0) return;
 			const x = getParagraph(offset)?.x ?? 0;
 			commit(offset);
 			draggingRef.current.offset = x;
 		}
-	}, [commit, draggingRef, getParagraphs])
+	}, [commit, draggingRef, getParagraphs, reset])
 
 	// Start drag
 	const startDrag = useCallback(() => {
@@ -203,9 +215,9 @@ export function CarouselIntervalSelector(props: CarouselIntervalSelectorProps) {
 				{
 					/* Render `ghosts` amount of previous intervals */
 					range(ghosts).reverse().map((i) => {
-						const _interval = IntervalUtils.getPreviousInterval(interval.start, interval.end, i)
-						const formatted = IntervalUtils.formatInterval("smart", ..._interval);
 						const offset = -i - 1
+						const _intervalDate = intervalLength === "year" ? subYears(intervalDate, i + 1) : subMonths(intervalDate, i + 1)
+						const formatted = formatDateInterval(_intervalDate, intervalLength)
 
 						return <p
 							key={formatted}
@@ -214,8 +226,8 @@ export function CarouselIntervalSelector(props: CarouselIntervalSelectorProps) {
 							ref={el => {
 								if (el) paragraphsRef.current[offset] = {
 									el,
-									intervalStart: _interval[0],
-									intervalEnd: _interval[1],
+									intervalDate: _intervalDate,
+									intervalLength,
 									offset,
 									x: 0,
 								}
@@ -232,22 +244,22 @@ export function CarouselIntervalSelector(props: CarouselIntervalSelectorProps) {
 					ref={el => {
 						if (el) paragraphsRef.current[0] = {
 							el,
-							intervalStart: interval.start,
-							intervalEnd: interval.end,
+							intervalDate,
+							intervalLength,
 							offset: 0,
 							x: 0,
 						}
 					}}
 				>
-					{interval.toString()}
+					{formatDateInterval(intervalDate, intervalLength)}
 				</p>
 
 				{
 					/* Render `ghosts` amount of next intervals */
 					range(ghosts).map((i) => {
-						const _interval = IntervalUtils.getNextInterval(interval.start, interval.end, i)
-						const formatted = IntervalUtils.formatInterval("smart", ..._interval);
+						const _intervalDate = intervalLength === "year" ? addYears(intervalDate, i + 1) : addMonths(intervalDate, i + 1)
 						const offset = i + 1;
+						const formatted = formatDateInterval(_intervalDate, intervalLength)
 
 						return <p
 							key={formatted}
@@ -256,8 +268,8 @@ export function CarouselIntervalSelector(props: CarouselIntervalSelectorProps) {
 							ref={el => {
 								if (el) paragraphsRef.current[offset] = {
 									el,
-									intervalStart: _interval[0],
-									intervalEnd: _interval[1],
+									intervalDate: _intervalDate,
+									intervalLength,
 									offset,
 									x: 0,
 								}
@@ -272,8 +284,9 @@ export function CarouselIntervalSelector(props: CarouselIntervalSelectorProps) {
 			<div className="absolute right-0 top-0 bottom-0 flex items-center">
 
 				{
-					!interval.includesToday && <IconButton
-						className="-mr-3"
+					!intervalIncludesToday(intervalDate, intervalLength) && <IconButton
+						variant="text"
+						className="-mr-3 p-4"
 						onClick={() => select("now", true)}
 					>
 						<Icon.Material className="text-slate-900 dark:text-slate-100" icon="replay" />
@@ -281,15 +294,17 @@ export function CarouselIntervalSelector(props: CarouselIntervalSelectorProps) {
 				}
 
 				<IconButton
-					className="-mr-3"
-					disabled={interval.isAll}
+					variant="text"
+					className="-mr-3 p-4"
+					disabled={intervalLength === "all"}
 					onClick={() => select(-1, true)}
 				>
 					<Icon.Material className="text-slate-900 dark:text-slate-100" icon="chevron_left" />
 				</IconButton>
 				<IconButton
-					className="-mr-3"
-					disabled={interval.isAll}
+					variant="text"
+					className="-mr-3 p-4"
+					disabled={intervalLength === "all"}
 					onClick={() => select(+1, true)}
 				>
 					<Icon.Material className="text-slate-900 dark:text-slate-100" icon="chevron_right" />

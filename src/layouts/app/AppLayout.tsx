@@ -1,5 +1,6 @@
 import { useBreakpoint } from "@/hooks/useBreakpoint";
 import { useRequireAuth } from "@/hooks/useRequireAuth";
+import { AppLayoutHeader } from "./components/AppLayoutHeader/AppLayoutHeader";
 import { RoundedMobileCorners } from "./components/RoundedMobileCorners/RoundedMobileCorners";
 import { BottomTabs } from "./features/BottomTabs/BottomTabs";
 import { Sidebar } from "./features/Sidebar/Sidebar";
@@ -41,4 +42,5 @@ export const AppLayout = Object.assign(function AppLayout(props: AppLayoutProps)
 
 	return null;
 }, {
+	Header: AppLayoutHeader
 });

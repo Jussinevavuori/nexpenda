@@ -1,4 +1,5 @@
 import { compareDate } from "../dates/compareDate";
+import { getLastOccurrence } from "./getLastOccurrence";
 
 /**
  * Check if still active

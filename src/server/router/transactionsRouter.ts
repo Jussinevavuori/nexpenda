@@ -31,16 +31,15 @@ export const transactionsRouter = createProtectedRouter()
    */
   .query("list", {
     input: z.object({
-      after: z.date().optional(),
-      before: z.date().optional(),
+      interval: z.tuple([z.date(), z.date()]).optional(),
     }),
     async resolve({ ctx, input }) {
       return ctx.prisma.transaction.findMany({
         where: {
           userId: ctx.session.user.id,
           time: {
-            gte: input.after,
-            lte: input.before,
+            gte: input.interval?.[0],
+            lte: input.interval?.[1],
           },
         },
         include: {

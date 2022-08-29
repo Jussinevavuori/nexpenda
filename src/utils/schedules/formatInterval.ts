@@ -6,7 +6,7 @@
  * - 1 year
  * depending on the interval.
  */
-export function formatInterval<S extends Schedule>(i: S) {
+export function formatOccurrenceInterval<S extends Schedule>(i: S) {
   const n = i.every;
   const interval = i.intervals.toLowerCase();
   return n > 1 ? `${n} ${interval}s` : `${interval}`;
