@@ -14,7 +14,6 @@ import { SettingsLayout } from "@/layouts/settings/SettingsLayout";
 import { capitalize } from "@/utils/generic/capitalize";
 import { pages } from "@/utils/pages";
 import { trpc } from "@/utils/trpc";
-import { Dialog } from "@headlessui/react";
 import { signOut } from "next-auth/react";
 import { useState } from "react";
 import { PageHead } from "@/components/PageHead/PageHead";
@@ -168,7 +167,7 @@ export default function AccountSettingsPage() {
 				}
 
 				{
-					user.accounts.map(account => <div className="flex gap-4 items-center">
+					user.accounts.map(account => <div key={account.provider} className="flex gap-4 items-center">
 						<Icon.Simple icon={account.provider} />
 						<div>
 							<p>

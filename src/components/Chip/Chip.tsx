@@ -84,7 +84,11 @@ function getClassName(props: {
 	variant?: ChipVariant;
 	color?: ChipColor;
 	className?: string;
+
+	// eslint-disable-next-line
 	startIcon?: any;
+
+	// eslint-disable-next-line
 	endIcon?: any;
 }) {
 	return c(

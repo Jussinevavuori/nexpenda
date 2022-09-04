@@ -8,7 +8,7 @@ export interface TransactionFlashState {
 }
 
 export const useTransactionFlashStore = create<TransactionFlashState>()(
-  (set, get) => ({
+  (set) => ({
     threshold: Date.now(),
 
     reset: () =>
@@ -57,7 +57,7 @@ export function useShouldFlashTransaction(transaction: TransactionItem) {
         clearTimeout(timeout);
       };
     }
-  });
+  }, [transaction, setIsFlashing]);
 
   return isFlashing;
 }

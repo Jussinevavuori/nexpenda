@@ -8,7 +8,7 @@ export interface ThemedMetaProps {
 	useLocalPalette?: boolean;
 }
 
-export const ThemedMeta = React.memo(function (props: ThemedMetaProps) {
+export const ThemedMeta = React.memo(function ThemedMeta(props: ThemedMetaProps) {
 	const globalPalette = usePreference("palette");
 	const { palette: localPalette } = useLocalPalette();
 	const palette = (props.useLocalPalette ? localPalette : globalPalette) ?? "blue";

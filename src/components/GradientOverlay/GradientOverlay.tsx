@@ -1,8 +1,4 @@
-export type GradientOverlayProps = {
-
-}
-
-export function GradientOverlay(props: GradientOverlayProps) {
+export function GradientOverlay() {
 	return <>
 		<div className="absolute inset-0 bg-primary-500 opacity-30 mix-blend-color" />
 		<div className="opacity-50 absolute inset-0 bg-gradient-to-br from-primary-300 via-transparent to-transparent" />

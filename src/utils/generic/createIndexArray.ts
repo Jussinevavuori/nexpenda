@@ -7,7 +7,7 @@
  * createIndexArray(3) // returns [0,1,2]
  */
 export function createIndexArray(n: number) {
-  let arr: number[] = [];
+  const arr: number[] = [];
   for (let i = 0; i < Math.floor(n); i++) {
     arr.push(i);
   }

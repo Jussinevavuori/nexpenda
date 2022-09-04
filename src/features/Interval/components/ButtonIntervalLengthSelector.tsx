@@ -4,11 +4,7 @@ import { usePeriodStore } from "@/stores/periodStore";
 import { getPeriodLength } from "@/utils/dates/getPeriodLength";
 import { capitalize } from "@/utils/generic/capitalize";
 
-export interface ButtonIntervalLenghtSelector {
-
-}
-
-export function ButtonIntervalLengthSelector(props: ButtonIntervalLenghtSelector) {
+export function ButtonIntervalLengthSelector() {
 
 	const period = usePeriodStore(_ => _.period);
 	const changeLength = usePeriodStore(_ => _.changeLength)

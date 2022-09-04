@@ -119,7 +119,7 @@ export function useUploadDataFile(
 
     state.reset();
     onFinished();
-  }, [state, notify, onFinished]);
+  }, [state, notify, onFinished, createTransactionsMutation, selectedSheet]);
 
   return {
     handleFileUpload,

@@ -1,8 +1,7 @@
 import { c } from '@/utils/generic/classnames';
 import * as RadixContextMenu from '@radix-ui/react-context-menu';
 
-export interface ContextMenuSeparatorProps extends RadixContextMenu.ContextMenuSeparatorProps {
-}
+export type ContextMenuSeparatorProps = RadixContextMenu.ContextMenuSeparatorProps
 
 export function ContextMenuSeparator(props: ContextMenuSeparatorProps) {
 	const { className, ...ContextMenuSeparatorProps } = props;

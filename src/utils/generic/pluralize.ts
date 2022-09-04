@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 /**
  * Pluralizes the word if the count is not equal to 1 or an array of length
  * 1

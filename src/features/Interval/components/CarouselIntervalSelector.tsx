@@ -1,7 +1,6 @@
 import { IntervalSelectorProps } from '../IntervalSelector';
 import { useCallback, useEffect, useMemo, useRef } from 'react';
 import { useRaf } from '@/hooks/useRaf';
-import { compareDate } from '@/utils/dates/compareDate';
 import { range } from '@/utils/generic/range';
 import { IconButton } from '@/components/IconButton/IconButton';
 import { Icon } from '@/components/Icon/Icon';
@@ -30,9 +29,7 @@ type ParagraphWrapper = {
 	x: number;
 }
 
-export interface CarouselIntervalSelectorProps extends IntervalSelectorProps { }
-
-export function CarouselIntervalSelector(props: CarouselIntervalSelectorProps) {
+export function CarouselIntervalSelector() {
 
 	const reset = usePeriodStore(_ => _.reset);
 	const forward = usePeriodStore(_ => _.forward);
@@ -106,7 +103,7 @@ export function CarouselIntervalSelector(props: CarouselIntervalSelectorProps) {
 	const previousTouchX = useRef<number>(0);
 
 	// Select an interval and go to it manually via a click for example
-	const select = useCallback((offset: number | "now", force: boolean = false) => {
+	const select = useCallback((offset: number | "now", force = false) => {
 		if (!force && (draggingRef.current.dragging || Math.abs(draggingRef.current.offset) > 30)) return;
 		draggingRef.current.changeAt = Date.now();
 
@@ -124,7 +121,7 @@ export function CarouselIntervalSelector(props: CarouselIntervalSelectorProps) {
 			commit(offset);
 			draggingRef.current.offset = x;
 		}
-	}, [commit, draggingRef, getParagraphs, reset])
+	}, [commit, draggingRef, getParagraphs, reset, getParagraph, period])
 
 	// Start drag
 	const startDrag = useCallback(() => {
@@ -140,7 +137,7 @@ export function CarouselIntervalSelector(props: CarouselIntervalSelectorProps) {
 	}, [draggingRef])
 
 	// End drag and commit unless specified otherwise
-	const endDrag = useCallback((commitDrag: boolean = true) => {
+	const endDrag = useCallback((commitDrag = true) => {
 		draggingRef.current.changeAt = Date.now()
 		draggingRef.current.dragging = false;
 
@@ -332,7 +329,7 @@ function updateParagraphs(paragraphs: ParagraphWrapper[], dragOffset: number) {
 	// Style each p
 	for (const p of paragraphsWithDistance) {
 		// Set up object for updatable properties
-		let properties = {
+		const properties = {
 			opacity: 100,
 			scale: 1,
 			fontWeight: 500,

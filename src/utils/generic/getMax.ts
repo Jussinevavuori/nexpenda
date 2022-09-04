@@ -20,6 +20,7 @@ export function getMax<T>(
       const nextValue = getItemValue(next);
       return nextValue > max.value ? { item: next, value: nextValue } : max;
     },
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     { item: arr[0], value: getItemValue(arr[0]!) } as { item: T; value: number }
   );
 }

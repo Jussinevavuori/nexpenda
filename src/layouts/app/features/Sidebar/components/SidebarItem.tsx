@@ -7,8 +7,8 @@ import { Icon } from '@/components/Icon/Icon';
 import { c } from '@/utils/generic/classnames';
 import { Tooltip } from '@/components/Tooltip/Tooltip';
 import { HoverOverlay } from '@/components/HoverOverlay/HoverOverlay';
-import { KeyCombination } from '@/components/KeyCombination/KeyCombination';
 
+// eslint-disable-next-line
 const { motion, AnimatePresence } = require("framer-motion");
 
 export interface SidebarItemProps {

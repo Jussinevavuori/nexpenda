@@ -1,9 +1,7 @@
 import { c } from '@/utils/generic/classnames';
 import * as RadixContextMenu from '@radix-ui/react-context-menu';
 
-export interface ContextMenuGroupProps extends RadixContextMenu.ContextMenuGroupProps {
-
-}
+export type ContextMenuGroupProps = RadixContextMenu.ContextMenuGroupProps
 
 export function ContextMenuGroup(props: ContextMenuGroupProps) {
 

@@ -26,16 +26,16 @@ export interface ToastProps {
 	fullWidth?: boolean;
 }
 
-export function Toast(props: ToastProps) {
+export function Toast({ onDismiss, action, ...props }: ToastProps) {
 
 	// Handle action loading
 	const [isActionLoading, setIsActionLoading] = useState(false);
 	const handleActionClick = useCallback(async () => {
 		setIsActionLoading(true)
-		await props.action?.onClick();
+		await action?.onClick();
 		setIsActionLoading(false)
-		props.onDismiss?.();
-	}, [props.onDismiss, setIsActionLoading, props.action?.onClick])
+		onDismiss?.();
+	}, [onDismiss, setIsActionLoading, action])
 
 	return <Color
 		color={selectVariant<StaticPalette | undefined, ToastVariant>(props.variant)({
@@ -45,10 +45,10 @@ export function Toast(props: ToastProps) {
 			success: "emerald",
 			warning: "amber"
 		})}
-		onClick={props.onDismiss}
+		onClick={onDismiss}
 		className={c(
 			"rounded py-2 px-4 shadow-lg bg-white dark:bg-slate-800 border border-primary-500",
-			c.if(props.onDismiss)("hover:opacity-80 cursor-pointer"),
+			c.if(onDismiss)("hover:opacity-80 cursor-pointer"),
 			c.if(props.fullWidth)("w-full")
 		)}
 	>
@@ -91,30 +91,30 @@ export function Toast(props: ToastProps) {
 
 			{
 				// Default button
-				props.action && props.action.label && <Button
+				action && action.label && <Button
 					className="pl-3 pr-3 -mr-2"
 					color="primary"
 					onClick={handleActionClick}
 					loading={isActionLoading}
 					endIcon={
-						props.action.icon
-							? <Icon.Material icon={props.action.icon} className="text-primary-500" />
+						action.icon
+							? <Icon.Material icon={action.icon} className="text-primary-500" />
 							: undefined
 					}
 				>
-					{props.action.label}
+					{action.label}
 				</Button>
 			}
 
 			{
 				// Icon button
-				props.action && props.action.icon && !props.action.label &&
+				action && action.icon && !action.label &&
 				<IconButton
 					className="-mr-2"
 					onClick={handleActionClick}
 					loading={isActionLoading}
 				>
-					<Icon.Material icon={props.action.icon} className="text-primary-500" />
+					<Icon.Material icon={action.icon} className="text-primary-500" />
 				</IconButton>
 			}
 

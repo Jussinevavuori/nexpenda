@@ -8,7 +8,7 @@ export interface ThemedFaviconProps {
 	fallback?: "dark" | "light";
 }
 
-export const ThemedFavicon = React.memo(function (props: ThemedFaviconProps) {
+export const ThemedFavicon = React.memo(function ThemedFavicon(props: ThemedFaviconProps) {
 	const darkMode = usePrefersColorSchemeDark();
 
 	const darkSrc = props.dark ?? _dark;

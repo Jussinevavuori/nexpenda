@@ -10,7 +10,7 @@ export interface TransactionelectionState {
 }
 
 export const useTransactionSelectionStore = create<TransactionelectionState>()(
-  (set, get) => ({
+  (set) => ({
     selection: new Set<string>(),
 
     selectMany: (ids: string[], toggle?: boolean) =>

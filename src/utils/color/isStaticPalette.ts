@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { palettes } from "./palettes";
 
 export function isStaticPalette(palette: any): palette is StaticPalette {

@@ -21,7 +21,7 @@ const dateFactor = 1;
  * @returns    Serial number for date
  */
 export function serializeDate(date: Date | string | number): number {
-  let _d = new Date(date);
+  const _d = new Date(date);
   return (
     _d.getFullYear() * yearFactor +
     (_d.getMonth() + 1) * monthFactor +

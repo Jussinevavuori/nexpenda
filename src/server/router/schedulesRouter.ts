@@ -132,7 +132,7 @@ export const schedulesRouter = createProtectedRouter()
         (t) => t.time
       );
 
-      let createdIds: string[] = [];
+      const createdIds: string[] = [];
 
       // Run through each schedule
       for (const schedule of schedules) {

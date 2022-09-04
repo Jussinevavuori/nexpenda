@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+
 import { trpc } from "@/utils/trpc";
 import { useMemo, useRef } from "react";
 import { usePeriodStore } from "../../stores/periodStore";
@@ -11,6 +13,8 @@ import { TransactionTableHeader } from "./components/TransactionTableHeader";
 import { TransactionSelectionTools } from "../TransactionSelectionTools/TransactionSelectionTools";
 import { useTransactionSortStore } from "@/stores/transactionSortStore";
 import { sortTransactions } from "@/utils/transaction/sortTransactions";
+
+// eslint-disable-next-line
 const { motion, AnimatePresence } = require("framer-motion")
 
 export type TransactionTableProps = {

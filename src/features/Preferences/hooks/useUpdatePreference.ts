@@ -33,6 +33,6 @@ export function useUpdatePreference<Key extends PreferenceKey>(key: Key) {
         value: value === null ? null : value,
       });
     },
-    [mutation.mutate]
+    [mutation, key]
   );
 }

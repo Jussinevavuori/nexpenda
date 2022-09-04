@@ -1,6 +1,8 @@
 import { sum } from "@/utils/generic/sum";
 import { useMemo } from "react";
 
+const _emptyArray: TransactionItem[] = [];
+
 export function useTransactionsSummary(
   transactions: TransactionItem[],
   selection?: Set<string>
@@ -9,7 +11,7 @@ export function useTransactionsSummary(
   const selectedTransactions =
     selection && selection.size > 0
       ? transactions.filter((_) => selection.has(_.id))
-      : [];
+      : _emptyArray;
 
   // Amounts
   const amounts = useMemo(

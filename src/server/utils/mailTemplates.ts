@@ -1,9 +1,11 @@
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type MailTemplate<Vars extends Record<string, any> = any> = {
   vars: Vars;
   templateName: string;
   subject: string;
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function createMailTemplate<Vars extends Record<string, any>>(
   templateName: string,
   getSubject: (vars: Vars) => string
@@ -20,7 +22,7 @@ function createMailTemplate<Vars extends Record<string, any>>(
 export const mailTemplates = {
   confirmEmail: createMailTemplate<{ url: string; email: string }>(
     "template.nexpenda.confirm-email",
-    (vars) => "Nexpenda | Confirm your email address"
+    () => "Nexpenda | Confirm your email address"
   ),
   feedbackReceived: createMailTemplate<{
     message: string;
@@ -28,14 +30,14 @@ export const mailTemplates = {
     email: string;
   }>(
     "template.nexpenda.feedback-received",
-    (vars) => "Nexpenda | Feedback Received"
+    () => "Nexpenda | Feedback Received"
   ),
   passwordChanged: createMailTemplate<{ email: string }>(
     "template.nexpenda.password-changed",
-    (vars) => "Nexpenda | Your password has been changed"
+    () => "Nexpenda | Your password has been changed"
   ),
   resetPassword: createMailTemplate<{ url: string; email: string }>(
     "template.nexpenda.forgot-password",
-    (vars) => "Nexpenda | Password reset request"
+    () => "Nexpenda | Password reset request"
   ),
 };

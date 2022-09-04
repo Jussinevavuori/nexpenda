@@ -6,13 +6,10 @@ import { usePreference } from "../Preferences/hooks/usePreference";
 import { useUpdatePreference } from "../Preferences/hooks/useUpdatePreference";
 import { PaletteSelectorButton } from "./components/PaletteSelectorButton";
 
-export type PaletteSelectorProps = {
-
-}
 
 const EFFECT_DURATION = 900;
 
-export function PaletteSelector(props: PaletteSelectorProps) {
+export function PaletteSelector() {
 	const palette = usePreference("palette")
 	const setPalette = useUpdatePreference("palette")
 

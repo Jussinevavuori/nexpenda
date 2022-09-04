@@ -1,4 +1,6 @@
-import classNames from 'classnames';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+import classNames from "classnames";
 
 // Utility for if-elseif-else conditions
 class ConditionalClassnames {

@@ -6,6 +6,8 @@ import { usePeriodStore } from "@/stores/periodStore";
 import { periodIncludesToday } from "@/utils/dates/periodIncludesToday";
 import { isFuture } from "date-fns";
 import { useMemo } from "react";
+
+// eslint-disable-next-line
 const { motion } = require("framer-motion")
 
 export type TransactionTableUpcomingProps = {

@@ -5,11 +5,7 @@ import { pages } from "@/utils/pages"
 import { trpc } from "@/utils/trpc"
 import { SettingsButton } from "../SettingsButton/SettingsButton"
 
-export type SettingsScreenProps = {
-
-}
-
-export function SettingsScreen(props: SettingsScreenProps) {
+export function SettingsScreen() {
 
 	const { data: user } = trpc.useQuery(["user.me"])
 

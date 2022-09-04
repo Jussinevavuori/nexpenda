@@ -10,6 +10,7 @@ import { useOnKeyCombination } from '@/hooks/useOnKeyCombination';
 import { pages } from '@/utils/pages';
 import { c } from '@/utils/generic/classnames';
 
+// eslint-disable-next-line
 const { motion } = require("framer-motion");
 
 export type SidebarItemKey = "dashboard" | "analytics" | "budgets" | "settings" | "schedules";
@@ -18,7 +19,7 @@ export interface SidebarProps {
 	active?: AppLayoutProps["active"]
 }
 
-export const Sidebar = React.memo(function (props: SidebarProps) {
+export const Sidebar = React.memo(function Sidebar(props: SidebarProps) {
 	const { isOpen: isSidebarOpen, toggleIsOpen: toggleSidebar } = useSidebarState();
 
 	useOnKeyCombination({ key: "t", shift: true }, () => {

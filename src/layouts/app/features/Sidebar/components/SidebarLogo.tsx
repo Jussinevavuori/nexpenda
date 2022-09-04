@@ -1,6 +1,7 @@
 import { NexpendaLogo } from "@/components/NexpendaLogo/NexpendaLogo";
 import { c } from "@/utils/generic/classnames";
 
+// eslint-disable-next-line
 const { motion } = require("framer-motion");
 
 export interface SidebarLogoProps {

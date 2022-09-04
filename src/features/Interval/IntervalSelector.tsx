@@ -13,9 +13,9 @@ export function IntervalSelector(props: IntervalSelectorProps) {
 		{
 			renderVariant(props.variant ?? "button")({
 				button: () => props.intervalLenghtOnly
-					? <ButtonIntervalLengthSelector {...props} />
-					: <ButtonIntervalSelector  {...props} />,
-				carousel: () => <CarouselIntervalSelector {...props} />
+					? <ButtonIntervalLengthSelector />
+					: <ButtonIntervalSelector />,
+				carousel: () => <CarouselIntervalSelector />
 			})
 		}
 	</>

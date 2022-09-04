@@ -2,16 +2,14 @@ import { c } from '@/utils/generic/classnames';
 import * as RadixContextMenu from '@radix-ui/react-context-menu';
 import { KeyCombination } from '../../KeyCombination/KeyCombination';
 
-export interface ContextMenuItemProps extends RadixContextMenu.ContextMenuItemProps {
+export type ContextMenuItemProps = RadixContextMenu.ContextMenuItemProps & {
 	startIcon?: React.ReactNode;
-	startIconClassName?: string;
 	endIcon?: React.ReactNode;
-	endIconClassName?: string;
 	keyCombination?: KeyCombination;
 }
 
 export function ContextMenuItem(props: ContextMenuItemProps) {
-	const { children, className, startIconClassName, endIconClassName, startIcon, endIcon, ...ContextMenuItemProps } = props;
+	const { children, className, startIcon, endIcon, keyCombination, ...ContextMenuItemProps } = props;
 
 	return <RadixContextMenu.ContextMenuItem
 		{...ContextMenuItemProps}
@@ -25,25 +23,25 @@ export function ContextMenuItem(props: ContextMenuItemProps) {
 		)}
 	>
 		{
-			props.startIcon &&
+			startIcon &&
 			<span className="pr-2">
-				{props.startIcon}
+				{startIcon}
 			</span>
 		}
 
-		{props.children}
+		{children}
 
 		{
-			props.endIcon &&
+			endIcon &&
 			<span className="ml-auto pl-4">
-				{props.endIcon}
+				{endIcon}
 			</span>
 		}
 
 		{
-			props.keyCombination &&
+			keyCombination &&
 			<span className="ml-auto pl-10 text-slate-500 text-xs">
-				<KeyCombination keyCombination={props.keyCombination} />
+				<KeyCombination keyCombination={keyCombination} />
 			</span>
 		}
 	</RadixContextMenu.ContextMenuItem>

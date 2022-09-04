@@ -22,6 +22,7 @@ export function UploadDataFileUploader(props: UploadDataFileUploaderProps) {
 		<UploadFileButton
 			color="primary"
 			startIcon={<Icon.Material icon="file_upload" />}
+			// eslint-disable-next-line
 			onChange={props.file.handleFileUpload as any}
 		>
 			Upload file

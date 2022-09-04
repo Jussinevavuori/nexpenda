@@ -9,6 +9,7 @@ import { useEffect } from "react";
 export function useInitialize() {
   // Apply palette
   const palette = usePreference("palette");
+  // eslint-disable-next-line
   useEffect(() => setPrimaryColor(palette), []);
 
   // Map set plugin for immer

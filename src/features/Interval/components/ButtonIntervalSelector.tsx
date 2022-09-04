@@ -5,11 +5,8 @@ import { formatPeriod } from "@/utils/dates/formatPeriod";
 import { getPeriodLength } from "@/utils/dates/getPeriodLength";
 import { periodIncludesToday } from "@/utils/dates/periodIncludesToday";
 import { capitalize } from "@/utils/generic/capitalize";
-import { IntervalSelectorProps } from "../IntervalSelector";
 
-export interface ButtonIntervalSelectorProps extends IntervalSelectorProps { }
-
-export function ButtonIntervalSelector(props: ButtonIntervalSelectorProps) {
+export function ButtonIntervalSelector() {
 
 	const reset = usePeriodStore(_ => _.reset);
 	const forward = usePeriodStore(_ => _.forward);

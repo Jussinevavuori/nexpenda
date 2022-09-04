@@ -4,13 +4,10 @@ import { usePreference } from "../Preferences/hooks/usePreference";
 import { useUpdatePreference } from "../Preferences/hooks/useUpdatePreference";
 import { ThemeSelectorButton } from "./components/ThemeSelectorButton";
 
-export type ThemeSelectorProps = {
-
-}
 
 const EFFECT_DURATION = 1200;
 
-export function ThemeSelector(props: ThemeSelectorProps) {
+export function ThemeSelector() {
 	const theme = usePreference("theme");
 	const setTheme = useUpdatePreference("theme");
 

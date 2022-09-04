@@ -12,10 +12,13 @@ export function getDefaultDynamicColorValue(
 ) {
   switch (palette) {
     case "primary":
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       return colorValuesMap.blue[shade]!;
     case "off-primary":
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       return colorValuesMap[offsetPalette("blue", 1)][shade]!;
     case "off-primary-alt":
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       return colorValuesMap[offsetPalette("blue", -1)][shade]!;
   }
 }
@@ -57,6 +60,7 @@ export function getColorValue(
   }
 
   // By default fetch static colors from color map
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   return colorValuesMap[palette][shade]!;
 }
 

@@ -2,6 +2,8 @@ import { Icon } from '@/components/Icon/Icon';
 import * as RadixTooltip from '@radix-ui/react-tooltip';
 import { KeyCombination } from '../KeyCombination/KeyCombination';
 
+
+// eslint-disable-next-line
 const { motion } = require("framer-motion");
 
 export type TooltipProps = RadixTooltip.TooltipProps & {

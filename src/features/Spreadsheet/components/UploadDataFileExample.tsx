@@ -2,12 +2,11 @@ import { subDays } from "date-fns"
 import { useState } from "react"
 import { UploadDataFilePreview } from "./UploadDataFilePreview"
 
-export interface UploadDataFileExampleProps {
-}
 
-export function UploadDataFileExample(props: UploadDataFileExampleProps) {
+export function UploadDataFileExample() {
 
 	const sheets = ["Example sheet", "Empty sheet"]
+	// eslint-disable-next-line
 	const [selectedSheet, setSelectedSheet] = useState(sheets[0]!);
 
 	return <div>

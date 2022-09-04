@@ -14,6 +14,7 @@ export function AuthLayout(props: AuthLayoutProps) {
 	return <div>
 		<div className="fixed inset-0 -z-10">
 			<Image
+				alt=""
 				src={BgImage}
 				placeholder="blur"
 				className="absolute inset-0 scale-y-[-100%] overflow-hidden min-h-[100%] object-cover"

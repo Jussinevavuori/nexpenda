@@ -87,14 +87,17 @@ export const InputBase = Object.assign(function InputBase(props: InputBaseProps)
 	</div>
 }, {
 	extractInputBaseProps<T extends InputBaseProps>(props: T): InputBaseProps {
+		/* eslint-disable-next-line */
 		const { children, readOnly, fullWidth, startIcon, startLabel, endIcon, endLabel, variant, error, disabled } = props;
 		return { children, readOnly, fullWidth, startIcon, startLabel, endIcon, endLabel, variant, error, disabled }
 	},
 	removeExtensionInputBaseProps<T extends ExtensionInputBaseProps>(props: T): Omit<T, keyof ExtensionInputBaseProps> {
+		/* eslint-disable-next-line */
 		const { fullWidth, startIcon, startLabel, endIcon, endLabel, variant, error, disabled, ...rest } = props;
 		return rest;
 	},
 	removeInputBaseProps<T extends InputBaseProps>(props: T): Omit<T, keyof InputBaseProps> {
+		/* eslint-disable-next-line */
 		const { children, readOnly, fullWidth, startIcon, startLabel, endIcon, endLabel, variant, error, disabled, ...rest } = props;
 		return rest;
 	}

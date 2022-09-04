@@ -10,12 +10,13 @@ export type InputProps =
 		helperText?: string;
 	}
 
-export const Input = React.forwardRef<HTMLInputElement, InputProps>((props, ref) => {
+export const Input = React.forwardRef<HTMLInputElement, InputProps>(function Input(props, ref) {
 	const { helperText, ...htmlProps } = InputBase.removeExtensionInputBaseProps(props)
 
 	return <InputBase {...props}>
 
 		<input
+			ref={ref}
 			{...htmlProps}
 			className={c("bg-transparent py-2 text-black dark:text-white outline-none",
 				"placeholder:text-black-disabled dark:placeholder:text-white-disabled w-full",

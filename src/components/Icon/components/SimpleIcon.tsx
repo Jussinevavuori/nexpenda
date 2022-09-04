@@ -32,6 +32,7 @@ function getSimpleIconName(name: string) {
  */
 export const SimpleIcon = Object.assign(function SimpleIcon(props: SimpleIconProps) {
 	const query = useQuery<SimpleIconData>(["simpleicon", props.icon], () => {
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		return import("simple-icons/icons").then((module: any) => {
 			return module[getSimpleIconName(props.icon)] as SimpleIconData
 		})

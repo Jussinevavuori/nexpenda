@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { readFile } from "./readFile";
 import { z } from "zod";
 import { escapeSpreadsheetFileName } from "./escapeSpreadsheetFileName";

@@ -51,7 +51,7 @@ export function useArrayPagination<T>(arr: T[], pagesize: number) {
 
   const goToLastPage = useCallback(() => {
     setIndex(maxIndex);
-  }, [maxIndex]);
+  }, [maxIndex, setIndex]);
 
   const isFirstPage = useMemo(() => index === 0, [index]);
 

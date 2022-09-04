@@ -10,12 +10,13 @@ export type TextAreaProps =
 		helperText?: string;
 	}
 
-export const TextArea = React.forwardRef<HTMLInputElement, TextAreaProps>((props, ref) => {
+export const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(function TextArea(props, ref) {
 	const { helperText, ...htmlProps } = InputBase.removeExtensionInputBaseProps(props)
 
 	return <InputBase {...props}>
 
 		<textarea
+			ref={ref}
 			{...htmlProps}
 			className={c("bg-transparent py-2 text-black dark:text-white outline-none",
 				"placeholder:text-black-disabled dark:placeholder:text-white-disabled w-full",

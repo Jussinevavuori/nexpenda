@@ -1,8 +1,6 @@
 import * as RadixContextMenu from '@radix-ui/react-context-menu';
 
-export interface ContextMenuSubProps extends RadixContextMenu.ContextMenuSubProps {
-
-}
+export type ContextMenuSubProps = RadixContextMenu.ContextMenuSubProps
 
 export function ContextMenuSub(props: ContextMenuSubProps) {
 

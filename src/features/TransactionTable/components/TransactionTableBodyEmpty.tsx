@@ -2,11 +2,7 @@ import { TransactionActions } from "@/features/TransactionActions/TransactionAct
 import { usePeriodStore } from "@/stores/periodStore";
 import { formatPeriod } from "@/utils/dates/formatPeriod";
 
-export interface TransactionTableBodyEmptyProps {
-
-}
-
-export function TransactionTableBodyEmpty(props: TransactionTableBodyEmptyProps) {
+export function TransactionTableBodyEmpty() {
 	const period = usePeriodStore(_ => _.period);
 
 	return <div className="border border-slate-300 dark:border-slate-700 border-dashed rounded-lg p-6 mt-10 flex flex-col items-center gap-6 mx-auto text-center max-w-[300px]">

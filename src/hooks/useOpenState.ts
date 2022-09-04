@@ -5,7 +5,7 @@ import { useCallback, useState } from "react";
  * Instead of setIsOpen(...) you are given also functions open(), close() and
  * toggle().
  */
-export function useOpenState(initialState: boolean = false) {
+export function useOpenState(initialState = false) {
   const [isOpen, setIsOpen] = useState(initialState);
 
   const open = useCallback(() => {

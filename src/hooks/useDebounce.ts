@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 /**
  * Debounce hook utility.
  */
-export function useDebounce<T>(value: T, delayMs: number = 100) {
+export function useDebounce<T>(value: T, delayMs = 100) {
   const [debouncedValue, setDebouncedValue] = useState(value);
 
   useEffect(() => {

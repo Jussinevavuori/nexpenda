@@ -6,10 +6,7 @@ import { trpc } from '@/utils/trpc';
 import { useSelectedTransactions, useTransactionSelectionStore } from '../../../stores/transactionSelectionStore';
 import { TransactionTableHeaderTab } from './TransactionTableHeaderTab';
 
-export interface TransactionTableHeaderProps {
-}
-
-export function TransactionTableHeader(props: TransactionTableHeaderProps) {
+export function TransactionTableHeader() {
 	const period = usePeriodStore(_ => _.period)
 	const { data: transactions } = trpc.useQuery(["transactions.list", { period }])
 

@@ -1,5 +1,3 @@
-import { number } from 'zod';
-
 interface CSSTranslate {
   (x: number | string, y: number | string): string;
   x(x: number | string): string;

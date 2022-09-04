@@ -1,17 +1,14 @@
 import { HoverOverlay } from '../../HoverOverlay/HoverOverlay';
-import { Icon } from '../../Icon/Icon';
 import { c } from '@/utils/generic/classnames';
 import * as RadixContextMenu from '@radix-ui/react-context-menu';
 
-export interface ContextMenuSubTrigger extends RadixContextMenu.ContextMenuSubTriggerProps {
+export type ContextMenuSubTrigger = RadixContextMenu.ContextMenuSubTriggerProps & {
 	startIcon?: React.ReactNode;
-	startIconClassName?: string;
 	endIcon?: React.ReactNode;
-	endIconClassName?: string;
 }
 
 export function ContextMenuSubTrigger(props: ContextMenuSubTrigger) {
-	const { children, className, startIconClassName, endIconClassName, startIcon, endIcon, ...ContextMenuTriggerItemProps } = props;
+	const { children, className, startIcon, endIcon, ...ContextMenuTriggerItemProps } = props;
 
 	return <RadixContextMenu.SubTrigger
 		{...ContextMenuTriggerItemProps}
@@ -24,26 +21,18 @@ export function ContextMenuSubTrigger(props: ContextMenuSubTrigger) {
 		<HoverOverlay opacity={0.15} />
 
 		{
-			props.startIcon &&
+			startIcon &&
 			<span className="pr-2	">
-				{
-					typeof props.startIcon === "string"
-						? <Icon.Material size={20} icon={props.startIcon} className={startIconClassName} />
-						: props.startIcon
-				}
+				{startIcon}
 			</span>
 		}
 
-		{props.children}
+		{children}
 
 		{
-			props.endIcon &&
+			endIcon &&
 			<span className="ml-auto pl-4">
-				{
-					typeof props.endIcon === "string"
-						? <Icon.Material size={28} icon={props.endIcon} className={endIconClassName} />
-						: props.endIcon
-				}
+				{endIcon}
 			</span>
 		}
 

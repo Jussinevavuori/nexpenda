@@ -3,6 +3,7 @@ import { NotificationData } from '@/stores/notificationStore';
 import { c } from '@/utils/generic/classnames';
 import { Toast } from './Toast';
 
+// eslint-disable-next-line
 const { motion, AnimatePresence } = require("framer-motion");
 
 export interface NotificationStackProps {

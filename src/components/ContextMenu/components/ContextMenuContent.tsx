@@ -1,9 +1,7 @@
 import { c } from '@/utils/generic/classnames';
 import * as RadixContextMenu from '@radix-ui/react-context-menu';
 
-export interface ContextMenuContentProps extends RadixContextMenu.ContextMenuContentProps {
-
-}
+export type ContextMenuContentProps = RadixContextMenu.ContextMenuContentProps
 
 export function ContextMenuContent(props: ContextMenuContentProps) {
 	return <RadixContextMenu.ContextMenuContent

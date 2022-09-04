@@ -14,7 +14,7 @@ export interface TransactionSortState {
 }
 
 export const useTransactionSortStore = create<TransactionSortState>()(
-  (set, get) => ({
+  (set) => ({
     property: "date",
     direction: "asc",
     toggle: (property: TransactionSortProperty) =>

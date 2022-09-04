@@ -2,7 +2,7 @@ export function normalizePeriod(period: Period): Period {
   // Only months require normalization
   if ("month" in period) {
     // Copy period
-    let p = { month: period.month, year: period.year };
+    const p = { month: period.month, year: period.year };
 
     // Fix month underflow
     while (p.month < 0) {

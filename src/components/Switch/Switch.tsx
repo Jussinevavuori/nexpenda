@@ -1,5 +1,7 @@
 import { c } from "@/utils/generic/classnames";
 
+
+// eslint-disable-next-line
 const { motion } = require("framer-motion");
 
 export interface SwitchProps {

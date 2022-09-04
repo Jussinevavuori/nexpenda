@@ -1,4 +1,3 @@
-import { SidebarItemKey } from '../Sidebar/Sidebar';
 import { BottomTabItem } from './components/BottomTabItem';
 import { Icon } from '@/components/Icon/Icon';
 import { AppLayoutProps } from '../../AppLayout';

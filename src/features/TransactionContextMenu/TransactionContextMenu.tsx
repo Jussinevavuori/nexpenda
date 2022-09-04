@@ -44,8 +44,7 @@ export function TransactionContextMenu({ transaction, ...props }: TransactionCon
 						Copy
 					</ContextMenu.Item>
 					<ContextMenu.Item
-						startIcon={<Icon.Material icon="delete" />}
-						startIconClassName='text-rose-500'
+						startIcon={<Icon.Material icon="delete" className="text-danger" />}
 						keyCombination={{ key: "delete" }}
 						// onSelect={() => { deleteMutation.mutate(transaction) }}
 						textValue="delete"

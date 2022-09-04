@@ -8,8 +8,8 @@
  * @returns 		Clamped value
  */
 export function clamp(value: number, min: number, max: number) {
-  let _min = Math.min(min, max);
-  let _max = Math.max(min, max);
+  const _min = Math.min(min, max);
+  const _max = Math.max(min, max);
   if (value < _min) return _min;
   if (value > _max) return _max;
   return value;

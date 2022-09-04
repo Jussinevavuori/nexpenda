@@ -1,4 +1,3 @@
-import { LoadingSpinner } from '../LoadingSpinner/LoadingSpinner';
 import React, { useState } from 'react';
 import { c } from '@/utils/generic/classnames';
 import { getInitials } from '@/utils/generic/getInitials';

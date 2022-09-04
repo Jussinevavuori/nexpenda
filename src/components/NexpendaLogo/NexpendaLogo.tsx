@@ -21,7 +21,7 @@ export const NexpendaLogo = {
 	Type: function NexpendaLogoType(props: NexpendaLogoTypeProps) {
 		return <span className={c(
 			"transition-all font-bold",
-			c.if(props.size)(c.variant(props.size!)(textSizeVariants)).else("text-xl lg:text-2xl"),
+			c.if(props.size)(c.variant(props.size ?? "base")(textSizeVariants)).else("text-xl lg:text-2xl"),
 			props.className
 		)}>
 			<span className={"text-black dark:text-white"}>N</span>

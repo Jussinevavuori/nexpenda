@@ -1,4 +1,6 @@
 import React from "react";
+
+// eslint-disable-next-line
 const { motion, AnimatePresence } = require("framer-motion");
 
 export interface SidebarGroupProps {

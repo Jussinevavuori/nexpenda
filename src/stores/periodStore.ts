@@ -19,14 +19,14 @@ export const usePeriodStore = create<PeriodState>()((set) => ({
     year: getYear(new Date()),
   },
 
-  forward: (by: number = 1) =>
+  forward: (by = 1) =>
     set(
       produce((draft: PeriodState) => {
         draft.period = offsetPeriod(draft.period, by);
       })
     ),
 
-  back: (by: number = 1) =>
+  back: (by = 1) =>
     set(
       produce((draft: PeriodState) => {
         draft.period = offsetPeriod(draft.period, -by);

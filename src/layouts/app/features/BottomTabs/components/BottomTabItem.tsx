@@ -4,6 +4,7 @@ import { AppLayoutProps } from '@/layouts/app/AppLayout';
 import { c } from '@/utils/generic/classnames';
 import { HoverOverlay } from '@/components/HoverOverlay/HoverOverlay';
 
+// eslint-disable-next-line
 const { motion, AnimatePresence } = require("framer-motion");
 
 export interface BottomTabItemProps {

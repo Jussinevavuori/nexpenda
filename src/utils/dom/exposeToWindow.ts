@@ -12,6 +12,7 @@ export function exposeToWindow<T extends {}>(
 ) {
   if (process.env.NODE_ENV === "development" || options.allowProduction) {
     for (const [key, value] of Object.entries(object)) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (window as any)[key] = value;
     }
   }
