@@ -13,6 +13,9 @@ import { TransactionTableHeader } from "./components/TransactionTableHeader";
 import { TransactionSelectionTools } from "../TransactionSelectionTools/TransactionSelectionTools";
 import { useTransactionSortStore } from "@/stores/transactionSortStore";
 import { sortTransactions } from "@/utils/transaction/sortTransactions";
+import { filterTransactions } from "@/utils/transaction/filterTransactions";
+import { useAtomValue } from "jotai";
+import { transactionSearchAtom } from "@/stores/transactionSearchAtom";
 
 // eslint-disable-next-line
 const { motion, AnimatePresence } = require("framer-motion")
@@ -28,15 +31,18 @@ export const TransactionTable = Object.assign(function TransactionTable(props: T
 	const period = usePeriodStore(_ => _.period)
 	const sortDirection = useTransactionSortStore(_ => _.direction);
 	const sortProperty = useTransactionSortStore(_ => _.property);
-	const { data: transactions, isFetching } = trpc.useQuery(["transactions.list", { period }])
+	const query = useAtomValue(transactionSearchAtom);
 
-	const sortedTransactions = useMemo(() => sortTransactions(transactions ?? [], sortDirection, sortProperty), [transactions, sortDirection, sortProperty])
+	// Fetch, filter and sort transactions
+	const { data: transactions, isFetching } = trpc.useQuery(["transactions.list", { period }])
+	const filteredTransactions = useMemo(() => filterTransactions(transactions ?? [], query), [transactions, query])
+	const sortedTransactions = useMemo(() => sortTransactions(filteredTransactions ?? [], sortDirection, sortProperty), [filteredTransactions, sortDirection, sortProperty])
 	const selectedTransactions = useSelectedTransactions(transactions ?? []);
 
 	// Virtualized list
 	const parentRef = useRef<HTMLDivElement | null>(null);
 	const virtualList = useVirtual({
-		size: transactions?.length ?? 0,
+		size: sortedTransactions?.length ?? 0,
 		parentRef,
 		estimateSize,
 		overscan: 2,
@@ -69,6 +75,10 @@ export const TransactionTable = Object.assign(function TransactionTable(props: T
 						</li>
 					})
 			}
+
+			<p className="absolute py-12 w-full text-sm text-center bottom-0 text-slate-400 dark:text-slate-600">
+				No more transactions.
+			</p>
 		</ul>
 
 		<AnimatePresence>

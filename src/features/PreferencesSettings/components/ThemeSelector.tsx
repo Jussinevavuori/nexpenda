@@ -1,9 +1,8 @@
 import { FullscreenSplash, useFullscreenSplashController } from "@/components/FullscreenSplash/FullscreenSplash";
+import { usePreference } from "@/features/Preferences/hooks/usePreference";
+import { useUpdatePreference } from "@/features/Preferences/hooks/useUpdatePreference";
 import { getSystemThemeMode } from "@/utils/dom/getSystemThemeMode";
-import { usePreference } from "../Preferences/hooks/usePreference";
-import { useUpdatePreference } from "../Preferences/hooks/useUpdatePreference";
-import { ThemeSelectorButton } from "./components/ThemeSelectorButton";
-
+import { ThemeSelectorButton } from "./ThemeSelectorButton";
 
 const EFFECT_DURATION = 1200;
 

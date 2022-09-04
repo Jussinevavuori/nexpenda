@@ -2,9 +2,9 @@ import { Color } from "@/components/Color/Color";
 import { FullscreenSplash, useFullscreenSplashController } from "@/components/FullscreenSplash/FullscreenSplash";
 import { palettes } from "@/utils/color/palettes";
 import { setPrimaryColor } from "@/utils/color/setPrimaryColor";
-import { usePreference } from "../Preferences/hooks/usePreference";
-import { useUpdatePreference } from "../Preferences/hooks/useUpdatePreference";
-import { PaletteSelectorButton } from "./components/PaletteSelectorButton";
+import { usePreference } from "@/features/Preferences/hooks/usePreference";
+import { useUpdatePreference } from "@/features/Preferences/hooks/useUpdatePreference";
+import { PaletteSelectorButton } from "./PaletteSelectorButton";
 
 
 const EFFECT_DURATION = 900;

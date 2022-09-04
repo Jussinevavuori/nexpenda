@@ -8,7 +8,7 @@ export function PageHead(props: PageHeadProps) {
 	return <Head>
 		<title>
 			{
-				["Nexpenda", props.title].filter(Boolean).join(" | ")
+				["Nexpenda", props.title].filter(Boolean).join(" ― ")
 			}
 		</title>
 	</Head>

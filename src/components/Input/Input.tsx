@@ -22,7 +22,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(function Inp
 				"placeholder:text-black-disabled dark:placeholder:text-white-disabled w-full",
 				c.variant(props.variant ?? "default")({
 					bordered: "px-2",
-					default: "px-2",
+					default: "px-4",
 					underlined: "px-0"
 				}))}
 		/>

@@ -1,9 +1,11 @@
 import { Button } from "@/components/Button/Button";
 import { Icon } from "@/components/Icon/Icon";
+import { IconButton } from "@/components/IconButton/IconButton";
 import { useTransactionSelectionStore } from "../../../stores/transactionSelectionStore";
 
 export interface EditTransactionButtonProps {
-	transactions: TransactionItem[]
+	transactions: TransactionItem[];
+	icon?: boolean;
 }
 
 export function EditTransactionButton(props: EditTransactionButtonProps) {
@@ -15,6 +17,17 @@ export function EditTransactionButton(props: EditTransactionButtonProps) {
 		: undefined
 
 	// const state = useTransactionEditFormDialogState();
+
+
+
+	if (props.icon) {
+		return <IconButton
+			variant="bordered"
+			disabled={!transaction}
+		>
+			<Icon.Material icon="edit" />
+		</IconButton>
+	}
 
 	return <Button
 		disabled={!transaction}

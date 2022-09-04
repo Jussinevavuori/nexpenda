@@ -1,4 +1,5 @@
 // src/pages/_app.tsx
+export { reportWebVitals } from "next-axiom";
 import { withTRPC } from "@trpc/next";
 import type { AppType } from "next/dist/shared/lib/utils";
 import superjson from "superjson";

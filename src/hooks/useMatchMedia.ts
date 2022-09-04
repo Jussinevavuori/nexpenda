@@ -6,12 +6,15 @@ import { useEffect, useState } from "react";
  * Can only be initialized client-side.
  */
 export function useMatchMedia(query: string) {
-  const [matches, setMatches] = useState<boolean | undefined>();
+  const [matches, setMatches] = useState<boolean | undefined>(
+    _querycache.get(query)
+  );
 
   useEffect(() => {
     const media = window.matchMedia(query);
     const handler = () => {
       setMatches(media.matches);
+      _querycache.set(query, media.matches);
     };
     media.addEventListener("change", handler);
     handler();
@@ -20,3 +23,5 @@ export function useMatchMedia(query: string) {
 
   return matches;
 }
+
+let _querycache = new Map<string, boolean>();

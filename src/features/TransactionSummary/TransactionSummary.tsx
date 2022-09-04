@@ -32,19 +32,19 @@ export function TransactionSummary(props: TransactionSummaryProps) {
 		{
 			!props.hideChips &&
 			<div className="flex gap-2">
-				<Tooltip value="Total incomes">
+				<Tooltip value="Total incomes" sideOffset={4}>
 					<Chip variant="flat" color="success">
 						{"+" + formatMoney(summary.total.positives)}
 					</Chip>
 				</Tooltip>
 
-				<Tooltip value="Total expenses">
+				<Tooltip value="Total expenses" sideOffset={4}>
 					<Chip variant="flat" color="danger">
 						{formatMoney(summary.total.negatives)}
 					</Chip>
 				</Tooltip>
 
-				<Tooltip value="Number of transactions">
+				<Tooltip value="Number of transactions" sideOffset={4}>
 					<Chip variant="flat" color="monochrome">
 						{"x " + summary.count.all.toString()}
 					</Chip>

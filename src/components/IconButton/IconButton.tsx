@@ -108,8 +108,9 @@ function getClassName(props: {
 	inputAdornment?: "start" | "end";
 }) {
 	return c(
-		"relative flex flex-row gap-4 items-center justify-center p-2 rounded-full",
+		"relative flex flex-row gap-4 items-center justify-center p-2",
 		"transition-colors active:transition-none",
+		c.if(!props.inputAdornment)("rounded-full"),
 		c.if(props.inputAdornment === "start")("-ml-2 pl-3 rounded-lg"),
 		c.if(props.inputAdornment === "end")("-mr-2 pr-3 rounded-lg"),
 		c.if(props.loading)("opacity-60"),

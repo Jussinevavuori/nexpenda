@@ -3,6 +3,8 @@ import { MobileView } from "@/components/MobileView/MobileView";
 import { PageHead } from "@/components/PageHead/PageHead";
 import { IntervalSelector } from "@/features/Interval/IntervalSelector";
 import { TransactionActions } from "@/features/TransactionActions/TransactionActions";
+import { TransactionList } from "@/features/TransactionList/TransactionList";
+import { TransactionSearch } from "@/features/TransactionSearch/TransactionSearch";
 import { TransactionSummary } from "@/features/TransactionSummary/TransactionSummary";
 import { TransactionTable } from "@/features/TransactionTable/TransactionTable";
 import { useRequireAuth } from "@/hooks/useRequireAuth";
@@ -20,7 +22,7 @@ export default function DashboardPage() {
 					<div className="flex flex-col gap-4 pt-8">
 						<div className="flex items-center gap-4 px-10 pb-4">
 							<TransactionActions.Create />
-							{/* <TransactionSearchInput /> */}
+							<TransactionSearch />
 						</div>
 
 						<div className="flex px-10 gap-4 flex-wrap justify-between">
@@ -45,7 +47,7 @@ export default function DashboardPage() {
 					<div className="px-6 py-4 flex flex-col items-stretch gap-4">
 
 						<div className="flex gap-4">
-							{/* <TransactionSearchInput /> */}
+							<TransactionSearch />
 							<IntervalSelector variant="button" intervalLenghtOnly />
 						</div>
 
@@ -53,7 +55,7 @@ export default function DashboardPage() {
 						<IntervalSelector variant="carousel" />
 					</div>
 				</AppLayout.Header>
-				{/* <TransactionList /> */}
+				<TransactionList />
 			</div>
 		</MobileView>
 	</AppLayout>

@@ -1,6 +1,6 @@
 import { c } from "@/utils/generic/classnames";
 import Link, { LinkProps } from "next/link";
-import React from "react"
+import React, { forwardRef } from "react"
 import { LoadingSpinner } from "../LoadingSpinner/LoadingSpinner";
 
 export type ChipVariant = "default" | "flat" | "bordered" | "ghost" | "flat" | "text";
@@ -24,7 +24,7 @@ export type ChipLinkProps = LinkProps & React.AnchorHTMLAttributes<HTMLAnchorEle
 	children?: React.ReactNode;
 }
 
-export const Chip = Object.assign(function Chip({
+export const Chip = Object.assign(forwardRef<HTMLButtonElement, ChipProps>(function Chip({
 	loading,
 	startIcon,
 	endIcon,
@@ -33,10 +33,11 @@ export const Chip = Object.assign(function Chip({
 	children,
 	className,
 	...htmlProps
-}: ChipProps) {
+}, ref) {
 
 	return <button
 		{...htmlProps}
+		ref={ref}
 		tabIndex={htmlProps.onClick ? undefined : -1}
 		disabled={loading || htmlProps.disabled}
 		className={getClassName({ loading, variant, color, className, disabled: htmlProps.disabled, startIcon, endIcon })}
@@ -54,7 +55,7 @@ export const Chip = Object.assign(function Chip({
 
 		{endIcon}
 	</button>
-}, {
+}), {
 	Link: function LinkChip({
 		startIcon,
 		endIcon,

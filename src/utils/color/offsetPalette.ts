@@ -9,7 +9,7 @@ export function offsetPalette(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const paletteList = palettes.staticGrayscale.includes(palette as any)
     ? palettes.staticGrayscale
-    : palettes.static;
+    : palettes.staticColor;
 
   // N for length of palettes, I for index of palette in palettes
   const n = paletteList.length;

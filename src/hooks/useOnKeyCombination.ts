@@ -19,7 +19,7 @@ export function useOnKeyCombination(
         .replace(/^key/, "") === combination.key.toLowerCase() &&
       !!ev.shiftKey === !!combination.shift &&
       !!ev.altKey === !!combination.alt &&
-      !!ev.ctrlKey === !!combination.ctrl
+      (!!ev.ctrlKey || !!ev.metaKey) === !!combination.ctrl
     ) {
       handler(ev);
     }

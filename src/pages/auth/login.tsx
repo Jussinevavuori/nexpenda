@@ -35,7 +35,7 @@ export default function LoginPage() {
 			<div className="flex gap-4 my-4 bg-danger-500/10 border border-danger-500/20 rounded-lg p-4">
 				<Icon.Feather icon="alertCircle" className="text-danger" />
 				<div>
-					{JSON.stringify(authError).replaceAll("\"", "")}
+					{JSON.stringify(authError === "undefined" ? "Something went wrong" : authError).replaceAll("\"", "")}
 				</div>
 			</div>
 		}

@@ -1,4 +1,5 @@
 import { env } from "./src/env/server.mjs";
+import { withAxiom } from "next-axiom"
 
 /**
  * Don't be scared of the generics here.
@@ -9,7 +10,7 @@ import { env } from "./src/env/server.mjs";
  * @constraint {{import('next').NextConfig}}
  */
 function defineNextConfig(config) {
-	return config;
+	return withAxiom(config);
 }
 
 export default defineNextConfig({
