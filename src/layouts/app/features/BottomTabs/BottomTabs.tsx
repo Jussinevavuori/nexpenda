@@ -18,14 +18,14 @@ export function BottomTabs(props: BottomTabsProps) {
 			active={props.active}
 			href={pages.dashboard}
 			items={["dashboard"]}
-			icon={<Icon.Material icon="home" className="text-slate-900 dark:text-slate-100" />}
+			icon={<Icon.Material icon="home" />}
 		/>
 
 		<BottomTabItem
 			active={props.active}
 			href={pages.analytics}
 			items={["analytics"]}
-			icon={<Icon.Material icon="insights" className="text-slate-900 dark:text-slate-100" />}
+			icon={<Icon.Material icon="insights" />}
 		/>
 
 		<BottomTabItem
@@ -39,14 +39,14 @@ export function BottomTabs(props: BottomTabsProps) {
 			active={props.active}
 			href={pages.schedules}
 			items={["schedules"]}
-			icon={<Icon.Material icon="update" className="text-slate-900 dark:text-slate-100" />}
+			icon={<Icon.Material icon="update" />}
 		/>
 
 		<BottomTabItem
 			active={props.active}
 			href={pages.settings.root}
 			items={["settings"]}
-			icon={<Icon.Material icon="tune" className="text-slate-900 dark:text-slate-100" />}
+			icon={<Icon.Material icon="tune" />}
 		/>
 
 	</div>

@@ -12,18 +12,18 @@ datasource db {
 // ################
 
 model Transaction {
-  id            String               @id @default(uuid())
-  comment       String?
-  integerAmount Int                  @map("integer_amount")
-  time          DateTime
-  categoryId    String               @map("category_id")
-  userId        String               @map("user_id")
-  scheduleId    String?              @map("schedule_id")
-  user          User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
-  category      Category             @relation(fields: [categoryId], references: [id])
-  schedule      TransactionSchedule? @relation(fields: [scheduleId], references: [id])
-  createdAt     DateTime             @default(now()) @map("created_at")
-  updatedAt     DateTime             @default(now()) @updatedAt @map("updated_at")
+  id         String               @id @default(uuid())
+  comment    String?
+  amount     Int
+  time       DateTime
+  categoryId String               @map("category_id")
+  userId     String               @map("user_id")
+  scheduleId String?              @map("schedule_id")
+  user       User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
+  category   Category             @relation(fields: [categoryId], references: [id])
+  schedule   TransactionSchedule? @relation(fields: [scheduleId], references: [id])
+  createdAt  DateTime             @default(now()) @map("created_at")
+  updatedAt  DateTime             @default(now()) @updatedAt @map("updated_at")
 
   @@map(name: "transactions")
 }
@@ -32,7 +32,7 @@ model TransactionSchedule {
   id                      String        @id @default(uuid())
   latestCreatedOccurrence DateTime?     @map("latest_created_occurrence")
   userId                  String        @map("user_id")
-  integerAmount           Int           @map("integer_amount")
+  amount                  Int
   comment                 String?
   categoryId              String        @map("category_id")
   category                Category      @relation(fields: [categoryId], references: [id])
@@ -58,7 +58,7 @@ enum IntervalType {
 model Category {
   id                  String                @id @default(uuid())
   userId              String                @map("user_id")
-  value               String
+  name                String
   icon                String?
   transactions        Transaction[]
   transactionSchedule TransactionSchedule[]
@@ -66,7 +66,7 @@ model Category {
   createdAt           DateTime              @default(now()) @map("created_at")
   updatedAt           DateTime              @default(now()) @updatedAt @map("updated_at")
 
-  @@unique([userId, value], name: "unique_uid_value")
+  @@unique([userId, name], name: "uniqueUidName")
   @@unique([userId, id], name: "unique_uid_id")
   @@map(name: "categories")
 }

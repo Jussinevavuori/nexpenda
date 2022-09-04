@@ -13,8 +13,18 @@ export function KeySymbol({ symbol }: KeySymbolProps) {
 
 function getKeySymbol(symbol: string) {
 	const _key = symbol.toLowerCase()
-	if (_key === "ctrl") return isMacOs ? "⌘" : "ctrl"
-	if (_key === "shift") return isMacOs ? "↑" : "Shift"
-	if (_key === "alt") return isMacOs ? "⌥" : "Alt"
+
+	// Get mac key if mac os and mapping exists
+	const macKey = macKeys[_key];
+	if (isMacOs && macKey) return macKey;
+
 	return _key.replace(/digit/g, "").replace(/symbol/g, "");
+}
+
+// List of mac key mappings
+const macKeys: Record<string, string> = {
+	ctrl: "⌘",
+	shift: "↑",
+	alt: "⌥",
+	delete: "⌫"
 }

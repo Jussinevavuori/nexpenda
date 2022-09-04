@@ -58,3 +58,8 @@ type Setter<T> = T | ((t: T) => T);
  * Action type for reducers
  */
 type ReducerAction<TType extends string, TData> = { type: TType; data: TData };
+
+/**
+ * Sorting direction
+ */
+type SortDirection = "asc" | "desc" | "none";

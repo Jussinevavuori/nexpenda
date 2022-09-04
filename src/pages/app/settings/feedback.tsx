@@ -1,11 +1,12 @@
 import { Button } from "@/components/Button/Button";
 import { TextArea } from "@/components/TextArea/TextArea";
-import { useNotify } from "@/features/Notifications/hooks/useNotify";
+import { useNotify } from "@/stores/notificationStore";
 import { useRequireAuth } from "@/hooks/useRequireAuth";
 import { AppLayout } from "@/layouts/app/AppLayout";
 import { SettingsLayout } from "@/layouts/settings/SettingsLayout";
 import { trpc } from "@/utils/trpc";
 import { useState } from "react";
+import { PageHead } from "@/components/PageHead/PageHead";
 
 export default function FeedbackSettingsPage() {
 	useRequireAuth();
@@ -20,6 +21,8 @@ export default function FeedbackSettingsPage() {
 	})
 
 	return <AppLayout active="settings">
+		<PageHead title="Send Feedback" />
+
 		<SettingsLayout title="Send Feedback">
 			<section className="flex flex-col">
 				<p>

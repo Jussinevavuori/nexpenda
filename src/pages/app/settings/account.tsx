@@ -1,3 +1,4 @@
+import { AlertDialog } from "@/components/AlertDialog/AlertDialog";
 import { Avatar } from "@/components/Avatar/Avatar";
 import { Button } from "@/components/Button/Button";
 import { Divider } from "@/components/Divider/Divider";
@@ -5,15 +6,18 @@ import { Icon } from "@/components/Icon/Icon";
 import { IconButton } from "@/components/IconButton/IconButton";
 import { Input } from "@/components/Input/Input";
 import { Tooltip } from "@/components/Tooltip/Tooltip";
-import { useNotify } from "@/features/Notifications/hooks/useNotify";
+import { useNotify } from "@/stores/notificationStore";
+import { PictureChanger } from "@/features/PictureChanger/PictureChanger";
 import { useRequireAuth } from "@/hooks/useRequireAuth";
 import { AppLayout } from "@/layouts/app/AppLayout";
 import { SettingsLayout } from "@/layouts/settings/SettingsLayout";
 import { capitalize } from "@/utils/generic/capitalize";
 import { pages } from "@/utils/pages";
 import { trpc } from "@/utils/trpc";
+import { Dialog } from "@headlessui/react";
 import { signOut } from "next-auth/react";
 import { useState } from "react";
+import { PageHead } from "@/components/PageHead/PageHead";
 
 export default function AccountSettingsPage() {
 	useRequireAuth();
@@ -30,6 +34,7 @@ export default function AccountSettingsPage() {
 	const updateUserMutation = trpc.useMutation("user.update", {
 		onSuccess(_, vars) {
 			if (vars.name) notify.success("Name updated");
+			if (vars.image === null) notify.success("Image removed");
 			utils.invalidateQueries("user.me");
 		}
 	})
@@ -42,10 +47,20 @@ export default function AccountSettingsPage() {
 		else setName(user?.name ?? "");
 	}
 
+	// Change picture
+	const [pictureChangerIsOpen, setPictureChangerIsOpen] = useState(false);
+
 	if (!user) return null;
 
 	return <AppLayout active="settings">
-		<SettingsLayout title="Active settings">
+		<PageHead title="Account Settings" />
+
+		<SettingsLayout title="Account settings">
+
+			<PictureChanger.Dialog
+				open={pictureChangerIsOpen}
+				onClose={() => setPictureChangerIsOpen(false)}
+			/>
 
 			<section className="flex flex-col gap-4">
 				<p className="text-sm text-black-secondary dark:text-white-secondary">
@@ -53,8 +68,29 @@ export default function AccountSettingsPage() {
 				</p>
 
 
-				<div className="flex flex-col items-center gap-1">
-					<Avatar image={user.image} name={user.name} size={80} />
+				<div className="flex py-4 items-center gap-4">
+					<Avatar
+						image={user.image}
+						name={user.name}
+						size={96}
+					/>
+					<div className="space-y-2">
+						<Button variant="default" onClick={() => setPictureChangerIsOpen(true)}>
+							Change picture
+						</Button>
+						<AlertDialog
+							title="Remove picture"
+							description="Are you sure you want to remove your profile picture?"
+							cancelLabel="Cancel"
+							confirmLabel="Confirm"
+							onConfirm={() => updateUserMutation.mutate({ image: null })}
+							variant="danger"
+						>
+							<Button disabled={!user.image} variant="ghost" color="danger">
+								Remove picture
+							</Button>
+						</AlertDialog>
+					</div>
 				</div>
 
 				<div className="flex flex-col gap-1">
@@ -82,10 +118,12 @@ export default function AccountSettingsPage() {
 						disabled={updateUserMutation.isLoading}
 						value={user.email ?? "No email"}
 						endIcon={user.email ? user.emailVerified
-							? <Icon.Material icon="check" className="text-success" />
-							: <Tooltip value="Email address is unverified">
-								<Icon.Material icon="warning" className="text-warning" />
-							</Tooltip>
+							? <IconButton variant="text" color="success" inputAdornment="end" startLabel="Verified">
+								<Icon.Material icon="check" />
+							</IconButton>
+							: <IconButton variant="text" color="warning" inputAdornment="end" startLabel="Unverified">
+								<Icon.Material icon="warning" />
+							</IconButton>
 							: undefined
 						}
 					/>
@@ -100,10 +138,7 @@ export default function AccountSettingsPage() {
 						readOnly
 						value={"No password"}
 						endIcon={<Tooltip value="Request password change email">
-							<IconButton variant="text" color="primary">
-								<p className="-mr-2 text-sm">
-									Change
-								</p>
+							<IconButton variant="text" color="primary" inputAdornment="end" startLabel="Change">
 								<Icon.Material icon="lock_reset" />
 							</IconButton>
 						</Tooltip>}

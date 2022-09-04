@@ -1,5 +1,8 @@
 import { useListenToKeypress } from "./useListenToKeypress";
 
+/**
+ * When the given key is pressed, run the handler function.
+ */
 export function useOnKey(
   key: string,
   handler: (ev: KeyboardEvent) => void,

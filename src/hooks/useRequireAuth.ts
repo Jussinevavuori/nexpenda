@@ -4,6 +4,9 @@ import type { UserRole } from "@prisma/client";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 
+/**
+ * When this hook is present, authentication is required. Allows loading state.
+ */
 export function useRequireAuth(role?: UserRole) {
   const session = useSession();
   const user = trpc.useQuery(["user.me"]);
@@ -16,7 +19,8 @@ export function useRequireAuth(role?: UserRole) {
     case "authenticated":
       if (role) {
         if (!user.data) break;
-        if (role !== user.data.role) {
+
+        if (role && role !== user.data.role) {
           router.push(
             pages.login +
               "?error=" +

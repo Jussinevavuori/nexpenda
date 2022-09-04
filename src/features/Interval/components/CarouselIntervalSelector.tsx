@@ -10,10 +10,12 @@ import { cssTranslate } from '@/utils/styles/cssTranslate';
 import { getMin } from '@/utils/generic/getMin';
 import { mapValue } from '@/utils/generic/mapValue';
 import { cssScale } from '@/utils/styles/cssScale';
-import { IntervalLength, useIntervalStore } from '../store/useIntervalStore';
-import { addMonths, addYears, isSameMonth, isSameYear, subMonths, subYears } from 'date-fns';
-import { formatDateInterval } from '@/utils/dates/formatInterval';
-import { intervalIncludesToday } from '@/utils/dates/intervalIncludesToday';
+import { usePeriodStore } from '@/stores/periodStore';
+import { getPeriodLength } from '@/utils/dates/getPeriodLength';
+import { isSamePeriod } from '@/utils/dates/isSamePeriod';
+import { offsetPeriod } from '@/utils/dates/offsetPeriod';
+import { formatPeriod } from '@/utils/dates/formatPeriod';
+import { periodIncludesToday } from '@/utils/dates/periodIncludesToday';
 
 const LEFT_OFFSET = 24;
 
@@ -24,8 +26,7 @@ const LEFT_OFFSET = 24;
 type ParagraphWrapper = {
 	el: HTMLParagraphElement;
 	offset: number;
-	intervalDate: Date;
-	intervalLength: IntervalLength;
+	period: Period;
 	x: number;
 }
 
@@ -33,15 +34,15 @@ export interface CarouselIntervalSelectorProps extends IntervalSelectorProps { }
 
 export function CarouselIntervalSelector(props: CarouselIntervalSelectorProps) {
 
-	const reset = useIntervalStore(_ => _.reset);
-	const forward = useIntervalStore(_ => _.forward);
-	const back = useIntervalStore(_ => _.back);
-	const intervalDate = useIntervalStore(_ => _.date);
-	const intervalLength = useIntervalStore(_ => _.intervalLength);
-	const changeIntervalTo = useIntervalStore(_ => _.changeTo)
+	const reset = usePeriodStore(_ => _.reset);
+	const forward = usePeriodStore(_ => _.forward);
+	const back = usePeriodStore(_ => _.back);
+	const period = usePeriodStore(_ => _.period)
+
+	const periodLength = getPeriodLength(period);
 
 	// How many components should be rendered on each side of the current interval
-	const ghosts = useMemo(() => intervalLength === "all" ? 0 : 10, [intervalLength])
+	const ghosts = useMemo(() => periodLength === "all" ? 0 : 10, [periodLength])
 
 	// Ref to hold all paragraphs and utility function to access all currently
 	// existing refs and only those (from -offset to +offset inclusive) and
@@ -112,16 +113,8 @@ export function CarouselIntervalSelector(props: CarouselIntervalSelectorProps) {
 		if (offset === "now") {
 			// Attempt to find paragraph to scroll to if one exists and scroll to it
 			// if found
-			const nowParagraph = getParagraphs().find(p => {
-				switch (intervalLength) {
-					case "all": return false;
-					case "year": return p.intervalLength === intervalLength && isSameYear(p.intervalDate, intervalDate);
-					case "month": return p.intervalLength === intervalLength && isSameMonth(p.intervalDate, intervalDate);
-				}
-			});
-			if (nowParagraph) {
-				draggingRef.current.offset = nowParagraph.x;
-			}
+			const nowParagraph = getParagraphs().find(p => isSamePeriod(p, period));
+			if (nowParagraph) draggingRef.current.offset = nowParagraph.x;
 
 			// Manually set now interval
 			reset()
@@ -216,64 +209,40 @@ export function CarouselIntervalSelector(props: CarouselIntervalSelectorProps) {
 					/* Render `ghosts` amount of previous intervals */
 					range(ghosts).reverse().map((i) => {
 						const offset = -i - 1
-						const _intervalDate = intervalLength === "year" ? subYears(intervalDate, i + 1) : subMonths(intervalDate, i + 1)
-						const formatted = formatDateInterval(_intervalDate, intervalLength)
+						const _period = offsetPeriod(period, offset);
+						const formatted = formatPeriod(_period);
 
 						return <p
 							key={formatted}
 							className="absolute left-0 top-0 text-2xl pr-6 dark:text-slate-100 select-none whitespace-nowrap"
 							onClick={() => select(offset)}
-							ref={el => {
-								if (el) paragraphsRef.current[offset] = {
-									el,
-									intervalDate: _intervalDate,
-									intervalLength,
-									offset,
-									x: 0,
-								}
-							}}
+							ref={el => { if (el) paragraphsRef.current[offset] = { el, period: _period, offset, x: 0 } }}
 						>
 							{formatted}
 						</p>
 					})
 				}
 
+				{/* Current interval */}
 				<p
-					/* Current interval */
 					className="absolute left-0 top-0 text-2xl pr-6 dark:text-slate-100 select-none whitespace-nowrap"
-					ref={el => {
-						if (el) paragraphsRef.current[0] = {
-							el,
-							intervalDate,
-							intervalLength,
-							offset: 0,
-							x: 0,
-						}
-					}}
+					ref={el => { if (el) paragraphsRef.current[0] = { el, period, offset: 0, x: 0 } }}
 				>
-					{formatDateInterval(intervalDate, intervalLength)}
+					{formatPeriod(period)}
 				</p>
 
 				{
 					/* Render `ghosts` amount of next intervals */
 					range(ghosts).map((i) => {
-						const _intervalDate = intervalLength === "year" ? addYears(intervalDate, i + 1) : addMonths(intervalDate, i + 1)
-						const offset = i + 1;
-						const formatted = formatDateInterval(_intervalDate, intervalLength)
+						const offset = i + 1
+						const _period = offsetPeriod(period, offset);
+						const formatted = formatPeriod(_period);
 
 						return <p
 							key={formatted}
 							className="absolute left-0 top-0 text-2xl pr-6 dark:text-slate-100 select-none whitespace-nowrap"
 							onClick={() => select(offset)}
-							ref={el => {
-								if (el) paragraphsRef.current[offset] = {
-									el,
-									intervalDate: _intervalDate,
-									intervalLength,
-									offset,
-									x: 0,
-								}
-							}}
+							ref={el => { if (el) paragraphsRef.current[offset] = { el, period: _period, offset, x: 0 } }}
 						>
 							{formatted}
 						</p>
@@ -284,30 +253,30 @@ export function CarouselIntervalSelector(props: CarouselIntervalSelectorProps) {
 			<div className="absolute right-0 top-0 bottom-0 flex items-center">
 
 				{
-					!intervalIncludesToday(intervalDate, intervalLength) && <IconButton
+					!periodIncludesToday(period) && <IconButton
 						variant="text"
 						className="-mr-3 p-4"
 						onClick={() => select("now", true)}
 					>
-						<Icon.Material className="text-slate-900 dark:text-slate-100" icon="replay" />
+						<Icon.Material icon="replay" />
 					</IconButton>
 				}
 
 				<IconButton
 					variant="text"
 					className="-mr-3 p-4"
-					disabled={intervalLength === "all"}
+					disabled={periodLength === "all"}
 					onClick={() => select(-1, true)}
 				>
-					<Icon.Material className="text-slate-900 dark:text-slate-100" icon="chevron_left" />
+					<Icon.Material icon="chevron_left" />
 				</IconButton>
 				<IconButton
 					variant="text"
 					className="-mr-3 p-4"
-					disabled={intervalLength === "all"}
+					disabled={periodLength === "all"}
 					onClick={() => select(+1, true)}
 				>
-					<Icon.Material className="text-slate-900 dark:text-slate-100" icon="chevron_right" />
+					<Icon.Material icon="chevron_right" />
 				</IconButton>
 
 			</div>

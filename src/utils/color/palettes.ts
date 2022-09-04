@@ -1,9 +1,4 @@
-export const palettes: {
-  static: Array<StaticPalette>;
-  staticColor: Array<StaticPalette>;
-  staticGrayscale: Array<GrayscaleStaticPalette>;
-  dynamic: Array<DynamicPalette>;
-} = {
+export const palettes = {
   static: [
     "slate",
     "gray",
@@ -27,7 +22,7 @@ export const palettes: {
     "fuchsia",
     "pink",
     "rose",
-  ],
+  ] as StaticPalette[],
 
   staticColor: [
     "red",
@@ -47,9 +42,15 @@ export const palettes: {
     "fuchsia",
     "pink",
     "rose",
-  ],
+  ] as StaticPalette[],
 
-  staticGrayscale: ["gray", "neutral", "slate", "stone", "zinc"],
+  staticGrayscale: [
+    "gray",
+    "neutral",
+    "slate",
+    "stone",
+    "zinc",
+  ] as GrayscaleStaticPalette[],
 
-  dynamic: ["primary", "off-primary", "off-primary-alt"],
+  dynamic: ["primary", "off-primary", "off-primary-alt"] as DynamicPalette[],
 } as const;

@@ -1,4 +1,4 @@
-import { useProgressBarValue } from './useProgressBarValue';
+import { useProgressBarValue } from './hooks/useProgressBarValue';
 
 export interface ProgressBarProps {
 	/**

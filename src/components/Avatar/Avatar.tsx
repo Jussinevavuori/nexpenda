@@ -1,5 +1,5 @@
 import { LoadingSpinner } from '../LoadingSpinner/LoadingSpinner';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { c } from '@/utils/generic/classnames';
 import { getInitials } from '@/utils/generic/getInitials';
 import { Icon } from '../Icon/Icon';
@@ -9,6 +9,7 @@ export interface Avatar {
 	name?: string | null;
 	size?: number;
 	onClick?(): void;
+	children?: React.ReactNode;
 }
 
 export function Avatar(props: Avatar) {
@@ -51,6 +52,8 @@ export function Avatar(props: Avatar) {
 			interactive &&
 			<div className="absolute z-10 inset-0 rounded-full bg-black opacity-0 hover:opacity-10 focus:opacity-10 active:opacity-20" />
 		}
+
+		{props.children}
 
 	</button>
 

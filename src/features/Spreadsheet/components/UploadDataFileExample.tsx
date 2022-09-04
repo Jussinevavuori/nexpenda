@@ -16,43 +16,43 @@ export function UploadDataFileExample(props: UploadDataFileExampleProps) {
 			rows={selectedSheet === "Example sheet" ? [
 				{
 					time: subDays(new Date(), 7),
-					integerAmount: -2395,
+					amount: -2395,
 					category: "Food",
 					comment: "Groceries",
 				},
 				{
 					time: subDays(new Date(), 6),
-					integerAmount: -499,
+					amount: -499,
 					category: "Transport",
 					comment: "Public transport bus",
 				},
 				{
 					time: subDays(new Date(), 5),
-					integerAmount: -4838,
+					amount: -4838,
 					category: "Food",
 					comment: "Groceries",
 				},
 				{
 					time: subDays(new Date(), 3),
-					integerAmount: 350259,
+					amount: 350259,
 					category: "Salary",
 					comment: "Work",
 				},
 				{
 					time: subDays(new Date(), 1),
-					integerAmount: -2000,
+					amount: -2000,
 					category: "Utilities",
 					comment: "Electric bill",
 				},
 				{
 					time: subDays(new Date(), 1),
-					integerAmount: -5948,
+					amount: -5948,
 					category: "Restaurants",
 					comment: "Fancy restaurant"
 				},
 				{
 					time: new Date(),
-					integerAmount: -4900,
+					amount: -4900,
 					category: "Food",
 					comment: "Groceries",
 				},

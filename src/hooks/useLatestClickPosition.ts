@@ -1,5 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
+/**
+ * Listens to the latest click position on the window.
+ */
 export function useLatestClickPosition() {
   const [pos, setPos] = useState<undefined | { x: number; y: number }>(
     undefined

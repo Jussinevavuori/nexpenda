@@ -1,6 +1,10 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
+/**
+ * Redirects after a certain timeout when called. Returns as number the
+ * time left (in seconds) until the timeout for implementing custom countdowns.
+ */
 export function useRedirectWithTimeout(href: string, seconds: number = 3) {
   const router = useRouter();
   const [secondsToRedirect, setSecondsToRedirect] = useState(seconds);

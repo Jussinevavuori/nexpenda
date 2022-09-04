@@ -1,18 +1,16 @@
 // src/pages/_app.tsx
 import { withTRPC } from "@trpc/next";
-import type { AppRouter } from "../server/router";
 import type { AppType } from "next/dist/shared/lib/utils";
 import superjson from "superjson";
 import { SessionProvider } from "next-auth/react";
 import "../styles/globals.css";
 import { useVhFix } from "../hooks/useVhFix";
-import { ThemedFavicon } from "@/components/ThemedFavicon/ThemedFavicon";
 import { Provider as RadixTooltipProvider } from '@radix-ui/react-tooltip';
 import { ThemeProvider } from "@/features/Theme/Theme";
 import { DefaultStyles } from "@/components/DefaultStyles/DefaultStyles";
-import { NotificationsProvider } from "@/features/Notifications/contexts/NotificationContext";
-import { ThemedMeta } from "@/components/ThemedMeta/ThemedMeta";
 import { useInitialize } from "@/hooks/useInitialize";
+import { Notifications } from "@/features/Notifications/Notifications";
+import { Meta } from "@/features/Meta/Meta";
 
 const MyApp: AppType = ({
 	Component,
@@ -26,13 +24,12 @@ const MyApp: AppType = ({
 		<SessionProvider session={session}>
 			<ThemeProvider>
 				<RadixTooltipProvider>
-					<NotificationsProvider>
-						<ThemedFavicon />
-						<ThemedMeta />
+					<Notifications>
+						<Meta.App />
 						<DefaultStyles>
 							<Component {...pageProps} />
 						</DefaultStyles>
-					</NotificationsProvider>
+					</Notifications>
 				</RadixTooltipProvider>
 			</ThemeProvider>
 		</SessionProvider>

@@ -3,7 +3,8 @@ import { UploadDataState } from '../hooks/useUploadDataState';
 import { UploadDataFilePreview } from './UploadDataFilePreview';
 import { Button } from '@/components/Button/Button';
 import { ProgressBar } from '@/components/ProgressBar/ProgressBar';
-import { useProgressBarValue } from '@/components/ProgressBar/useProgressBarValue';
+import { useProgressBarValue } from '@/components/ProgressBar/hooks/useProgressBarValue';
+import { Icon } from '@/components/Icon/Icon';
 
 export interface UploadDataFileCommitterProps {
 	state: UploadDataState;
@@ -38,7 +39,7 @@ export function UploadDataFileCommitter(props: UploadDataFileCommitterProps) {
 				variant="bordered"
 				color="monochrome"
 				onClick={props.onReset}
-				startIcon="refresh"
+				startIcon={<Icon.Material icon="refresh" />}
 			>
 				Upload another file
 			</Button>
@@ -46,7 +47,7 @@ export function UploadDataFileCommitter(props: UploadDataFileCommitterProps) {
 			<Button
 				color="primary"
 				onClick={props.file.handleUploadTransactions}
-				startIcon="publish"
+				startIcon={<Icon.Material icon="file_upload" />}
 				disabled={rows.length === 0}
 				loading={props.state.state === "uploading"}
 			>

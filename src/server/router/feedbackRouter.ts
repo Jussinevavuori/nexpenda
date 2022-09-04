@@ -1,4 +1,3 @@
-import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import { mailTemplates } from "../utils/mailTemplates";
 import { requireRole } from "../utils/requireRole";

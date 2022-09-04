@@ -14,10 +14,10 @@ export const schedulesRouter = createProtectedRouter()
    */
   .query("list", {
     async resolve({ ctx }) {
-      return await ctx.prisma.transactionSchedule.findMany({
+      return ctx.prisma.transactionSchedule.findMany({
         where: { userId: ctx.session.user.id },
         include: {
-          category: { select: { id: true, value: true, icon: true } },
+          category: { select: { id: true, name: true, icon: true } },
         },
       });
     },
@@ -35,7 +35,7 @@ export const schedulesRouter = createProtectedRouter()
       occurrences: z.number().int().nonnegative().optional(),
       intervals: z.enum(["DAY", "WEEK", "MONTH", "YEAR"]),
       every: z.number().positive().int(),
-      integerAmount: z.number().int(),
+      amount: z.number().int(),
       category: z.string().min(1),
       comment: z.string().optional(),
       categoryIcon: z.string().optional(),
@@ -48,19 +48,19 @@ export const schedulesRouter = createProtectedRouter()
           occurrences: input.occurrences || undefined,
           every: input.every,
           intervals: input.intervals,
-          integerAmount: input.integerAmount,
+          amount: input.amount,
           comment: input.comment,
           user: { connect: { id: ctx.session.user.id } },
           category: {
             connectOrCreate: {
               where: {
-                unique_uid_value: {
+                uniqueUidName: {
                   userId: ctx.session.user.id,
-                  value: input.category,
+                  name: input.category,
                 },
               },
               create: {
-                value: input.category,
+                name: input.category,
                 user: { connect: { id: ctx.session.user.id } },
               },
             },
@@ -68,7 +68,7 @@ export const schedulesRouter = createProtectedRouter()
         },
         include: {
           transactions: { select: { id: true } },
-          category: { select: { id: true, value: true, icon: true } },
+          category: { select: { id: true, name: true, icon: true } },
         },
       });
 
@@ -100,7 +100,7 @@ export const schedulesRouter = createProtectedRouter()
       return await ctx.prisma.transactionSchedule.findFirst({
         where: { userId: ctx.session.user.id, id: created.id },
         include: {
-          category: { select: { id: true, value: true, icon: true } },
+          category: { select: { id: true, name: true, icon: true } },
         },
       });
     },
@@ -183,7 +183,7 @@ export const schedulesRouter = createProtectedRouter()
               data: {
                 user: { connect: { id: ctx.session.user.id } },
                 category: { connect: { id: schedule.categoryId } },
-                integerAmount: schedule.integerAmount,
+                amount: schedule.amount,
                 comment: schedule.comment,
                 time: date,
                 schedule: { connect: { id: schedule.id } },
@@ -240,7 +240,7 @@ export const schedulesRouter = createProtectedRouter()
       occurrences: z.number().int().nonnegative().optional().nullable(),
       intervals: z.enum(["DAY", "WEEK", "MONTH", "YEAR"]).optional(),
       every: z.number().positive().int().optional(),
-      integerAmount: z.number().int().optional(),
+      amount: z.number().int().optional(),
       category: z.string().min(1).optional(),
       comment: z.string().optional().nullable(),
       categoryIcon: z.string().optional().optional(),
@@ -266,19 +266,19 @@ export const schedulesRouter = createProtectedRouter()
           occurrences: input.occurrences,
           every: input.every,
           intervals: input.intervals,
-          integerAmount: input.integerAmount,
+          amount: input.amount,
           comment: input.comment,
           category: input.category
             ? {
                 connectOrCreate: {
                   where: {
-                    unique_uid_value: {
+                    uniqueUidName: {
                       userId: ctx.session.user.id,
-                      value: input.category,
+                      name: input.category,
                     },
                   },
                   create: {
-                    value: input.category,
+                    name: input.category,
                     user: { connect: { id: ctx.session.user.id } },
                   },
                 },
@@ -287,7 +287,7 @@ export const schedulesRouter = createProtectedRouter()
         },
         include: {
           transactions: { select: { id: true } },
-          category: { select: { id: true, value: true, icon: true } },
+          category: { select: { id: true, name: true, icon: true } },
         },
       });
 

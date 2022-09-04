@@ -2,6 +2,7 @@ import { Avatar } from "@/components/Avatar/Avatar";
 import { Button } from "@/components/Button/Button";
 import { Icon } from "@/components/Icon/Icon";
 import { LoadingSpinner } from "@/components/LoadingSpinner/LoadingSpinner";
+import { PageHead } from "@/components/PageHead/PageHead";
 import { useQueryParam } from "@/hooks/useSearchParam";
 import { AuthLayout } from "@/layouts/auth/AuthLayout";
 import { pages } from "@/utils/pages";
@@ -18,6 +19,7 @@ export default function LoginPage() {
 	})
 
 	return <AuthLayout>
+		<PageHead title="Log in" />
 
 		<div className="flex flex-col gap-4 pb-8">
 			<h1 className="text-4xl font-bold text-black dark:text-white">

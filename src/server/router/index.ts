@@ -6,14 +6,13 @@ import { transactionsRouter } from "./transactionsRouter";
 import { feedbackRouter } from "./feedbackRouter";
 import { schedulesRouter } from "./schedulesRouter";
 import { preferencesRouter } from "./preferencesRouter";
+import { categoriesRouter } from "./categoriesRouter";
 
 export const appRouter = createRouter()
   .transformer(superjson)
   .merge("user.", userRouter)
   .merge("transactions.", transactionsRouter)
+  .merge("categories.", categoriesRouter)
   .merge("feedback.", feedbackRouter)
   .merge("schedules.", schedulesRouter)
   .merge("preferences.", preferencesRouter);
-
-// export type definition of API
-export type AppRouter = typeof appRouter;

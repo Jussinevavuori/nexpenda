@@ -1,6 +1,8 @@
 import { readFile } from "./readFile";
 import { z } from "zod";
 import { escapeSpreadsheetFileName } from "./escapeSpreadsheetFileName";
+import { allFulfilled } from "@/utils/generic/allFulfilled";
+import { allRejected } from "@/utils/generic/allRejected";
 
 export type SpreadsheetReadFileResult<T> = {
   name: string;
@@ -41,7 +43,10 @@ export function createSpreadsheet<T extends {}>({
       throw new Error("Row missing or has wrong type while parsing row");
     }
 
-    const transformed: { [C in keyof T]?: any } = {};
+    // Attempt to fetch value to correct column using any of the available
+    // column names, case-insensitively and apply transformBeforeValidation
+    // functions.
+    const rowObject: { [C in keyof T]?: any } = {};
     Object.keys(columns).forEach((key) => {
       const opts = columns[key as keyof T];
       const columnKey = Object.keys(row).find((_) => {
@@ -49,20 +54,20 @@ export function createSpreadsheet<T extends {}>({
       });
       if (columnKey) {
         const columnValue = row[columnKey];
-        transformed[key as keyof T] = opts.transformBeforeValidation
+        rowObject[key as keyof T] = opts.transformBeforeValidation
           ? opts.transformBeforeValidation(columnValue)
           : columnValue;
       }
     });
-    const validation = await schema.parse(transformed);
-    return validation;
+
+    // Parse
+    return schema.parse(rowObject);
   }
 
   /**
    * The latest created file for downloading
    */
   let _workbook: import("xlsx").WorkBook | undefined;
-  let _rowsCount: number = 0;
 
   /**
    * Uses the read file function to read every single sheet into an array of
@@ -92,11 +97,19 @@ export function createSpreadsheet<T extends {}>({
       if (!sheet) throw new Error("Missing sheet");
       const json = XLSX.utils.sheet_to_json(sheet, { raw: true });
 
+      // Parse all rows and log unfulfilled
+      const rowPromises = await Promise.allSettled(
+        json.map((row) => parseRow(row))
+      );
+      const failedRows = allRejected(rowPromises);
+      if (failedRows.length > 0)
+        console.error("Some rows failed to parse", failedRows);
+
       // Parse rows and add result to sheets
       sheets[sheetName] = {
         sheetName,
         index,
-        rows: await Promise.all(json.map((row) => parseRow(row))),
+        rows: allFulfilled(rowPromises),
       };
     }
 

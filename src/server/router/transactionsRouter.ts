@@ -1,16 +1,18 @@
+import { getPeriodEndDate } from "@/utils/dates/getPeriodEndDate";
+import { getPeriodLength } from "@/utils/dates/getPeriodLength";
+import { getPeriodStartDate } from "@/utils/dates/getPeriodStartDate";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
-import {
-  createProtectedRouter,
-  ProtectedRouterContext,
-} from "./protectedRouter";
+import { createProtectedRouter } from "./protectedRouter";
 
 export const transactionsRouter = createProtectedRouter()
   /**
    * Get a single transaction.
    */
   .query("get", {
-    input: z.object({ id: z.string().min(1) }),
+    input: z.object({
+      id: z.string().min(1),
+    }),
     async resolve({ ctx, input }) {
       return ctx.prisma.transaction.findFirst({
         where: {
@@ -31,16 +33,32 @@ export const transactionsRouter = createProtectedRouter()
    */
   .query("list", {
     input: z.object({
-      interval: z.tuple([z.date(), z.date()]).optional(),
+      period: z
+        .object({
+          year: z.number().positive().int().optional(),
+          month: z.number().min(0).max(11).int().optional(),
+        })
+        .refine(
+          ({ year, month }) =>
+            !(year === undefined && typeof month === "number"),
+          {
+            message: "Invalid period. Period can't contain only month.",
+            path: ["year"],
+          }
+        )
+        .optional(),
     }),
     async resolve({ ctx, input }) {
       return ctx.prisma.transaction.findMany({
         where: {
           userId: ctx.session.user.id,
-          time: {
-            gte: input.interval?.[0],
-            lte: input.interval?.[1],
-          },
+          time:
+            input.period && getPeriodLength(input.period) !== "all"
+              ? {
+                  gte: getPeriodStartDate(input.period),
+                  lte: getPeriodEndDate(input.period),
+                }
+              : undefined,
         },
         include: {
           category: true,
@@ -59,33 +77,83 @@ export const transactionsRouter = createProtectedRouter()
     input: z.object({
       time: z.date(),
       category: z.string().min(1),
-      integerAmount: z.number().int(),
+      amount: z.number().int(),
       comment: z.string().optional(),
-      categoryIcon: z.string().optional(),
     }),
     async resolve({ ctx, input }) {
-      return _createTransaction(ctx, input);
+      return ctx.prisma.transaction.create({
+        data: {
+          user: { connect: { id: ctx.session.user.id } },
+          category: {
+            connectOrCreate: {
+              where: {
+                uniqueUidName: {
+                  userId: ctx.session.user.id,
+                  name: input.category,
+                },
+              },
+              create: {
+                name: input.category,
+                user: { connect: { id: ctx.session.user.id } },
+              },
+            },
+          },
+          amount: input.amount,
+          comment: input.comment,
+          time: input.time,
+        },
+        include: {
+          category: true,
+          schedule: true,
+        },
+      });
     },
   })
 
   /**
-   * Creates multiple new transactions.
+   * Create many new transactions.
    *
-   * Returns all new created transactions.
+   * Returns the created transactions.
    */
   .mutation("createMany", {
     input: z.array(
       z.object({
         time: z.date(),
         category: z.string().min(1),
-        integerAmount: z.number().int(),
+        amount: z.number().int(),
         comment: z.string().optional(),
-        categoryIcon: z.string().optional(),
       })
     ),
     async resolve({ ctx, input }) {
-      return Promise.allSettled(
-        input.map(async (instance) => _createTransaction(ctx, instance))
+      return Promise.all(
+        input.map((transaction) =>
+          ctx.prisma.transaction.create({
+            data: {
+              user: { connect: { id: ctx.session.user.id } },
+              category: {
+                connectOrCreate: {
+                  where: {
+                    uniqueUidName: {
+                      userId: ctx.session.user.id,
+                      name: transaction.category,
+                    },
+                  },
+                  create: {
+                    name: transaction.category,
+                    user: { connect: { id: ctx.session.user.id } },
+                  },
+                },
+              },
+              amount: transaction.amount,
+              comment: transaction.comment,
+              time: transaction.time,
+            },
+            include: {
+              category: true,
+              schedule: true,
+            },
+          })
+        )
       );
     },
   })
@@ -100,7 +168,7 @@ export const transactionsRouter = createProtectedRouter()
       id: z.string().min(1),
       time: z.date(),
       category: z.string().min(1),
-      integerAmount: z.number().int(),
+      amount: z.number().int(),
       comment: z.string().optional(),
       categoryIcon: z.string().optional(),
     }),
@@ -112,25 +180,25 @@ export const transactionsRouter = createProtectedRouter()
       if (!targetTransaction) throw new TRPCError({ code: "NOT_FOUND" });
 
       // Update
-      const updated = await ctx.prisma.transaction.update({
+      return ctx.prisma.transaction.update({
         where: {
           id: input.id,
         },
         data: {
           comment: input.comment,
           time: input.time,
-          integerAmount: input.integerAmount,
+          amount: input.amount,
           category: input.category
             ? {
                 connectOrCreate: {
                   where: {
-                    unique_uid_value: {
+                    uniqueUidName: {
                       userId: ctx.session.user.id,
-                      value: input.category,
+                      name: input.category,
                     },
                   },
                   create: {
-                    value: input.category,
+                    name: input.category,
                     user: { connect: { id: ctx.session.user.id } },
                   },
                 },
@@ -142,17 +210,6 @@ export const transactionsRouter = createProtectedRouter()
           schedule: true,
         },
       });
-
-      // Update category icon if new icon provided in request.
-      const updatedCategory =
-        input.categoryIcon && input.categoryIcon !== updated.category.icon
-          ? await ctx.prisma.category.update({
-              where: { id: updated.category.id },
-              data: { icon: input.categoryIcon },
-            })
-          : undefined;
-
-      return { ...updated, category: updatedCategory ?? updated.category };
     },
   })
 
@@ -193,65 +250,3 @@ export const transactionsRouter = createProtectedRouter()
       return result.count;
     },
   });
-
-// =============================================================================
-// Inner implementations for router
-// =============================================================================
-
-const _transactionCreateInputSchema = z.object({
-  time: z.date(),
-  category: z.string().min(1),
-  integerAmount: z.number().int(),
-  comment: z.string().optional(),
-  categoryIcon: z.string().optional(),
-});
-
-/**
- * Implementation of creating transactions so they don't have to be
- * repeated in both "create" and "createMany"
- */
-async function _createTransaction(
-  ctx: ProtectedRouterContext,
-  input: z.TypeOf<typeof _transactionCreateInputSchema>
-) {
-  const created = await ctx.prisma.transaction.create({
-    data: {
-      user: { connect: { id: ctx.session.user.id } },
-      category: {
-        connectOrCreate: {
-          where: {
-            unique_uid_value: {
-              userId: ctx.session.user.id,
-              value: input.category,
-            },
-          },
-          create: {
-            value: input.category,
-            user: { connect: { id: ctx.session.user.id } },
-          },
-        },
-      },
-      integerAmount: input.integerAmount,
-      comment: input.comment,
-      time: input.time,
-    },
-    include: {
-      category: true,
-      schedule: true,
-    },
-  });
-
-  // Update category icon if new icon provided in request.
-  const updatedCategory =
-    input.categoryIcon && input.categoryIcon !== created.category.icon
-      ? await ctx.prisma.category.update({
-          where: { id: created.category.id },
-          data: { icon: input.categoryIcon },
-        })
-      : undefined;
-
-  return {
-    ...created,
-    category: updatedCategory ?? created.category,
-  };
-}

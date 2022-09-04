@@ -1,0 +1,82 @@
+import { trpc } from "@/utils/trpc";
+import { useMemo, useRef } from "react";
+import { usePeriodStore } from "../../stores/periodStore";
+import { TransactionTableLoadingBar } from "./components/TransactionTableLoadingBar";
+import { useVirtual } from '@tanstack/react-virtual';
+import { TransactionTableBodyEmpty } from "./components/TransactionTableBodyEmpty";
+import { useSelectedTransactions } from "../../stores/transactionSelectionStore";
+import { TransactionContextMenu } from "../TransactionContextMenu/TransactionContextMenu";
+import { TransactionTableRow } from "./components/TransactionTableRow";
+import { TransactionTableHeader } from "./components/TransactionTableHeader";
+import { TransactionSelectionTools } from "../TransactionSelectionTools/TransactionSelectionTools";
+import { useTransactionSortStore } from "@/stores/transactionSortStore";
+import { sortTransactions } from "@/utils/transaction/sortTransactions";
+const { motion, AnimatePresence } = require("framer-motion")
+
+export type TransactionTableProps = {
+	disableBottomPadding?: boolean;
+	disableTools?: boolean;
+}
+
+const estimateSize = () => 40
+
+export const TransactionTable = Object.assign(function TransactionTable(props: TransactionTableProps) {
+	const period = usePeriodStore(_ => _.period)
+	const sortDirection = useTransactionSortStore(_ => _.direction);
+	const sortProperty = useTransactionSortStore(_ => _.property);
+	const { data: transactions, isFetching } = trpc.useQuery(["transactions.list", { period }])
+
+	const sortedTransactions = useMemo(() => sortTransactions(transactions ?? [], sortDirection, sortProperty), [transactions, sortDirection, sortProperty])
+	const selectedTransactions = useSelectedTransactions(transactions ?? []);
+
+	// Virtualized list
+	const parentRef = useRef<HTMLDivElement | null>(null);
+	const virtualList = useVirtual({
+		size: transactions?.length ?? 0,
+		parentRef,
+		estimateSize,
+		overscan: 2,
+		paddingEnd: props.disableBottomPadding ? 0 : 120
+	});
+
+
+	return <div
+		ref={parentRef}
+		className="dark:bg-slate-820 relative w-full h-full overflow-auto"
+	>
+		<TransactionTableLoadingBar isFetching={isFetching} />
+
+		<ul
+			className="absolute inset-0 min-h-full"
+			style={{ height: virtualList.totalSize }}
+		>
+			{
+				transactions?.length === 0
+					? <TransactionTableBodyEmpty />
+					: transactions && virtualList.virtualItems.map(row => {
+						return <li
+							key={row.index}
+							className="absolute top-0 left-0 w-full"
+							style={{ height: row.size, transform: `translateY(${row.start}px)` }}
+						>
+							<TransactionContextMenu transaction={sortedTransactions[row.index]!}>
+								<TransactionTableRow transaction={sortedTransactions[row.index]!} />
+							</TransactionContextMenu>
+						</li>
+					})
+			}
+		</ul>
+
+		<AnimatePresence>
+			{
+				!props.disableTools && selectedTransactions.length > 0 &&
+				<motion.div className="fixed bottom-0 p-4" initial={{ y: 200, opacity: 0 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 200 }}>
+					<TransactionSelectionTools transactions={transactions ?? []} />
+				</motion.div>
+			}
+		</AnimatePresence>
+	</div>
+
+}, {
+	Header: TransactionTableHeader,
+});

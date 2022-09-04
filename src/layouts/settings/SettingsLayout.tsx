@@ -24,7 +24,16 @@ export function SettingsLayout(props: SettingsLayoutProps) {
 			<Divider variant="vertical" className={c("mx-10", isPanelOpen ? "opacity-100" : "opacity-0")} />
 			<div className={c("flex-[2]", isPanelOpen ? "" : "")}>
 				<div className="bg-white dark:bg-slate-800 h-full pt-10">
-					{props.children}
+					{
+						props.children ?? <div className="flex flex-col items-center">
+							<div className="border border-slate-300 dark:border-slate-700 border-dashed rounded-lg p-6 flex flex-col items-center gap-6 mx-auto text-center w-full">
+								<Icon.Feather icon="sliders" />
+								<p className="text-slate-700 dark:text-slate-400 text-sm max-w-xs">
+									Manage all your settings here. Start by selecting a category.
+								</p>
+							</div>
+						</div>
+					}
 				</div>
 			</div>
 		</div>

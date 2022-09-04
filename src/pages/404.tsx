@@ -1,3 +1,7 @@
+import { PageHead } from "@/components/PageHead/PageHead";
+
 export default function NotFoundPage() {
-	return <></>
+	return <>
+		<PageHead title="Not Found" />
+	</>
 }

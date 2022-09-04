@@ -1,14 +1,15 @@
 import { Autocomplete } from "@/components/Autocomplete/Autocomplete";
 import { Divider } from "@/components/Divider/Divider";
+import { PageHead } from "@/components/PageHead/PageHead";
 import { Switch } from "@/components/Switch/Switch";
 import { PaletteSelector } from "@/features/PaletteSelector/PaletteSelector";
 import { usePreference } from "@/features/Preferences/hooks/usePreference";
 import { useUpdatePreference } from "@/features/Preferences/hooks/useUpdatePreference";
 import { ThemeSelector } from "@/features/ThemeSelector/ThemeSelector";
-import { useFormatMoney } from "@/hooks/useFormatMoney";
 import { useRequireAuth } from "@/hooks/useRequireAuth";
 import { AppLayout } from "@/layouts/app/AppLayout";
 import { SettingsLayout } from "@/layouts/settings/SettingsLayout";
+import { formatMoney } from "@/utils/currency/formatMoney";
 import { selectableCurrencies, SelectableCurrency } from "@/utils/currency/selectableCurrencies";
 import { useState } from "react";
 
@@ -27,9 +28,6 @@ export default function PreferencesSettingsPage() {
 				.includes(currencyQuery.trim().toLowerCase().replace(/\s+/g, ""))
 		})
 
-	// Money formatter
-	const formatMoney = useFormatMoney({ currency: selectedCurrency?.code });
-
 	// Hide currency
 	const hideCurrency = usePreference("hideCurrency");
 	const updateHideCurrency = useUpdatePreference("hideCurrency")
@@ -39,6 +37,8 @@ export default function PreferencesSettingsPage() {
 	const updateCurrencyFormatting = useUpdatePreference("currencyFormatting")
 
 	return <AppLayout active="settings">
+		<PageHead title="User Preferences" />
+
 		<SettingsLayout title="User preferences">
 
 			<section>

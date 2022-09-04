@@ -5,6 +5,7 @@ import { SettingsLayout } from "@/layouts/settings/SettingsLayout";
 import { UploadDataFileCommitter } from "@/features/Spreadsheet/components/UploadDataFileCommitter";
 import { UploadDataFileUploader } from "@/features/Spreadsheet/components/UploadDataFileUploader";
 import { useRequireAuth } from "@/hooks/useRequireAuth";
+import { PageHead } from "@/components/PageHead/PageHead";
 
 export default function UploadSettingsPage() {
 	useRequireAuth();
@@ -14,6 +15,8 @@ export default function UploadSettingsPage() {
 
 
 	return <AppLayout active="settings">
+		<PageHead title="Upload Transactions" />
+
 		<SettingsLayout title="Upload transactions">
 			{
 				state.state.file

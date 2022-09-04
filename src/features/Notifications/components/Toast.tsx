@@ -2,11 +2,11 @@ import { Button } from '@/components/Button/Button';
 import { Color } from '@/components/Color/Color';
 import { Icon } from '@/components/Icon/Icon';
 import { IconButton } from '@/components/IconButton/IconButton';
+import { NotificationVariant } from '@/stores/notificationStore';
 import { c } from '@/utils/generic/classnames';
 import { renderVariant } from '@/utils/generic/renderVariant';
 import { selectVariant } from '@/utils/generic/selectVariant';
 import { useCallback, useState } from 'react';
-import { NotificationVariant } from '../contexts/NotificationContext';
 
 export type ToastVariant = NotificationVariant;
 

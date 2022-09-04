@@ -1,7 +1,8 @@
 import { useTheme } from "../hooks/useTheme";
 
 export type SubThemeProviderProps = {
-	children?: React.ReactNode; theme?: Theme
+	children?: React.ReactNode;
+	theme?: Theme
 }
 
 export function SubThemeProvider(props: SubThemeProviderProps) {

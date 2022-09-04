@@ -2,6 +2,10 @@ import { useCallbackRef } from "./useCallbackRef";
 import { useObjectRef } from "./useObjectRef";
 import { useEffect } from "react";
 
+/**
+ * Listens to keypresses and runs the handler function whenever a key is
+ * pressed.
+ */
 export function useListenToKeypress(
   handler: (ev: KeyboardEvent) => void,
   options: { enableOnInputFocused?: boolean; disable?: boolean } = {}

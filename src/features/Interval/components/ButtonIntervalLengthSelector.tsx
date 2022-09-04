@@ -1,7 +1,8 @@
 import { Button } from "@/components/Button/Button";
 import { Icon } from "@/components/Icon/Icon";
+import { usePeriodStore } from "@/stores/periodStore";
+import { getPeriodLength } from "@/utils/dates/getPeriodLength";
 import { capitalize } from "@/utils/generic/capitalize";
-import { useIntervalStore } from "../store/useIntervalStore";
 
 export interface ButtonIntervalLenghtSelector {
 
@@ -9,34 +10,36 @@ export interface ButtonIntervalLenghtSelector {
 
 export function ButtonIntervalLengthSelector(props: ButtonIntervalLenghtSelector) {
 
-	const intervalLength = useIntervalStore(_ => _.intervalLength);
-	const changeIntervalTo = useIntervalStore(_ => _.changeTo)
+	const period = usePeriodStore(_ => _.period);
+	const changeLength = usePeriodStore(_ => _.changeLength)
+
+	const periodLength = getPeriodLength(period);
 
 	const cycleIntervalLength = () => {
-		switch (intervalLength) {
+		switch (periodLength) {
 			case "month": {
-				changeIntervalTo("year");
+				changeLength("year");
 				break;
 			}
 			case "year": {
-				changeIntervalTo("all");
+				changeLength("all");
 				break;
 			}
 			case "all": {
-				changeIntervalTo("month");
+				changeLength("month");
 				break;
 			}
 		}
 	}
 
 	return <Button
-		variant="bordered"
+		variant="flat"
 		color="monochrome"
 		endIcon={<Icon.Material icon="unfold_more" />}
 		className="w-28 pr-1 pl-3  justify-between"
 		onClick={cycleIntervalLength}
 	>
-		{capitalize(intervalLength)}
+		{capitalize(periodLength)}
 	</Button>
 
 }

@@ -1,6 +1,11 @@
 import { clamp } from "@/utils/generic/clamp";
 import { useCallback, useMemo, useState } from "react";
 
+/**
+ * Array paginagtion utility. Handles paginating an array with a given pagesize
+ * and returns all required properties and functions for working with simple
+ * pagination.
+ */
 export function useArrayPagination<T>(arr: T[], pagesize: number) {
   const [index, _setIndex] = useState(0);
 

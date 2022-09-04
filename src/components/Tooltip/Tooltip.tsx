@@ -56,10 +56,7 @@ export function Tooltip({ children, value, side, sideOffset, ...tooltipProps }: 
 									}
 								</div>
 								{
-									value.icon && <Icon.Material
-										icon={value.icon}
-										className="text-slate-900 dark:text-white"
-									/>
+									value.icon && <Icon.Material icon={value.icon} />
 								}
 							</div>
 						) : (

@@ -1,6 +1,6 @@
 import { useBreakpoint } from '@/hooks/useBreakpoint';
+import { NotificationData } from '@/stores/notificationStore';
 import { c } from '@/utils/generic/classnames';
-import { NotificationData } from '../contexts/NotificationContext';
 import { Toast } from './Toast';
 
 const { motion, AnimatePresence } = require("framer-motion");

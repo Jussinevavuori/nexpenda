@@ -12,6 +12,9 @@ export const breakpoints: Record<Breakpoint, number> = {
   "2xl": 1536,
 };
 
+/**
+ * Breakpoint query utility.
+ */
 export function useBreakpoint(breakpoint: `${"" | "!"}${Breakpoint}`) {
   const query = useMemo(() => {
     const cleanBreakpoint = breakpoint.replace("!", "") as Breakpoint;

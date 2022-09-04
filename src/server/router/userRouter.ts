@@ -19,7 +19,7 @@ export const userRouter = createProtectedRouter()
           accounts: true,
           preferences: true,
           sessions: true,
-          transactions: { select: { integerAmount: true } },
+          transactions: { select: { amount: true } },
           transactionSchedules: { select: { id: true } },
         },
       });
@@ -64,7 +64,7 @@ export const userRouter = createProtectedRouter()
   .mutation("update", {
     input: z.object({
       name: z.string().min(1).optional(),
-      image: z.string().min(1).optional(), // Base-64 image or url
+      image: z.string().min(1).optional().nullable(), // Base-64 image or url
     }),
     async resolve({ ctx, input }) {
       const updateBatch: Partial<User> = {};
@@ -72,6 +72,11 @@ export const userRouter = createProtectedRouter()
       // Update name
       if (input.name) {
         updateBatch.name = input.name;
+      }
+
+      // Remove image
+      if (input.image === null) {
+        updateBatch.image = null;
       }
 
       // Update image

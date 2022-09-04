@@ -1,15 +1,22 @@
+import { readPersistedPreference } from "@/features/Preferences/utils/readPersistedPreference";
+
 export function formatMoney(
   value: number,
   options: {
-    currency: string;
+    currency?: string;
     absolute?: boolean;
     currencyFormatting?: "default" | "reverse";
     hideCurrency?: boolean;
-  }
+  } = {}
 ) {
-  const currency = options.currency;
-  const flip = options.currencyFormatting === "reverse";
-  const hideCurrency = options.hideCurrency;
+  // Apply options or get default options from persisted preferences in
+  // local storage.
+  const currency = options.currency ?? readPersistedPreference("currency");
+  const flip =
+    (options.currencyFormatting ??
+      readPersistedPreference("currencyFormatting")) == "reverse";
+  const hideCurrency =
+    options.hideCurrency ?? readPersistedPreference("hideCurrency") === "true";
 
   // Default formatting
   const formatResult = new Intl.NumberFormat(

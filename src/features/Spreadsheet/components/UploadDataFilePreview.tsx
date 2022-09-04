@@ -4,6 +4,7 @@ import { IconButton } from '@/components/IconButton/IconButton';
 import { useArrayPagination } from '@/hooks/useArrayPagination';
 import { c } from '@/utils/generic/classnames';
 import { format } from 'date-fns';
+import React, { Fragment } from 'react';
 import { SpreadsheetTransactionBody } from '../utils/TransactionSpreadsheet';
 
 export interface UploadDataFilePreviewProps {
@@ -60,12 +61,12 @@ export function UploadDataFilePreview(props: UploadDataFilePreviewProps) {
 			<HeaderCell>Comment</HeaderCell>
 
 			{
-				(pagination.page).map((row) => (<>
+				(pagination.page).map((row, i) => <Fragment key={i}>
 					<Cell>{format(new Date(row.time), "d.M.yyyy")}</Cell>
-					<Cell>{(row.integerAmount / 100).toFixed(2)}</Cell>
+					<Cell>{(row.amount / 100).toFixed(2)}</Cell>
 					<Cell>{row.category}</Cell>
 					<Cell>{row.comment ?? ""}</Cell>
-				</>))
+				</Fragment>)
 			}
 		</div>
 
@@ -84,10 +85,10 @@ export function UploadDataFilePreview(props: UploadDataFilePreviewProps) {
 		<div className="flex items-center justify-between">
 			<div className="flex items-center gap-2">
 				<IconButton variant="text" onClick={pagination.goToFirstPage} disabled={pagination.isFirstPage}>
-					<Icon.Material className="text-slate-900 dark:text-slate-100" icon="keyboard_double_arrow_left" />
+					<Icon.Material icon="keyboard_double_arrow_left" />
 				</IconButton>
 				<IconButton variant="text" onClick={pagination.goToPrevPage} disabled={pagination.isFirstPage}>
-					<Icon.Material className="text-slate-900 dark:text-slate-100" icon="keyboard_arrow_left" />
+					<Icon.Material icon="keyboard_arrow_left" />
 				</IconButton>
 			</div>
 			<p className="text-xs text-slate-700 dark:text-slate-300">
@@ -95,10 +96,10 @@ export function UploadDataFilePreview(props: UploadDataFilePreviewProps) {
 			</p>
 			<div className="flex items-center gap-2">
 				<IconButton variant="text" onClick={pagination.goToNextPage} disabled={pagination.isLastPage}>
-					<Icon.Material className="text-slate-900 dark:text-slate-100" icon="keyboard_arrow_right" />
+					<Icon.Material icon="keyboard_arrow_right" />
 				</IconButton>
 				<IconButton variant="text" onClick={pagination.goToLastPage} disabled={pagination.isLastPage}>
-					<Icon.Material className="text-slate-900 dark:text-slate-100" icon="keyboard_double_arrow_right" />
+					<Icon.Material icon="keyboard_double_arrow_right" />
 				</IconButton>
 			</div>
 		</div>

@@ -12,12 +12,17 @@ export type IconButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
 	variant?: IconButtonVariant;
 	color?: IconButtonColor;
 	children?: React.ReactNode;
+	startLabel?: string;
+	endLabel?: string;
+	inputAdornment?: "start" | "end";
 }
 
 export type IconButtonLinkProps = LinkProps & React.AnchorHTMLAttributes<HTMLAnchorElement> & {
 	variant?: IconButtonVariant;
 	color?: IconButtonColor;
 	children?: React.ReactNode;
+	startLabel?: string;
+	endLabel?: string;
 }
 
 export const IconButton = Object.assign(function Button({
@@ -26,13 +31,16 @@ export const IconButton = Object.assign(function Button({
 	color,
 	children,
 	className,
+	inputAdornment,
+	startLabel,
+	endLabel,
 	...htmlProps
 }: IconButtonProps) {
 
 	return <button
 		{...htmlProps}
 		disabled={loading || htmlProps.disabled}
-		className={getClassName({ loading, variant, color, className, disabled: htmlProps.disabled })}
+		className={getClassName({ loading, variant, color, className, inputAdornment, disabled: htmlProps.disabled })}
 	>
 		{
 			// Loading icon
@@ -41,7 +49,19 @@ export const IconButton = Object.assign(function Button({
 			</div>
 		}
 
+		{
+			startLabel && <p className="-mr-2 pl-1 text-sm">
+				{startLabel}
+			</p>
+		}
+
 		{children}
+
+		{
+			endLabel && <p className="-ml-2 pr-1 text-sm">
+				{endLabel}
+			</p>
+		}
 	</button>
 }, {
 	Link: function LinkButton({
@@ -49,6 +69,8 @@ export const IconButton = Object.assign(function Button({
 		color,
 		className,
 		children,
+		startLabel,
+		endLabel,
 		...htmlProps
 	}: IconButtonLinkProps) {
 
@@ -56,8 +78,19 @@ export const IconButton = Object.assign(function Button({
 			{...htmlProps}
 			className={getClassName({ variant, color, className })}
 		>
+			{
+				startLabel && <p className="-mr-2 pl-1 text-sm">
+					{startLabel}
+				</p>
+			}
 
 			{children}
+
+			{
+				endLabel && <p className="-ml-2 pr-1 text-sm">
+					{endLabel}
+				</p>
+			}
 		</Link>
 	},
 
@@ -72,10 +105,13 @@ function getClassName(props: {
 	variant?: IconButtonVariant;
 	color?: IconButtonColor;
 	className?: string;
+	inputAdornment?: "start" | "end";
 }) {
 	return c(
 		"relative flex flex-row gap-4 items-center justify-center p-2 rounded-full",
 		"transition-colors active:transition-none",
+		c.if(props.inputAdornment === "start")("-ml-2 pl-3 rounded-lg"),
+		c.if(props.inputAdornment === "end")("-mr-2 pr-3 rounded-lg"),
 		c.if(props.loading)("opacity-60"),
 		c.if(props.disabled)(
 			c("cursor-default", c.variant(props.variant ?? "default")({

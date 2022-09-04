@@ -1,19 +1,26 @@
 import { useUploadDataState } from "./useUploadDataState";
 import React, { useCallback, useState } from "react";
-import { useNotify } from "@/features/Notifications/hooks/useNotify";
-import { inferMutationInput, trpc } from "@/utils/trpc";
+import { useNotify } from "@/stores/notificationStore";
+import { trpc } from "@/utils/trpc";
 import { chunkify } from "@/utils/generic/chunkify";
-import { ProgressBarPubSub } from "@/components/ProgressBar/ProgressBarPubSub";
+import { ProgressBarPubSub } from "@/components/ProgressBar/utils/ProgressBarPubSub";
 import { createTransactionSpreadsheet } from "../utils/TransactionSpreadsheet";
+import { useTransactionFlashStore } from "@/stores/transactionFlashStore";
 
 export function useUploadDataFile(
   state: ReturnType<typeof useUploadDataState>,
   onFinished: () => void
 ) {
   const notify = useNotify();
-  const postTransactionsMutation = trpc.useMutation([
-    "transactions.createMany",
-  ]);
+  const utils = trpc.useContext();
+  const createTransactionsMutation = trpc.useMutation(
+    ["transactions.createMany"],
+    {
+      onSettled() {
+        utils.invalidateQueries(["transactions.list"]);
+      },
+    }
+  );
 
   // Selected sheet name
   const [selectedSheetName, setSelectedSheetName] = useState("");
@@ -74,13 +81,13 @@ export function useUploadDataFile(
     state.uploadStart();
 
     // Chunkify rows to chunks of hundreds and post those chunks one by one
-    const chunks = chunkify<inferMutationInput<"transactions.create">>(
+    const chunks = chunkify<Unwrap<MutationInput<"transactions.createMany">>>(
       selectedSheet.rows,
       200
     );
     let nPostedTransactions = 0;
     for (const chunk of chunks) {
-      await postTransactionsMutation.mutateAsync(chunk);
+      await createTransactionsMutation.mutateAsync(chunk);
       nPostedTransactions += chunk.length;
       if (chunk.length < selectedSheet.rows.length) {
         ProgressBarPubSub.publish({
@@ -99,6 +106,9 @@ export function useUploadDataFile(
         `Succesfully uploaded all ${nPostedTransactions} transactions`
       );
     }
+
+    // Prevent created transactions from flashing
+    useTransactionFlashStore.getState().reset();
 
     // Reset progress bar
     ProgressBarPubSub.publish({

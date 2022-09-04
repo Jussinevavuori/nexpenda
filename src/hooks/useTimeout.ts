@@ -1,5 +1,8 @@
 import { useCallback, useMemo, useRef } from "react";
 
+/**
+ * Timeout wrapper with set and clear functionality.
+ */
 export function useTimeout() {
   const timeout = useRef<NodeJS.Timeout | null>(null);
 

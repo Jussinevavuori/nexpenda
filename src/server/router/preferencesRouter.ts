@@ -1,4 +1,3 @@
-import { siTreehouse } from "simple-icons/icons";
 import { z } from "zod";
 import { createProtectedRouter } from "./protectedRouter";
 

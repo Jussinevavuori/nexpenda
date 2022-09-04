@@ -88,7 +88,7 @@ function getClassName(props: {
 	endIcon?: any;
 }) {
 	return c(
-		"relative flex flex-row gap-4 items-centered justify-center px-4 py-2 rounded-lg",
+		"relative flex flex-row gap-4 items-center justify-center px-4 py-2 rounded-lg text-[0.9rem]",
 		"font-medium transition-colors active:transition-none",
 		c.if(props.loading)("opacity-60"),
 		c.if(props.disabled)(
