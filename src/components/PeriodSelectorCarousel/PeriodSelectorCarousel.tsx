@@ -42,6 +42,10 @@ export function PeriodSelectorCarousel() {
 	// How many components should be rendered on each side of the current interval
 	const ghosts = useMemo(() => periodLength === "all" ? 0 : 10, [periodLength])
 
+	// Forcing updated drawing
+	const forceUpdateRef = useRef(false);
+	useEffect(() => { forceUpdateRef.current = true }, [isActiveQuery])
+
 	// Ref to hold all paragraphs and utility function to access all currently
 	// existing refs and only those (from -offset to +offset inclusive) and
 	// function to find a given paragraph
@@ -81,8 +85,12 @@ export function PeriodSelectorCarousel() {
 	useRaf(useCallback(() => {
 		// Early optimization: if no offset and last change to drag state
 		// occurred more than a second ago, skip calculating styles, assume
-		// styles remain unchanged
-		if (draggingRef.current.offset === 0 && draggingRef.current.changeAt + 1000 < Date.now()) return;
+		// styles remain unchanged. Can be overridden with the force update
+		// flag, which is automatically set to false to force a single redraw.
+		if (!forceUpdateRef.current) {
+			if (draggingRef.current.offset === 0 && draggingRef.current.changeAt + 1000 < Date.now()) return;
+			forceUpdateRef.current = false;
+		}
 
 		const paragraphs = getParagraphs();
 
