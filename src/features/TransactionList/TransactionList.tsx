@@ -1,17 +1,13 @@
 import { useVirtual } from '@tanstack/react-virtual';
 import { useOpenState } from "@/hooks/useOpenState";
 import { usePeriodStore } from "@/stores/periodStore";
-import { transactionSearchAtom } from "@/stores/transactionSearchAtom";
 import { useSelectedTransactions } from "@/stores/transactionSelectionStore";
-import { useTransactionSortStore } from "@/stores/transactionSortStore";
 import { flatGroupByDate } from "@/utils/dates/flatGroupByDate";
 import { periodIncludesToday } from "@/utils/dates/periodIncludesToday";
 import { divide } from "@/utils/generic/group";
-import { filterTransactions } from "@/utils/transaction/filterTransactions";
 import { sortTransactions } from "@/utils/transaction/sortTransactions";
 import { trpc } from "@/utils/trpc";
 import { isFuture } from "date-fns";
-import { useAtomValue } from "jotai";
 import { memo, useCallback, useMemo, useRef } from "react";
 import { TransactionListLoadingBar } from './components/TransactionListLoadingBar';
 import { IconButton } from '@/components/IconButton/IconButton';
@@ -20,6 +16,7 @@ import { TransactionListBodyEmpty } from './components/TransactionListBodyEmpty'
 import { TransactionListGroupHeader } from './components/TransactionListGroupHeader';
 import { TransactionListItem } from './components/TransactionListItem';
 import { TransactionSelectionTools } from '../TransactionSelectionTools/TransactionSelectionTools';
+import { useActiveQuery } from '@/stores/transactionSearchAtom';
 
 // eslint-disable-next-line
 const { motion, AnimatePresence } = require("framer-motion")
@@ -31,20 +28,17 @@ export interface TransactionListProps {
 
 export const TransactionList = Object.assign(memo(function (props: TransactionListProps) {
 	const period = usePeriodStore(_ => _.period)
-	const sortDirection = useTransactionSortStore(_ => _.direction);
-	const sortProperty = useTransactionSortStore(_ => _.property);
-	const query = useAtomValue(transactionSearchAtom);
+	const query = useActiveQuery();
 
 	// Fetch, filter and sort transactions
-	const { data: transactions, isFetching } = trpc.useQuery(["transactions.list", { period }])
-	const filteredTransactions = useMemo(() => filterTransactions(transactions ?? [], query), [transactions, query])
-	const sortedTransactions = useMemo(() => sortTransactions(filteredTransactions ?? [], sortDirection, sortProperty), [filteredTransactions, sortDirection, sortProperty])
+	const { data: transactions, isFetching } = trpc.useQuery(["transactions.list", query ? { query } : { period }])
+	const sortedTransactions = useMemo(() => sortTransactions(transactions ?? [], "desc", "date"), [transactions])
 	const selectedTransactions = useSelectedTransactions(transactions ?? []);
 
 	// Upcoming toggle: open state for upcoming items and enable upcoming items
 	// when there are some and the user is in the current interval
 	const upcomingSection = useOpenState();
-	const upcomingCount = useMemo(() => filteredTransactions.filter(_ => isFuture(_.time)).length, [filteredTransactions])
+	const upcomingCount = useMemo(() => sortedTransactions.filter(_ => isFuture(_.time)).length, [sortedTransactions])
 	const enableUpcomingToggle = useMemo(() => periodIncludesToday(period) && upcomingCount > 0, [period, upcomingCount]);
 
 	// Group transactions into always shown transactions and upcoming transactions
@@ -151,9 +145,12 @@ export const TransactionList = Object.assign(memo(function (props: TransactionLi
 					})
 			}
 
-			<p className="absolute py-12 w-full text-sm text-center bottom-0 text-slate-400 dark:text-slate-600">
-				No more transactions.
-			</p>
+			{
+				(transactions?.length ?? 0) > 0 &&
+				<p className="absolute py-12 w-full text-sm text-center bottom-0 text-slate-400 dark:text-slate-600">
+					No more transactions.
+				</p>
+			}
 
 		</motion.ul>
 

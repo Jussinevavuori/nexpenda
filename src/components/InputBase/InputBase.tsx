@@ -71,13 +71,13 @@ export const InputBase = Object.assign(function InputBase(props: InputBaseProps)
 			{props.startIcon}
 		</span>}
 
-		{props.startLabel && <span className="px-2 text-black-disabled dark:text-white-disabled">
+		{props.startLabel && <span className="px-2 whitespace-nowrap text-black-disabled dark:text-white-disabled">
 			{props.startLabel}
 		</span>}
 
 		{props.children}
 
-		{props.endLabel && <span className="ml-auto px-2 text-black-disabled dark:text-white-disabled">
+		{props.endLabel && <span className="ml-auto px-2 whitespace-nowrap text-black-disabled dark:text-white-disabled">
 			{props.endLabel}
 		</span>}
 

@@ -14,8 +14,7 @@ import { TransactionSelectionTools } from "../TransactionSelectionTools/Transact
 import { useTransactionSortStore } from "@/stores/transactionSortStore";
 import { sortTransactions } from "@/utils/transaction/sortTransactions";
 import { filterTransactions } from "@/utils/transaction/filterTransactions";
-import { useAtomValue } from "jotai";
-import { transactionSearchAtom } from "@/stores/transactionSearchAtom";
+import { useActiveQuery } from "@/stores/transactionSearchAtom";
 
 // eslint-disable-next-line
 const { motion, AnimatePresence } = require("framer-motion")
@@ -31,10 +30,10 @@ export const TransactionTable = Object.assign(function TransactionTable(props: T
 	const period = usePeriodStore(_ => _.period)
 	const sortDirection = useTransactionSortStore(_ => _.direction);
 	const sortProperty = useTransactionSortStore(_ => _.property);
-	const query = useAtomValue(transactionSearchAtom);
+	const query = useActiveQuery();
 
 	// Fetch, filter and sort transactions
-	const { data: transactions, isFetching } = trpc.useQuery(["transactions.list", { period }])
+	const { data: transactions, isFetching } = trpc.useQuery(["transactions.list", query ? { query } : { period }])
 	const filteredTransactions = useMemo(() => filterTransactions(transactions ?? [], query), [transactions, query])
 	const sortedTransactions = useMemo(() => sortTransactions(filteredTransactions ?? [], sortDirection, sortProperty), [filteredTransactions, sortDirection, sortProperty])
 	const selectedTransactions = useSelectedTransactions(transactions ?? []);
@@ -76,9 +75,12 @@ export const TransactionTable = Object.assign(function TransactionTable(props: T
 					})
 			}
 
-			<p className="absolute py-12 w-full text-sm text-center bottom-0 text-slate-400 dark:text-slate-600">
-				No more transactions.
-			</p>
+			{
+				(transactions?.length ?? 0) > 0 &&
+				<p className="absolute py-12 w-full text-sm text-center bottom-0 text-slate-400 dark:text-slate-600">
+					No more transactions.
+				</p>
+			}
 		</ul>
 
 		<AnimatePresence>

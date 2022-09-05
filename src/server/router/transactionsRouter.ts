@@ -1,6 +1,7 @@
 import { getPeriodEndDate } from "@/utils/dates/getPeriodEndDate";
 import { getPeriodLength } from "@/utils/dates/getPeriodLength";
 import { getPeriodStartDate } from "@/utils/dates/getPeriodStartDate";
+import { filterTransactions } from "@/utils/transaction/filterTransactions";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import { createProtectedRouter } from "./protectedRouter";
@@ -33,6 +34,7 @@ export const transactionsRouter = createProtectedRouter()
    */
   .query("list", {
     input: z.object({
+      query: z.string().optional(),
       period: z
         .object({
           year: z.number().positive().int().optional(),
@@ -49,7 +51,7 @@ export const transactionsRouter = createProtectedRouter()
         .optional(),
     }),
     async resolve({ ctx, input }) {
-      return ctx.prisma.transaction.findMany({
+      const transactions = await ctx.prisma.transaction.findMany({
         where: {
           userId: ctx.session.user.id,
           time:
@@ -65,6 +67,11 @@ export const transactionsRouter = createProtectedRouter()
           schedule: true,
         },
       });
+
+      if (input.query?.trim())
+        return filterTransactions(transactions, input.query);
+
+      return transactions;
     },
   })
 

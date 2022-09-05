@@ -1,12 +1,18 @@
 import { Button } from "@/components/Button/Button";
 import { Icon } from "@/components/Icon/Icon";
 import { usePeriodStore } from "@/stores/periodStore";
+import { useActiveQuery } from "@/stores/transactionSearchAtom";
 import { formatPeriod } from "@/utils/dates/formatPeriod";
 import { getPeriodLength } from "@/utils/dates/getPeriodLength";
 import { periodIncludesToday } from "@/utils/dates/periodIncludesToday";
 import { capitalize } from "@/utils/generic/capitalize";
 
-export function ButtonIntervalSelector() {
+type PeriodSelectorButtonsProps = {
+	disabledOnQuery?: boolean;
+}
+
+export function PeriodSelectorButtons(props: PeriodSelectorButtonsProps) {
+	const isActiveQuery = !!useActiveQuery();
 
 	const reset = usePeriodStore(_ => _.reset);
 	const forward = usePeriodStore(_ => _.forward);
@@ -40,14 +46,15 @@ export function ButtonIntervalSelector() {
 			color="primary"
 			className="w-28 pr-2 py-[0.45rem] justify-between"
 			endIcon={<Icon.Material icon="unfold_more" />}
+			disabled={isActiveQuery}
 		>
-			{capitalize(periodLength)}
+			{isActiveQuery ? "Results" : capitalize(periodLength)}
 		</Button>
 
 
 		<Button
 			onClick={() => back()}
-			disabled={periodLength === "all"}
+			disabled={isActiveQuery || periodLength === "all"}
 			className="px-2 py-[0.45rem]"
 		>
 			<Icon.Material icon="chevron_left" />
@@ -56,7 +63,7 @@ export function ButtonIntervalSelector() {
 
 		<Button
 			onClick={() => forward()}
-			disabled={periodLength === "all"}
+			disabled={isActiveQuery || periodLength === "all"}
 			className="px-2 py-[0.45rem]"
 		>
 			<Icon.Material icon="chevron_right" />
@@ -64,13 +71,13 @@ export function ButtonIntervalSelector() {
 
 		<span className="bg-slate-100 dark:bg-slate-840 rounded py-[0.62rem] w-[155px]">
 			<p className="px-4 text-center text-sm dark:text-slate-100 font-semibold">
-				{formatPeriod(period)}
+				{isActiveQuery ? "Search results" : formatPeriod(period)}
 			</p>
 		</span>
 
 		<Button
 			onClick={() => reset()}
-			disabled={periodIncludesToday(period)}
+			disabled={isActiveQuery || periodIncludesToday(period)}
 			color={periodIncludesToday(period) ? "monochrome" : "primary"}
 			className="px-2 py-[0.45rem]"
 		>

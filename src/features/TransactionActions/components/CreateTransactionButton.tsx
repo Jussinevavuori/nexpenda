@@ -9,7 +9,7 @@ export function CreateTransactionButton({ ...ButtonProps }: CreateTransactionBut
 	return <Button
 		startIcon={<Icon.Material icon="add" />}
 		{...ButtonProps}
-		className="w-60"
+		className="min-w-[200px]"
 	>
 		New transaction
 	</Button>

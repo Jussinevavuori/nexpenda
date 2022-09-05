@@ -1,4 +1,3 @@
-import { IntervalSelectorProps } from '../IntervalSelector';
 import { useCallback, useEffect, useMemo, useRef } from 'react';
 import { useRaf } from '@/hooks/useRaf';
 import { range } from '@/utils/generic/range';
@@ -15,6 +14,7 @@ import { isSamePeriod } from '@/utils/dates/isSamePeriod';
 import { offsetPeriod } from '@/utils/dates/offsetPeriod';
 import { formatPeriod } from '@/utils/dates/formatPeriod';
 import { periodIncludesToday } from '@/utils/dates/periodIncludesToday';
+import { useActiveQuery } from '@/stores/transactionSearchAtom';
 
 const LEFT_OFFSET = 24;
 
@@ -29,7 +29,8 @@ type ParagraphWrapper = {
 	x: number;
 }
 
-export function CarouselIntervalSelector() {
+export function PeriodSelectorCarousel() {
+	const isActiveQuery = !!useActiveQuery();
 
 	const reset = usePeriodStore(_ => _.reset);
 	const forward = usePeriodStore(_ => _.forward);
@@ -204,7 +205,7 @@ export function CarouselIntervalSelector() {
 
 				{
 					/* Render `ghosts` amount of previous intervals */
-					range(ghosts).reverse().map((i) => {
+					!isActiveQuery && range(ghosts).reverse().map((i) => {
 						const offset = -i - 1
 						const _period = offsetPeriod(period, offset);
 						const formatted = formatPeriod(_period);
@@ -225,12 +226,16 @@ export function CarouselIntervalSelector() {
 					className="absolute left-0 top-0 text-2xl pr-6 dark:text-slate-100 select-none whitespace-nowrap"
 					ref={el => { if (el) paragraphsRef.current[0] = { el, period, offset: 0, x: 0 } }}
 				>
-					{formatPeriod(period)}
+					{
+						isActiveQuery
+							? "Search results"
+							: formatPeriod(period)
+					}
 				</p>
 
 				{
 					/* Render `ghosts` amount of next intervals */
-					range(ghosts).map((i) => {
+					!isActiveQuery && range(ghosts).map((i) => {
 						const offset = i + 1
 						const _period = offsetPeriod(period, offset);
 						const formatted = formatPeriod(_period);

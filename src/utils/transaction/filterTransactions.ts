@@ -1,10 +1,10 @@
+import type { Category, Transaction } from "@prisma/client";
 import { formatMoney } from "../currency/formatMoney";
 import { formatDateString } from "../dates/formatDateString";
 
-export function filterTransactions(
-  transactions: TransactionItem[],
-  query: string
-) {
+export function filterTransactions<
+  T extends Transaction & { category: Category }
+>(transactions: T[], query: string) {
   const q = query.trim().toLowerCase();
 
   if (!q) return transactions;

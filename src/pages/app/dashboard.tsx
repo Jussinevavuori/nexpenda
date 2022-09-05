@@ -1,7 +1,9 @@
 import { DesktopView } from "@/components/DesktopView/DesktopView";
 import { MobileView } from "@/components/MobileView/MobileView";
 import { PageHead } from "@/components/PageHead/PageHead";
-import { IntervalSelector } from "@/features/Interval/IntervalSelector";
+import { PeriodLengthToggle } from "@/components/PeriodLengthToggle/PeriodLengthToggle";
+import { PeriodSelectorButtons } from "@/components/PeriodSelectorButtons/PeriodSelectorButtons";
+import { PeriodSelectorCarousel } from "@/components/PeriodSelectorCarousel/PeriodSelectorCarousel";
 import { TransactionActions } from "@/features/TransactionActions/TransactionActions";
 import { TransactionList } from "@/features/TransactionList/TransactionList";
 import { TransactionSearch } from "@/features/TransactionSearch/TransactionSearch";
@@ -27,7 +29,7 @@ export default function DashboardPage() {
 
 						<div className="flex px-10 gap-4 flex-wrap justify-between">
 							<TransactionSummary className="flex-col" />
-							<IntervalSelector variant="button" />
+							<PeriodSelectorButtons />
 						</div>
 
 						<div className="h-12">
@@ -48,11 +50,11 @@ export default function DashboardPage() {
 
 						<div className="flex gap-4">
 							<TransactionSearch />
-							<IntervalSelector variant="button" intervalLenghtOnly />
+							<PeriodLengthToggle />
 						</div>
 
 						<TransactionSummary hideChips className="flex-row justify-between items-center" />
-						<IntervalSelector variant="carousel" />
+						<PeriodSelectorCarousel />
 					</div>
 				</AppLayout.Header>
 				<TransactionList />
