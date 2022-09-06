@@ -10,7 +10,7 @@ export function TransactionListLoadingBar(props: TransactionListLoadingBarProps)
 
 	if (!props.isFetching || !isFetchingDebounced) return null
 
-	return <div className="absolute inset-0 bg-white/20 dark:bg-black/20 flex flex-col items-stretch justify-start">
+	return <div className="absolute inset-0 bg-white-bg/20 dark:bg-black-bg/20 flex flex-col items-stretch justify-start">
 		<LoadingSpinner variant="bar" height={2} />
 	</div>
 }

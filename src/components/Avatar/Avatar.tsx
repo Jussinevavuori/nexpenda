@@ -21,7 +21,7 @@ export function Avatar(props: Avatar) {
 	return <button
 		disabled={!interactive}
 		style={{ width: size, height: size }}
-		className={c("relative z-0 rounded-full bg-slate-200 dark:bg-slate-800", interactive ? "cursor-pointer" : "cursor-default")}
+		className={c("relative z-0 rounded-full bg-white-bg-5 dark:bg-black-bg-5", interactive ? "cursor-pointer" : "cursor-default")}
 
 		onClick={props.onClick}
 	>
@@ -49,7 +49,7 @@ export function Avatar(props: Avatar) {
 
 		{
 			interactive &&
-			<div className="absolute z-10 inset-0 rounded-full bg-black opacity-0 hover:opacity-10 focus:opacity-10 active:opacity-20" />
+			<div className="absolute z-10 inset-0 rounded-full bg-black-bg opacity-0 hover:opacity-10 focus:opacity-10 active:opacity-20" />
 		}
 
 		{props.children}

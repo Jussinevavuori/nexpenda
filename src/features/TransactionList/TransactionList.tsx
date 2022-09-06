@@ -84,7 +84,7 @@ export const TransactionList = Object.assign(memo(function (props: TransactionLi
 		{
 			enableUpcomingToggle &&
 			<div onClick={() => upcomingSection.toggle()} className="cursor-pointer px-6 flex items-center justify-between">
-				<p className="text-sm text-black-disabled dark:text-white-disabled">
+				<p className="text-sm text-black-3 dark:text-white-3">
 					{upcomingSection.isOpen ? "Hide" : "Show"} {upcomingCount} upcoming
 				</p>
 				<IconButton variant="text" className="-mr-4" color="primary">

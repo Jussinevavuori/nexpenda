@@ -13,7 +13,7 @@ export function FlipCurrencyToggle() {
 			<p>
 				Flip currency formatting
 			</p>
-			<p className="text-sm text-black-secondary dark:text-white-secondary">
+			<p className="text-sm text-black-3 dark:text-white-3">
 				Reverses the order of the currency symbol and number
 			</p>
 		</div>

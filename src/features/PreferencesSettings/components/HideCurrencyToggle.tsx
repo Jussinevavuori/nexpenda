@@ -12,7 +12,7 @@ export function HideCurrencyToggle() {
 			<p>
 				Hide currency
 			</p>
-			<p className="text-sm text-black-secondary dark:text-white-secondary">
+			<p className="text-sm text-black-3 dark:text-white-3">
 				Hides the currency symbol
 			</p>
 		</div>

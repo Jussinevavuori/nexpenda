@@ -8,6 +8,6 @@ export function ContextMenuSeparator(props: ContextMenuSeparatorProps) {
 
 	return <RadixContextMenu.ContextMenuSeparator
 		{...ContextMenuSeparatorProps}
-		className={c("my-1 h-px w-full bg-slate-200 dark:bg-slate-700", className)}
+		className={c("my-1 h-px w-full bg-divider", className)}
 	/>
 }

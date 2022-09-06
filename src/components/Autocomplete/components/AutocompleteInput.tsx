@@ -20,7 +20,7 @@ export function AutocompleteInput({ helperText, onChange, ...props }: Autocomple
 			onChange={onChange}
 			className={
 				c("bg-transparent py-2 text-black dark:text-white outline-none",
-					"placeholder:text-black-disabled dark:placeholder:text-white-disabled w-full",
+					"placeholder:text-black-4 dark:placeholder:text-white-4 w-full",
 					c.variant(props.variant ?? "default")({
 						bordered: "px-2",
 						default: "px-2",
@@ -32,7 +32,7 @@ export function AutocompleteInput({ helperText, onChange, ...props }: Autocomple
 		{
 			helperText && <span className={c(
 				"absolute top-[100%] pt-1 text-sm",
-				c.if(props.error)("text-danger").else("text-black-disabled dark:text-white-disabled")
+				c.if(props.error)("text-danger").else("text-black-3 dark:text-white-3")
 			)}>
 				{helperText}
 			</span>

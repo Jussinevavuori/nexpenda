@@ -15,14 +15,14 @@ export default function SignoutPage() {
 			<h1 className="text-4xl font-bold text-black dark:text-white">
 				Goodbye!
 			</h1>
-			<p className="text-xl text-black-secondary dark:text-white-secondary">
+			<p className="text-xl text-black-3 dark:text-white-3">
 				You've logged out.
 			</p>
 		</div>
 
 		<div className="flex items-center gap-4">
 			<LoadingSpinner variant="puff" />
-			<p className="text-black-secondary text-sm">
+			<p className="text-black-4 text-sm">
 				You will be redirected in {secondsToRedirect}...
 			</p>
 		</div>

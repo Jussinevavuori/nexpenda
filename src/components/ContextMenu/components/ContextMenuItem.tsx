@@ -14,11 +14,11 @@ export function ContextMenuItem(props: ContextMenuItemProps) {
 	return <RadixContextMenu.ContextMenuItem
 		{...ContextMenuItemProps}
 		className={c(
-			"hover:outline-none focus:outline-none active:outline-none bg-white dark:bg-slate-800 rounded-lg",
-			"hover:bg-white-hover dark:hover:bg-slate-820",
-			"focus:bg-white-hover dark:focus:bg-slate:820",
-			"active:bg-white-pressed dark:focus:bg-slate-840",
-			"group relative text-sm text-slate-700 dark:text-slate-300 rounded-sm py-1 px-2 flex items-center",
+			"hover:outline-none focus:outline-none active:outline-none bg-white-bg-2 dark:bg-black-bg-2 rounded-lg",
+			"hover:bg-white-bg-3 dark:hover:bg-black-bg-3",
+			"focus:bg-white-bg-3 dark:focus:bg-black-bg-3",
+			"active:bg-white-bg-3 dark:focus:bg-black-bg-4",
+			"group relative text-sm text-black-3 dark:text-white-3 rounded-sm py-1 px-2 flex items-center",
 			className,
 		)}
 	>

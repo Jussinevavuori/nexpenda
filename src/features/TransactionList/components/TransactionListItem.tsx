@@ -24,9 +24,9 @@ export function TransactionListItem({ transaction }: TransactionListItemProps) {
 
 	return <div
 		className={c(
-			"px-6 py-2 relative group flex items-center gap-4",
+			"px-6 py-2 relative group flex items-center gap-4 hover:bg-white-bg-2 dark:hover:bg-black-bg-3",
 			c
-				.if(isSelected)("bg-slate-100 dark:bg-slate-780")
+				.if(isSelected)("bg-white-bg-3 dark:bg-black-bg-4")
 				.elseIf(isUpcoming)("opacity-80")
 		)}
 		onClick={(ev) => {
@@ -36,10 +36,8 @@ export function TransactionListItem({ transaction }: TransactionListItemProps) {
 	>
 		{isFlashing && <div className={c("flasher")} />}
 
-		<HoverOverlay opacity={0.2} />
-
 		<div className={c(
-			"relative w-12 h-12 bg-slate-200 dark:bg-slate-780 rounded-full flex items-center justify-center",
+			"relative w-12 h-12 bg-white-bg-4 dark:bg-black-bg-4 rounded-full flex items-center justify-center",
 		)}>
 			<span className={c(
 				"text-2xl",
@@ -78,7 +76,7 @@ export function TransactionListItem({ transaction }: TransactionListItemProps) {
 			<p className="text-slate-700 dark:text-slate-300" style={lineClamp(1)}>
 				{
 					isUpcoming &&
-					<span className="mr-2 text-xs bg-slate-200 dark:bg-slate-900 text-slate-800 dark:text-slate-300 px-2 py-1 rounded">
+					<span className="mr-2 text-xs bg-white-bg-3 dark:bg-black-bg-5 text-slate-800 dark:text-slate-300 px-2 py-1 rounded">
 						Upcoming
 					</span>
 				}

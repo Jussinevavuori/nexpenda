@@ -23,7 +23,7 @@ export function TransactionTableRow(props: TransactionTableRowProps) {
 			if (ev.shiftKey) ev.preventDefault();
 			select(props.transaction.id, ev.ctrlKey || ev.metaKey)
 		}}
-		className={c("px-6 relative w-full h-full grid grid-cols-[3.5rem_6fr_4fr_8fr_3fr] hover:bg-slate-100 dark:hover:bg-slate-860")}
+		className={c("px-6 relative w-full h-full grid grid-cols-[3.5rem_6fr_4fr_8fr_3fr] hover:bg-hover-overlay")}
 	>
 
 		{isFlashing && <div className={c("flasher")} />}
@@ -51,7 +51,7 @@ export function TransactionTableRow(props: TransactionTableRowProps) {
 			<p className="max-w-full truncate flex items-center gap-2">
 				{
 					isFuture(props.transaction.time) &&
-					<span className="text-xs bg-slate-200 dark:bg-slate-900 text-slate-800 dark:text-slate-300 px-2 py-1 rounded">
+					<span className="text-xs bg-white-bg-3 dark:bg-black-bg-4 text-slate-800 dark:text-slate-300 px-2 py-1 rounded">
 						Upcoming
 					</span>
 				}

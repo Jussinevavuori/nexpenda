@@ -58,7 +58,7 @@ export const InputBase = Object.assign(function InputBase(props: InputBaseProps)
 			<div className={c(
 				"absolute inset-0 pointer-events-none transition-[clip-path] duration-250",
 				"[clip-path:circle(0)] group-hover:[clip-path:circle(100%)] group-focus-within:[clip-path:circle(100%)]",
-				c.if(props.error)("border-danger").else("border-slate-300"),
+				c.if(props.error)("border-danger").else("border-slate-300 dark:border-slate-600"),
 				c.variant(props.variant ?? "default")({
 					bordered: "border rounded-lg",
 					default: "border rounded-lg",
@@ -71,13 +71,13 @@ export const InputBase = Object.assign(function InputBase(props: InputBaseProps)
 			{props.startIcon}
 		</span>}
 
-		{props.startLabel && <span className="px-2 whitespace-nowrap text-black-disabled dark:text-white-disabled">
+		{props.startLabel && <span className="px-2 whitespace-nowrap text-black-4 dark:text-white-4">
 			{props.startLabel}
 		</span>}
 
 		{props.children}
 
-		{props.endLabel && <span className="ml-auto px-2 whitespace-nowrap text-black-disabled dark:text-white-disabled">
+		{props.endLabel && <span className="ml-auto px-2 whitespace-nowrap text-black-4 dark:text-white-4">
 			{props.endLabel}
 		</span>}
 

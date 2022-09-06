@@ -13,7 +13,7 @@ export const AppLayout = Object.assign(function AppLayout(props: AppLayoutProps)
 	const isDesktop = useBreakpoint("desktop");
 
 	if (isDesktop === true) {
-		return <div className="h-screen w-full flex overflow-hidden dark:bg-slate-800">
+		return <div className="h-screen w-full flex overflow-hidden dark:bg-black-bg-2">
 			<aside>
 				<Sidebar active={props.active} />
 			</aside >
@@ -27,7 +27,7 @@ export const AppLayout = Object.assign(function AppLayout(props: AppLayoutProps)
 		return <div className="flex flex-col h-max-screenMinusTabs">
 			<RoundedMobileCorners />
 
-			<main className="fixed bottom-tabs left-0 right-0 top-0 dark:bg-slate-800 overflow-y-auto overflow-x-hidden">
+			<main className="fixed bottom-tabs left-0 right-0 top-0 dark:bg-black-bg-2 overflow-y-auto overflow-x-hidden">
 				{props.children}
 			</main>
 			<nav className="fixed bottom-0 left-0 right-0 h-tabs">

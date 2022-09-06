@@ -3,7 +3,7 @@ export interface AppLayoutHeaderProps {
 }
 
 export function AppLayoutHeader(props: AppLayoutHeaderProps) {
-	return <div className="border-b border-b-slate-100 dark:border-b-slate-850 bg-white dark:bg-slate-820">
+	return <div className="border-b border-b-white-bg-2 dark:border-b-black-bg">
 		{props.children}
 	</div>
 }

@@ -17,7 +17,7 @@ export function AuthLayout(props: AuthLayoutProps) {
 				alt=""
 				src={BgImage}
 				placeholder="blur"
-				className="absolute inset-0 scale-y-[-100%] overflow-hidden min-h-[100%] object-cover"
+				className="absolute inset-0 scale-y-[-100%] overflow-hidden min-h-[100%] w-full object-cover"
 			/>
 			<GradientOverlay />
 		</div>

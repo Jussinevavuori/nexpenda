@@ -18,7 +18,7 @@ export function TransactionListGroupHeader(props: TransactionListGroupHeaderProp
 
 	return <div
 		{...longPress.props}
-		className={c(c.if(longPress.pressed)("bg-slate-100 dark:bg-slate-780 transition-colors duration-[300ms]"))}
+		className={c(c.if(longPress.pressed)("bg-white-bg-2 dark:bg-black-bg-2 transition-colors duration-[300ms]"))}
 	>
 		<p className="text-sm text-slate-500 px-6 pb-1 pt-3">
 			{formatDateString(props.date)}

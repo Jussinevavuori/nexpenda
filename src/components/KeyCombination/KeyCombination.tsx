@@ -5,7 +5,7 @@ export type KeyCombinationProps = {
 }
 
 export function KeyCombination(props: KeyCombinationProps) {
-	return <span className="inline-flex gap-1 text-sm text-black-secondary dark:text-white-secondary">
+	return <span className="inline-flex gap-1 text-sm text-black-3 dark:text-white-3">
 		{props.keyCombination.ctrl && <KeySymbol symbol="ctrl" />}
 		{props.keyCombination.shift && <KeySymbol symbol="shift" />}
 		{props.keyCombination.alt && <KeySymbol symbol="alt" />}

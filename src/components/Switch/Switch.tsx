@@ -19,8 +19,8 @@ export function Switch(props: SwitchProps) {
 
 		<motion.div
 			className={c(
-				"flex items-center p-1 w-14 h-8 rounded-full border border-slate-300 dark:border-slate-840 transition-colors",
-				props.value ? "bg-primary-200 dark:bg-primary-900 justify-end" : "bg-slate-200 dark:bg-slate-840 justify-start"
+				"flex items-center p-1 w-14 h-8 rounded-full border border-white-bg-4 dark:border-black-bg-5 transition-colors",
+				props.value ? "bg-primary-200 dark:bg-primary-900 justify-end" : "bg-white-bg-4 dark:bg-black-bg-5 justify-start"
 			)}
 		>
 

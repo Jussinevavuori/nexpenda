@@ -53,7 +53,7 @@ export function AccountSettings() {
 		/>
 
 		<section className="flex flex-col gap-4">
-			<p className="text-sm text-black-secondary dark:text-white-secondary">
+			<p className="text-sm text-black-3 dark:text-white-3">
 				Your profile
 			</p>
 
@@ -84,7 +84,7 @@ export function AccountSettings() {
 			</div>
 
 			<div className="flex flex-col gap-1">
-				<label htmlFor="name" className="text-sm text-black-disabled dark:text-white-disabled">
+				<label htmlFor="name" className="text-sm text-black-3 dark:text-white-3">
 					Username
 				</label>
 				<Input
@@ -99,7 +99,7 @@ export function AccountSettings() {
 			</div>
 
 			<div className="flex flex-col gap-1">
-				<label className="text-sm text-black-disabled dark:text-white-disabled">
+				<label className="text-sm text-black-3 dark:text-white-3">
 					Email address
 				</label>
 				<Input
@@ -120,7 +120,7 @@ export function AccountSettings() {
 			</div>
 
 			<div className="flex flex-col gap-1">
-				<label className="text-sm text-black-disabled dark:text-white-disabled">
+				<label className="text-sm text-black-3 dark:text-white-3">
 					Password
 				</label>
 				<Input
@@ -136,7 +136,7 @@ export function AccountSettings() {
 			</div>
 
 			<div className="flex flex-col gap-1">
-				<p className="text-sm text-black-disabled dark:text-white-disabled">
+				<p className="text-sm text-black-4 dark:text-white-4">
 					Joined {user.createdAt.toLocaleDateString()}
 				</p>
 			</div>
@@ -147,12 +147,12 @@ export function AccountSettings() {
 
 		<section className="flex flex-col gap-4">
 
-			<p className="text-sm text-black-secondary dark:text-white-secondary">
+			<p className="text-sm text-black-3 dark:text-white-3">
 				Connected accounts
 			</p>
 
 			{
-				user.accounts.length === 0 && <p className="text-sm text-black-disabled dark:text-white-disabled">
+				user.accounts.length === 0 && <p className="text-sm text-black-3 dark:text-white-3">
 					No connected accounts
 				</p>
 			}
@@ -164,7 +164,7 @@ export function AccountSettings() {
 						<p>
 							{capitalize(account.provider)}
 						</p>
-						<p className="text-sm text-black-disabled dark:text-white-disabled">
+						<p className="text-sm text-black-3 dark:text-white-3">
 							Created {account.createdAt.toLocaleDateString()}
 						</p>
 					</div>

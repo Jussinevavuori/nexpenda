@@ -57,7 +57,7 @@ export function SidebarItem(props: SidebarItemProps) {
 					<Icon.Material
 						icon={props.icon}
 						size={20}
-						className={c(c.if(active)("text-white").else("text-black-secondary dark:text-white-secondary"))}
+						className={c(c.if(active)("text-white").else("text-black-1 dark:text-white-1"))}
 					/>
 				</motion.span>
 				<AnimatePresence>
@@ -70,7 +70,7 @@ export function SidebarItem(props: SidebarItemProps) {
 							className={c(
 								"text-sm absolute left-14",
 								c.if(active)("font-normal").else("font-medium"),
-								c.if(active)("text-white").else("text-black-secondary dark:text-white-secondary")
+								c.if(active)("text-white").else("text-black-1 dark:text-white-1")
 							)}
 						>
 							{props.label}

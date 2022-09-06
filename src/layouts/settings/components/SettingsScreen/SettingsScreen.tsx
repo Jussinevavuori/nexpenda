@@ -12,7 +12,7 @@ export function SettingsScreen() {
 	return <div className="w-full max-w-2xl mx-auto flex flex-col gap-4">
 
 		<section className="flex flex-col items-stretch gap-4">
-			<p className="text-sm text-black-secondary dark:text-white-secondary">
+			<p className="text-sm text-black-3 dark:text-white-3">
 				Account
 			</p>
 			<div className="flex flex-col items-stretch gap-1">
@@ -46,7 +46,7 @@ export function SettingsScreen() {
 		<Divider />
 
 		<section className="flex flex-col items-stretch gap-4">
-			<p className="text-sm text-black-secondary dark:text-white-secondary">
+			<p className="text-sm text-black-3 dark:text-white-3">
 				Options
 			</p>
 			<div className="flex flex-col items-stretch gap-1">
@@ -76,7 +76,7 @@ export function SettingsScreen() {
 		{
 			user?.role === "ADMIN" && <>
 				<section className="flex flex-col items-stretch gap-4">
-					<p className="text-sm text-black-secondary dark:text-white-secondary">
+					<p className="text-sm text-black-3 dark:text-white-3">
 						Admin
 					</p>
 					<div className="flex flex-col items-stretch gap-1">
@@ -99,7 +99,7 @@ export function SettingsScreen() {
 		}
 
 		<section className="flex flex-col items-stretch gap-4">
-			<p className="text-sm text-black-secondary dark:text-white-secondary">
+			<p className="text-sm text-black-3 dark:text-white-3">
 				Other
 			</p>
 			<div className="flex flex-col items-stretch gap-1">

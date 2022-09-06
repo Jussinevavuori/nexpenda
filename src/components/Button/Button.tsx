@@ -97,11 +97,11 @@ function getClassName(props: {
 		c.if(props.loading)("opacity-60"),
 		c.if(props.disabled)(
 			c("cursor-default", c.variant(props.variant ?? "default")({
-				default: "text-black-disabled bg-slate-200 dark:text-white-disabled dark:bg-slate-800",
-				bordered: "text-black-disabled border border-slate-300 dark:text-white-disabled dark:border-slate-700",
-				ghost: "text-black-disabled border border-slate-300 dark:text-white-disabled dark:border-slate-700",
-				text: "text-black-disabled dark:text-white-disabled",
-				flat: "text-black-disabled bg-slate-100 dark:text-white-disabled dark:bg-slate-800/50"
+				default: "text-black-4 bg-slate-200 dark:text-white-4 dark:bg-slate-800",
+				bordered: "text-black-4 border border-slate-300 dark:text-white-4 dark:border-slate-700",
+				ghost: "text-black-4 border border-slate-300 dark:text-white-4 dark:border-slate-700",
+				text: "text-black-4 dark:text-white-4",
+				flat: "text-black-4 bg-slate-100 dark:text-white-4 dark:bg-slate-800/50"
 			}))
 		).elseIf(props.loading)(
 			c("cursor-default", c.variant(props.variant ?? "default")({
@@ -114,14 +114,14 @@ function getClassName(props: {
 				})),
 				bordered: c("border", c.variant(props.color ?? "primary")({
 					primary: "border-primary text-primary :border-primary-pressed",
-					monochrome: "border-black text-black dark:border-white-pressed dark:text-white-text-pressed",
+					monochrome: "border-black text-black dark:border-white-pressed dark:text-white-pressed",
 					success: "border-success text-success",
 					warning: "border-warning text-warning",
 					danger: "border-danger text-danger",
 				})),
 				flat: c("bg-opacity-30", c.variant(props.color ?? "primary")({
-					primary: "bg-primary text-primary-text-hover dark:text-primary-text-300",
-					monochrome: "bg-slate-500 text-black-text-hover dark:text-white-text-pressed",
+					primary: "bg-primary text-primary-hover dark:text-primary-300",
+					monochrome: "bg-slate-500 text-black-hover dark:text-white-pressed",
 					success: "bg-success text-success-hover dark:text-success-400",
 					warning: "bg-warning text-warning-hover dark:text-warning-400",
 					danger: "bg-danger text-danger-hover dark:text-danger-400",
@@ -134,8 +134,8 @@ function getClassName(props: {
 					danger: "border-danger text-danger",
 				})),
 				text: c("bg-opacity-0", c.variant(props.color ?? "primary")({
-					primary: "text-primary-text",
-					monochrome: "text-black-text-hover dark:text-white-text-hover",
+					primary: "text-primary",
+					monochrome: "text-black-hover dark:text-white-hover",
 					success: "text-success-hover",
 					warning: "text-warning-hover",
 					danger: "text-danger-hover",
@@ -152,14 +152,14 @@ function getClassName(props: {
 				})),
 				bordered: c("border hover:ring-1 hover:ring-inset", c.variant(props.color ?? "primary")({
 					primary: "border-primary text-primary hover:ring-primary active:text-primary-pressed active:ring-primary-pressed active:border-primary-pressed",
-					monochrome: "border-black text-black hover:ring-black active:text-black-text-pressed active:ring-black-pressed active:border-black-pressed active:bg-black active:bg-opacity-5 dark:border-white-pressed dark:text-white-text-pressed dark:hover:ring-white-pressed dark:active:border-slate-400 dark:active:ring-slate-400",
+					monochrome: "border-black text-black hover:ring-black active:text-black-pressed active:ring-black-pressed active:border-black-pressed active:bg-black active:bg-opacity-5 dark:border-white-pressed dark:text-white-pressed dark:hover:ring-white-pressed dark:active:border-slate-400 dark:active:ring-slate-400",
 					success: "border-success text-success hover:ring-success active:text-success-pressed active:ring-success-pressed active:border-success-pressed",
 					warning: "border-warning text-warning hover:ring-warning active:text-warning-pressed active:ring-warning-pressed active:border-warning-pressed",
 					danger: "border-danger text-danger hover:ring-danger active:text-danger-pressed active:ring-danger-pressed active:border-danger-pressed",
 				})),
 				flat: c("bg-opacity-30 hover:bg-opacity-40 active:bg-opacity-50", c.variant(props.color ?? "primary")({
-					primary: "bg-primary text-primary-text-hover dark:text-primary-text-300",
-					monochrome: "bg-slate-500 text-black-text-hover dark:text-white-text-pressed",
+					primary: "bg-primary text-primary-hover dark:text-primary-300",
+					monochrome: "bg-slate-500 text-black-hover dark:text-white-pressed",
 					success: "bg-success text-success-hover dark:text-success-400",
 					warning: "bg-warning text-warning-hover dark:text-warning-400",
 					danger: "bg-danger text-danger-hover dark:text-danger-400",
@@ -172,8 +172,8 @@ function getClassName(props: {
 					danger: "border-danger text-danger hover:bg-danger active:bg-danger-hover",
 				})),
 				text: c("bg-opacity-0 hover:bg-opacity-10 active:bg-opacity-20", c.variant(props.color ?? "primary")({
-					primary: "text-primary-text hover:bg-primary-100 active:bg-primary-200",
-					monochrome: "bg-slate-900 dark:bg-white text-black-text-hover dark:text-white-text-hover",
+					primary: "text-primary hover:bg-primary-100 active:bg-primary-200",
+					monochrome: "bg-slate-900 dark:bg-white text-black-hover dark:text-white-hover",
 					success: "bg-success text-success-hover",
 					warning: "bg-warning text-warning-hover",
 					danger: "bg-danger text-danger-hover",

@@ -18,15 +18,15 @@ export function TransactionSelectionTools(props: TransactionSelectionToolsProps)
 	const clear = useTransactionSelectionStore(_ => _.clear);
 	const summary = useTransactionsSummary(props.transactions, selection);
 
-	return <div className="pt-2 pb-3 px-4 bg-white dark:bg-slate-800 flex flex-col gap-2 shadow-lg border border-slate-100 dark:border-slate-840 rounded-t-lg d:rounded-lg">
+	return <div className="pt-2 pb-3 px-4 bg-white-bg dark:bg-black-bg flex flex-col gap-2 shadow-lg border border-slate-100 dark:border-slate-840 rounded-t-lg d:rounded-lg">
 
 		<div className="flex items-baseline d:items-center justify-between m:gap-2 m:pb-1">
 			<p className="flex flex-1 items-baseline m:justify-between gap-2">
-				<span className="d:text-sm">
+				<span className="d:text-sm text-black-3 dark:text-white-3">
 					Selected {selection.size} {pluralize(selection.size, "transaction")}
 				</span>
 				<span className={c("d:text-sm font-semibold m:ml-auto", summary.total.selected >= 0 ? "text-success" : "text-danger")}>
-					({formatMoney(summary.total.selected)})
+					{formatMoney(summary.total.selected)}
 				</span>
 			</p>
 

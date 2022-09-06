@@ -16,7 +16,7 @@ export interface TransactionTableHeaderTabProps {
 export function TransactionTableHeaderTab(props: TransactionTableHeaderTabProps) {
 
 	return <button
-		className={c(`rounded relative flex items-center px-4 h-full hover:bg-slate-100 dark:hover:bg-slate-840`, props.className)}
+		className={c(`rounded relative flex items-center px-4 h-full hover:bg-hover-overlay`, props.className)}
 		onClick={props.onClick}
 	>
 

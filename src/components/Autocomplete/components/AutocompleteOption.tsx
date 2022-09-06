@@ -9,8 +9,8 @@ export function AutocompleteOption(props: AutocompleteOptionProps) {
 	return <Combobox.Option {...props}
 		className={({ active, disabled }) => c(
 			"w-full relative flex items-center px-4 py-2 text-sm",
-			c.if(active)("bg-slate-100 dark:bg-slate-740")
-				.else("bg-white dark:bg-slate-700 "),
+			c.if(active)("bg-white-bg-3 dark:bg-black-bg-3")
+				.else("bg-white-bg dark:bg-black-bg "),
 			c.if(disabled)("opacity-50"),
 			props.className
 		)}

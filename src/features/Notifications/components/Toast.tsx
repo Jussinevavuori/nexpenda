@@ -47,7 +47,7 @@ export function Toast({ onDismiss, action, ...props }: ToastProps) {
 		})}
 		onClick={onDismiss}
 		className={c(
-			"rounded py-2 px-4 shadow-lg bg-white dark:bg-slate-800 border border-primary-500",
+			"rounded py-2 px-4 shadow-lg bg-white-bg dark:bg-black-bg-4 border border-primary-500",
 			c.if(onDismiss)("hover:opacity-80 cursor-pointer"),
 			c.if(props.fullWidth)("w-full")
 		)}

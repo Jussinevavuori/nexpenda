@@ -10,7 +10,7 @@ export function PreferencesSettings() {
 	return <div>
 
 		<section>
-			<p className="text-sm text-black-secondary dark:text-white-secondary">
+			<p className="text-sm text-black-4 dark:text-white-4">
 				Choose your accent color
 			</p>
 
@@ -22,7 +22,7 @@ export function PreferencesSettings() {
 		<Divider />
 
 		<section className="pt-4">
-			<p className="text-sm text-black-secondary dark:text-white-secondary">
+			<p className="text-sm text-black-4 dark:text-white-4">
 				Choose your theme
 			</p>
 
@@ -34,7 +34,7 @@ export function PreferencesSettings() {
 		<Divider />
 
 		<section className="pt-4 pb-8">
-			<p className="text-sm text-black-secondary dark:text-white-secondary pb-4">
+			<p className="text-sm text-black-4 dark:text-white-4 pb-4">
 				Choose your currency
 			</p>
 

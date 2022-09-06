@@ -1,34 +1,8 @@
 
 const { rose, emerald, amber, slate } = require("tailwindcss/colors");
 
-const withOpacity = (color, opacity = "--tw-bg-opacity") => {
+const withOpacity = (color, opacity) => {
 	return color + Math.round(255 * opacity).toString(16).padStart(2, "0")
-}
-
-function applyBgOpacity(color) {
-	return `rgba(${color}, var(--tw-bg-opacity, 1))`
-}
-
-function applyTextOpacity(color) {
-	return `rgba(${color}, var(--tw-text-opacity, 1))`
-}
-
-function applyBorderOpacity(color) {
-	return `rgba(${color}, var(--tw-border-opacity, 1))`
-}
-
-function applyOpacities(propertyname, colors) {
-	return {
-		[propertyname]: Object.fromEntries(
-			Object.entries(colors).map(entry => [entry[0], applyBgOpacity(entry[1])])
-		),
-		[propertyname + "-text"]: Object.fromEntries(
-			Object.entries(colors).map(entry => [entry[0], applyTextOpacity(entry[1])])
-		),
-		[propertyname + "-border"]: Object.fromEntries(
-			Object.entries(colors).map(entry => [entry[0], applyBorderOpacity(entry[1])])
-		),
-	}
 }
 
 /** @type {import('tailwindcss').Config} */
@@ -42,19 +16,6 @@ module.exports = {
 			"mono": "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace;"
 		},
 		extend: {
-			strokeWidth: {
-				'3': '3px',
-				'4': '4px',
-			},
-			backgroundImage: {
-				'gradient-radial': 'radial-gradient(var(--gradient-color-stops))',
-			},
-			fontSize: {
-				"buttonSize": ".933rem",
-			},
-			gridTemplateColumns: {
-				'20': 'repeat(20, minmax(0, 1fr))',
-			},
 			opacity: {
 				15: "0.15",
 			},
@@ -76,20 +37,6 @@ module.exports = {
 				"screenMinusTabs": "calc(var(--full-vh, 100vh) - 3.5rem)",
 				"screen": "var(--full-vh, 100vh)",
 			},
-			boxShadow: {
-				"inset-sm": "inset 0 1px 2px 0 rgb(0 0 0 / 0.05)",
-				"inset": "inset 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
-				"inset-md": "inset 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
-				"inset-lg": "inset 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
-				"inset-xl": "inset 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)",
-				"inset-2xl": "inset 0 25px 50px -12px rgb(0 0 0 / 0.25)",
-			},
-			dropShadow: {
-				"intensive": [
-					"0 1px 2px rgb(0 0 0 / 0.15)",
-					"0 1px 1px rgb(0 0 0 / 0.12)"
-				],
-			},
 			screens: {
 				// Mobile and alias "m" for mobile
 				mobile: { max: "900px" },
@@ -102,66 +49,59 @@ module.exports = {
 			colors: {
 
 				white: {
-					DEFAULT: applyBgOpacity("255,255,255"),
-					hover: applyBgOpacity("241,245,249"), // slate 100
-					pressed: applyBgOpacity("225,231,239"), // slate 200
-					text: {
-						DEFAULT: applyTextOpacity("255,255,255"),
-						hover: applyTextOpacity("241,245,249"), // slate 100
-						pressed: applyTextOpacity("225,231,239"), // slate 200
-					},
-					border: {
-						DEFAULT: applyBorderOpacity("255,255,255"),
-						hover: applyBorderOpacity("241,245,249"), // slate 100
-						pressed: applyBorderOpacity("225,231,239"), // slate 200
-					},
-					secondary: withOpacity("#ffffff", 0.75),
-					disabled: withOpacity("#ffffff", 0.55),
+					DEFAULT: "rgb(255 255 255 / <alpha-value>)",
+					hover: "rgb(241 245 249 / <alpha-value>)", // slate 100
+					pressed: "rgb(225 231 239 / <alpha-value>)", // slate 200
+
+					1: withOpacity("#ffffff", 1.0),
+					2: withOpacity("#ffffff", 1.0 - 1 * 0.15),
+					3: withOpacity("#ffffff", 1.0 - 2 * 0.15),
+					4: withOpacity("#ffffff", 1.0 - 3 * 0.15),
+					5: withOpacity("#ffffff", 1.0 - 4 * 0.15),
+
+					bg: {
+						DEFAULT: "rgb(255 255 255 / <alpha-value>)",
+						1: "rgb(255 255 255 / <alpha-value>)",
+						2: "rgb(248 249 251 / <alpha-value>)",
+						3: "rgb(241 244 248 / <alpha-value>)",
+						4: "rgb(233 238 244 / <alpha-value>)",
+						5: "rgb(226 232 240 / <alpha-value>)",
+					}
 				},
 
 				black: {
-					DEFAULT: applyBgOpacity("15,23,42"),
-					hover: applyBgOpacity("8,12,21"),
-					pure: applyBgOpacity("0,0,0"),
-					pressed: applyBgOpacity("0,0,0"),
-					text: {
-						DEFAULT: applyTextOpacity("15,23,42"),
-						hover: applyTextOpacity("8,12,21"),
-						pure: applyTextOpacity("0,0,0"),
-						pressed: applyTextOpacity("0,0,0"),
-					},
-					border: {
-						DEFAULT: applyBorderOpacity("15,23,42"),
-						hover: applyBorderOpacity("8,12,21"),
-						pure: applyBorderOpacity("0,0,0"),
-						pressed: applyBorderOpacity("0,0,0"),
-					},
-					secondary: withOpacity(slate[900], 0.75),
-					disabled: withOpacity(slate[900], 0.55),
+					DEFAULT: "rgb(15 23 42 / <alpha-value>)",  // Slate 900
+					hover: "rgb(8 12 21 / <alpha-value>)",  // Half-way slate 900 and black
+					pure: "rgb(0 0 0 / <alpha-value>)",  // Pure black
+					pressed: "rgb(0 0 0 / <alpha-value>)",  // Pure black
+
+					1: withOpacity(slate[900], 1.0),
+					2: withOpacity(slate[900], 1.0 - 1 * 0.15),
+					3: withOpacity(slate[900], 1.0 - 2 * 0.15),
+					4: withOpacity(slate[900], 1.0 - 3 * 0.15),
+					5: withOpacity(slate[900], 1.0 - 4 * 0.15),
+
+					bg: {
+						DEFAULT: "rgb(21 30 49 / <alpha-value>)",
+						1: "rgb(21 30 49 / <alpha-value>)", // Slate 860
+						2: "rgb(26 36 54 / <alpha-value>)", // Slate 830
+						3: "rgb(30 41 59 / <alpha-value>)", // Slate 800
+						4: "rgb(36 48 67 / <alpha-value>)", // Slate 770
+						5: "rgb(43 55 75 / <alpha-value>)", // Slate 740
+					}
 				},
 
-				divider: withOpacity(slate[500], 0.08),
+				hover: {
+					overlay: withOpacity(slate[500], 0.08),
+				},
 
-				// Extend slate palette
-				slate: {
-					710: "#313F52",
-					720: "#2F3C50",
-					730: "#2D3A4D",
-					740: "#2B374B",
-					750: "#293548",
-					760: "#263345",
-					770: "#243043",
-					780: "#222E40",
-					790: "#202B3E",
-					810: "#1D2739",
-					820: "#1B2538",
-					830: "#1A2436",
-					840: "#182234",
-					850: "#172033",
-					860: "#151E31",
-					870: "#141C2F",
-					880: "#121B2D",
-					890: "#11192C",
+				active: {
+					overlay: withOpacity(slate[500], 0.15),
+				},
+
+				divider: {
+					DEFAULT: withOpacity(slate[500], 0.08),
+					strong: withOpacity(slate[500], 0.24),
 				},
 
 				// Success colors
@@ -191,62 +131,59 @@ module.exports = {
 					outline: rose[200],
 				},
 
-				// Dynamic primary color which obides --tw-bg-opacity and
-				// text variant with -text postfix which obides --tw-text-opacity
-				...applyOpacities("primary", {
-					DEFAULT: ("var(--color-primary-600)"),
-					hover: ("var(--color-primary-700)"),
-					pressed: ("var(--color-primary-800)"),
-					outline: ("var(--color-primary-200)"),
-					50: ("var(--color-primary-50)"),
-					100: ("var(--color-primary-100)"),
-					200: ("var(--color-primary-200)"),
-					300: ("var(--color-primary-300)"),
-					400: ("var(--color-primary-400)"),
-					500: ("var(--color-primary-500)"),
-					600: ("var(--color-primary-600)"),
-					700: ("var(--color-primary-700)"),
-					800: ("var(--color-primary-800)"),
-					900: ("var(--color-primary-900)"),
-				}),
+				// Dynamic primary color with alpha value
+				"primary": {
+					DEFAULT: "rgba(var(--color-primary-600) / <alpha-value>)",
+					hover: "rgba(var(--color-primary-700) / <alpha-value>)",
+					pressed: "rgba(var(--color-primary-800) / <alpha-value>)",
+					outline: "rgba(var(--color-primary-200) / <alpha-value>)",
+					50: "rgba(var(--color-primary-50) / <alpha-value>)",
+					100: "rgba(var(--color-primary-100) / <alpha-value>)",
+					200: "rgba(var(--color-primary-200) / <alpha-value>)",
+					300: "rgba(var(--color-primary-300) / <alpha-value>)",
+					400: "rgba(var(--color-primary-400) / <alpha-value>)",
+					500: "rgba(var(--color-primary-500) / <alpha-value>)",
+					600: "rgba(var(--color-primary-600) / <alpha-value>)",
+					700: "rgba(var(--color-primary-700) / <alpha-value>)",
+					800: "rgba(var(--color-primary-800) / <alpha-value>)",
+					900: "rgba(var(--color-primary-900) / <alpha-value>)",
+				},
 
-				// Dynamic off-primary color which obides --tw-bg-opacity and
-				// text variant with -text postfix which obides --tw-text-opacity
-				...applyOpacities("off-primary", {
-					DEFAULT: ("var(--color-off-primary-600)"),
-					hover: ("var(--color-off-primary-700)"),
-					pressed: ("var(--color-off-primary-800)"),
-					outline: ("var(--color-off-primary-200)"),
-					50: ("var(--color-off-primary-50)"),
-					100: ("var(--color-off-primary-100)"),
-					200: ("var(--color-off-primary-200)"),
-					300: ("var(--color-off-primary-300)"),
-					400: ("var(--color-off-primary-400)"),
-					500: ("var(--color-off-primary-500)"),
-					600: ("var(--color-off-primary-600)"),
-					700: ("var(--color-off-primary-700)"),
-					800: ("var(--color-off-primary-800)"),
-					900: ("var(--color-off-primary-900)"),
-				}),
+				// Dynamic off-primary color with alpha value
+				"off-primary": {
+					DEFAULT: "rgba(var(--color-off-primary-600) / <alpha-value>)",
+					hover: "rgba(var(--color-off-primary-700) / <alpha-value>)",
+					pressed: "rgba(var(--color-off-primary-800) / <alpha-value>)",
+					outline: "rgba(var(--color-off-primary-200) / <alpha-value>)",
+					50: "rgba(var(--color-off-primary-50) / <alpha-value>)",
+					100: "rgba(var(--color-off-primary-100) / <alpha-value>)",
+					200: "rgba(var(--color-off-primary-200) / <alpha-value>)",
+					300: "rgba(var(--color-off-primary-300) / <alpha-value>)",
+					400: "rgba(var(--color-off-primary-400) / <alpha-value>)",
+					500: "rgba(var(--color-off-primary-500) / <alpha-value>)",
+					600: "rgba(var(--color-off-primary-600) / <alpha-value>)",
+					700: "rgba(var(--color-off-primary-700) / <alpha-value>)",
+					800: "rgba(var(--color-off-primary-800) / <alpha-value>)",
+					900: "rgba(var(--color-off-primary-900) / <alpha-value>)",
+				},
 
-				// Dynamic off-primary alt color which obides --tw-bg-opacity and
-				// text variant with -text postfix which obides --tw-text-opacity
-				...applyOpacities("off-primarya-t", {
-					DEFAULT: ("var(--color-off-primary-alt-600)"),
-					hover: ("var(--color-off-primary-alt-700)"),
-					pressed: ("var(--color-off-primary-alt-800)"),
-					outline: ("var(--color-off-primary-alt-200)"),
-					50: ("var(--color-off-primary-alt-50)"),
-					100: ("var(--color-off-primary-alt-100)"),
-					200: ("var(--color-off-primary-alt-200)"),
-					300: ("var(--color-off-primary-alt-300)"),
-					400: ("var(--color-off-primary-alt-400)"),
-					500: ("var(--color-off-primary-alt-500)"),
-					600: ("var(--color-off-primary-alt-600)"),
-					700: ("var(--color-off-primary-alt-700)"),
-					800: ("var(--color-off-primary-alt-800)"),
-					900: ("var(--color-off-primary-alt-900)"),
-				}),
+				// Dynamic off-primary alt color with alpha value
+				"off-primary-alt": {
+					DEFAULT: "rgba(var(--color-off-primary-alt-600) / <alpha-value>)",
+					hover: "rgba(var(--color-off-primary-alt-700) / <alpha-value>)",
+					pressed: "rgba(var(--color-off-primary-alt-800) / <alpha-value>)",
+					outline: "rgba(var(--color-off-primary-alt-200) / <alpha-value>)",
+					50: "rgba(var(--color-off-primary-alt-50) / <alpha-value>)",
+					100: "rgba(var(--color-off-primary-alt-100) / <alpha-value>)",
+					200: "rgba(var(--color-off-primary-alt-200) / <alpha-value>)",
+					300: "rgba(var(--color-off-primary-alt-300) / <alpha-value>)",
+					400: "rgba(var(--color-off-primary-alt-400) / <alpha-value>)",
+					500: "rgba(var(--color-off-primary-alt-500) / <alpha-value>)",
+					600: "rgba(var(--color-off-primary-alt-600) / <alpha-value>)",
+					700: "rgba(var(--color-off-primary-alt-700) / <alpha-value>)",
+					800: "rgba(var(--color-off-primary-alt-800) / <alpha-value>)",
+					900: "rgba(var(--color-off-primary-alt-900) / <alpha-value>)",
+				},
 			}
 		},
 	},

@@ -1,5 +1,4 @@
 import { Avatar } from '@/components/Avatar/Avatar';
-import { HoverOverlay } from '@/components/HoverOverlay/HoverOverlay';
 import { c } from '@/utils/generic/classnames';
 import { pages } from '@/utils/pages';
 import { trpc } from '@/utils/trpc';
@@ -16,8 +15,7 @@ export interface SidebarUserProps {
 export function SidebarUser(props: SidebarUserProps) {
 	const { data: user } = trpc.useQuery(["user.me"])
 
-	return <Link href={pages.settings.root} className={c("bg-transparent group relative w-full px-4 py-4 inline-flex items-center gap-4 rounded hover:bg-slate-200 dark:hover:bg-slate-840 transition-colors duration-100")}>
-		<HoverOverlay />
+	return <Link href={pages.settings.root} className={c("bg-transparent group relative w-full px-4 py-4 inline-flex items-center gap-4 rounded hover:bg-hover-overlay transition-colors duration-100")}>
 		<motion.span
 			initial={false}
 			animate={{

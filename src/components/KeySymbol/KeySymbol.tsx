@@ -6,7 +6,7 @@ export type KeySymbolProps = {
 }
 
 export function KeySymbol({ symbol }: KeySymbolProps) {
-	return <span className="border border-b-2 border-black-border dark:border-white-border border-opacity-20 px-1 rounded">
+	return <span className="border border-b-2 border-black dark:border-white border-opacity-20 px-1 rounded">
 		{capitalize(getKeySymbol(symbol))}
 	</span >
 }

@@ -13,7 +13,7 @@ export function UploadDataFileUploader(props: UploadDataFileUploaderProps) {
 
 	return <div className="flex flex-col items-stretch gap-4">
 
-		<p className="text-sm text-black-secondary dark:text-white-secondary">
+		<p className="text-sm text-black-3 dark:text-white-3">
 			Upload a spreadsheet file. Ensure the spreadsheet contains data that matches the following format.
 		</p>
 

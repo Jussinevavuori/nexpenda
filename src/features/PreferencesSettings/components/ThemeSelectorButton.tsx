@@ -19,67 +19,67 @@ export function ThemeSelectorButton(props: ThemeSelectorButtonProps) {
 	>
 
 		<div className={c("w-48 h-36 rounded-lg overflow-hidden relative", c.variant(theme)({
-			dark: "bg-slate-850",
-			light: "bg-slate-200",
+			dark: "bg-black-bg-5",
+			light: "bg-white-bg-5",
 		}), c.if(props.isSelected)("ring ring-primary"))}>
 
 			<div
 				className={c("absolute h-36 w-12", c.variant(theme)({
-					dark: "bg-slate-900",
-					light: "bg-slate-300"
+					dark: "bg-black-bg-2",
+					light: "bg-white-bg-2"
 				}))}
 			/>
 
 			<div
 				className={c("absolute rounded h-28 w-12 left-14 top-2", c.variant(theme)({
-					dark: "bg-slate-900",
-					light: "bg-slate-100"
+					dark: "bg-black-bg-2",
+					light: "bg-white-bg-1"
 				}))}
 			>
-				<div className={c("absolute rounded h-4 w-8 left-2 top-2", c.variant(theme)({ dark: "bg-slate-850", light: "bg-slate-200" }))} />
-				<div className={c("absolute rounded h-4 w-8 left-2 top-8", c.variant(theme)({ dark: "bg-slate-850", light: "bg-slate-200" }))} />
-				<div className={c("absolute rounded h-4 w-8 left-2 top-14", c.variant(theme)({ dark: "bg-slate-850", light: "bg-slate-200" }))} />
-				<div className={c("absolute rounded h-4 w-8 left-2 top-20", c.variant(theme)({ dark: "bg-slate-850", light: "bg-slate-200" }))} />
+				<div className={c("absolute rounded h-4 w-8 left-2 top-2", c.variant(theme)({ dark: "bg-black-bg-5", light: "bg-white-bg-5" }))} />
+				<div className={c("absolute rounded h-4 w-8 left-2 top-8", c.variant(theme)({ dark: "bg-black-bg-5", light: "bg-white-bg-5" }))} />
+				<div className={c("absolute rounded h-4 w-8 left-2 top-14", c.variant(theme)({ dark: "bg-black-bg-5", light: "bg-white-bg-5" }))} />
+				<div className={c("absolute rounded h-4 w-8 left-2 top-20", c.variant(theme)({ dark: "bg-black-bg-5", light: "bg-white-bg-5" }))} />
 			</div>
 
 			<div
 				className={c("absolute rounded h-20 w-12 left-28 top-2", c.variant(theme)({
-					dark: "bg-slate-900",
-					light: "bg-slate-100"
+					dark: "bg-black-bg-2",
+					light: "bg-white-bg-1"
 				}))}
 			>
-				<div className={c("absolute rounded h-4 w-8 left-2 top-2", c.variant(theme)({ dark: "bg-slate-850", light: "bg-slate-200" }))} />
-				<div className={c("absolute rounded h-4 w-8 left-2 top-8", c.variant(theme)({ dark: "bg-slate-850", light: "bg-slate-200" }))} />
-				<div className={c("absolute rounded h-4 w-8 left-2 top-14", c.variant(theme)({ dark: "bg-slate-850", light: "bg-slate-200" }))} />
+				<div className={c("absolute rounded h-4 w-8 left-2 top-2", c.variant(theme)({ dark: "bg-black-bg-5", light: "bg-white-bg-5" }))} />
+				<div className={c("absolute rounded h-4 w-8 left-2 top-8", c.variant(theme)({ dark: "bg-black-bg-5", light: "bg-white-bg-5" }))} />
+				<div className={c("absolute rounded h-4 w-8 left-2 top-14", c.variant(theme)({ dark: "bg-black-bg-5", light: "bg-white-bg-5" }))} />
 			</div>
 
 			<div
 				className={c("absolute rounded h-20 w-12 left-28 top-24", c.variant(theme)({
-					dark: "bg-slate-900",
-					light: "bg-slate-100"
+					dark: "bg-black-bg-2",
+					light: "bg-white-bg-1"
 				}))}
 			>
-				<div className={c("absolute rounded h-4 w-8 left-2 top-2", c.variant(theme)({ dark: "bg-slate-850", light: "bg-slate-200" }))} />
-				<div className={c("absolute rounded h-4 w-8 left-2 top-8", c.variant(theme)({ dark: "bg-slate-850", light: "bg-slate-200" }))} />
-				<div className={c("absolute rounded h-4 w-8 left-2 top-14", c.variant(theme)({ dark: "bg-slate-850", light: "bg-slate-200" }))} />
+				<div className={c("absolute rounded h-4 w-8 left-2 top-2", c.variant(theme)({ dark: "bg-black-bg-5", light: "bg-white-bg-5" }))} />
+				<div className={c("absolute rounded h-4 w-8 left-2 top-8", c.variant(theme)({ dark: "bg-black-bg-5", light: "bg-white-bg-5" }))} />
+				<div className={c("absolute rounded h-4 w-8 left-2 top-14", c.variant(theme)({ dark: "bg-black-bg-5", light: "bg-white-bg-5" }))} />
 			</div>
 
 			<div
 				className={c("absolute rounded h-28 w-12 left-[10.5rem] top-2", c.variant(theme)({
-					dark: "bg-slate-900",
-					light: "bg-slate-100"
+					dark: "bg-black-bg-2",
+					light: "bg-white-bg-1"
 				}))}
 			>
-				<div className={c("absolute rounded h-4 w-8 left-2 top-2", c.variant(theme)({ dark: "bg-slate-850", light: "bg-slate-200" }))} />
-				<div className={c("absolute rounded h-4 w-8 left-2 top-8", c.variant(theme)({ dark: "bg-slate-850", light: "bg-slate-200" }))} />
-				<div className={c("absolute rounded h-4 w-8 left-2 top-14", c.variant(theme)({ dark: "bg-slate-850", light: "bg-slate-200" }))} />
-				<div className={c("absolute rounded h-4 w-8 left-2 top-20", c.variant(theme)({ dark: "bg-slate-850", light: "bg-slate-200" }))} />
+				<div className={c("absolute rounded h-4 w-8 left-2 top-2", c.variant(theme)({ dark: "bg-black-bg-5", light: "bg-white-bg-5" }))} />
+				<div className={c("absolute rounded h-4 w-8 left-2 top-8", c.variant(theme)({ dark: "bg-black-bg-5", light: "bg-white-bg-5" }))} />
+				<div className={c("absolute rounded h-4 w-8 left-2 top-14", c.variant(theme)({ dark: "bg-black-bg-5", light: "bg-white-bg-5" }))} />
+				<div className={c("absolute rounded h-4 w-8 left-2 top-20", c.variant(theme)({ dark: "bg-black-bg-5", light: "bg-white-bg-5" }))} />
 			</div>
 
 			<div
 				className={c("absolute rounded h-36 w-12", c.variant(theme)({
-					dark: "bg-slate-900",
-					light: "bg-slate-300"
+					dark: "bg-black-bg-2",
+					light: "bg-white-bg-2"
 				}))}
 			/>
 
@@ -97,7 +97,7 @@ export function ThemeSelectorButton(props: ThemeSelectorButtonProps) {
 
 		</div>
 
-		<p className="text-sm text-black-secondary dark:text-white-secondary">
+		<p className="text-sm text-black-3 dark:text-white-3">
 			{capitalize(props.variant)} theme
 		</p>
 

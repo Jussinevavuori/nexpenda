@@ -3,7 +3,6 @@ import { c } from "@/utils/generic/classnames";
 export interface DividerProps {
 	variant?: "horizontal" | "vertical";
 	className?: string;
-	children?: string;
 }
 
 export function Divider(props: DividerProps) {
@@ -17,11 +16,5 @@ export function Divider(props: DividerProps) {
 			}),
 			props.className
 		)}
-	>
-		{
-			props.children && <span className="absolute-centered text-sm text-slate-500 bg-white dark:bg-slate-800 px-2 py-0">
-				{props.children}
-			</span>
-		}
-	</div>
+	/>
 }

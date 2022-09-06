@@ -22,8 +22,8 @@ export const Dialog = Object.assign(function Dialog(props: DialogProps) {
 			onClose={props.onClose}
 		>
 			<SubThemeProvider>
-				<div className={"fixed inset-0 flex flex-col items-center justify-end d:justify-center p-4 backdrop-blur-sm bg-black bg-opacity-50"}>
-					<HeadlessDialog.Panel className="bg-white dark:bg-slate-740 text-black dark:text-white rounded-t-lg d:rounded-lg shadow-lg p-4">
+				<div className={"fixed inset-0 flex flex-col items-center justify-end d:justify-center p-4 backdrop-blur-sm bg-black-bg bg-opacity-50"}>
+					<HeadlessDialog.Panel className="bg-white-bg dark:bg-black-bg text-black dark:text-white rounded-t-lg d:rounded-lg shadow-lg p-4">
 
 						{
 							props.title && <HeadlessDialog.Title className="font-medium text-black dark:text-white">
@@ -32,7 +32,7 @@ export const Dialog = Object.assign(function Dialog(props: DialogProps) {
 						}
 
 						{
-							props.description && <HeadlessDialog.Description className="text-sm text-black-secondary dark:text-white-secondary py-4">
+							props.description && <HeadlessDialog.Description className="text-sm text-black-4 dark:text-white-4 py-4">
 								{props.description}
 							</HeadlessDialog.Description>
 						}

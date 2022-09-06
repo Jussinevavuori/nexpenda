@@ -20,13 +20,13 @@ export function AutocompleteOptions({ onResetQuery, children, ...props }: Autoco
 		<Combobox.Options
 			{...props}
 			className={c("absolute top-[100%] mt-1 max-h-60 w-full overflow-auto",
-				"rounded-lg z-10 bg-white dark:bg-slate-700 py-1 text-base shadow-lg",
+				"rounded-lg z-10 bg-white-bg dark:bg-black-bg py-1 text-base shadow-lg",
 				"ring-1 ring-divider focus:outline-none sm:text-sm",
 			)}
 		>
 			{
 				React.Children.count(children) === 0
-					? <div className="cursor-default select-none py-2 px-4 text-black-disabled dark:text-white-disabled">
+					? <div className="cursor-default select-none py-2 px-4 text-black-4 dark:text-white-4">
 						Nothing found
 					</div>
 					: children

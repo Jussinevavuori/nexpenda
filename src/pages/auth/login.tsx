@@ -25,7 +25,7 @@ export default function LoginPage() {
 			<h1 className="text-4xl font-bold text-black dark:text-white">
 				Welcome!
 			</h1>
-			<p className="text-xl text-black-secondary dark:text-white-secondary">
+			<p className="text-xl text-black-3 dark:text-white-3">
 				Let's get you signed in
 			</p>
 		</div>
@@ -52,7 +52,7 @@ export default function LoginPage() {
 				<div className="flex gap-4 items-center pb-4">
 					<Avatar image={user?.image} name={user?.name} size={64} />
 					<div>
-						<p className="text-sm text-black-secondary dark:text-white-secondary">Already signed in as</p>
+						<p className="text-sm text-black-4 dark:text-white-4">Already signed in as</p>
 						<p className="">{user?.name}</p>
 					</div>
 				</div>

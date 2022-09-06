@@ -71,8 +71,8 @@ export const FullscreenSplash = forwardRef<FullscreenSplashHandle, FullscreenSpl
 			className={c(
 				"animate-radiate-circle",
 				c.variant(state.color)({
-					light: "bg-slate-200",
-					dark: "bg-slate-800",
+					light: "bg-white-bg-4",
+					dark: "bg-black-bg-4",
 				}).default("bg-primary-500")
 			)}
 			style={{

@@ -51,7 +51,7 @@ export const TransactionTable = Object.assign(function TransactionTable(props: T
 
 	return <div
 		ref={parentRef}
-		className="dark:bg-slate-820 relative w-full h-full overflow-auto"
+		className="relative w-full h-full overflow-auto"
 	>
 		<TransactionTableLoadingBar isFetching={isFetching} />
 

@@ -33,7 +33,7 @@ export default function AccountSettingsPage() {
 
 		<SettingsLayout title="Download transactions">
 			<section className="flex flex-col gap-4">
-				<p className="text-sm text-black-secondary dark:text-white-secondary">
+				<p className="text-sm text-black-3 dark:text-white-3">
 					Download transactions
 				</p>
 				<Button

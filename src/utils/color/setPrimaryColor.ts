@@ -11,7 +11,7 @@ export function toRgbList(hex: string) {
   const g = Number.parseInt(hex.substring(offset + 2, offset + 4), 16);
   const b = Number.parseInt(hex.substring(offset + 4, offset + 6), 16);
 
-  return [r, g, b].join(",");
+  return [r, g, b].join(" ");
 }
 
 export function setPrimaryColor(

@@ -15,7 +15,7 @@ export function SidebarGroup(props: SidebarGroupProps) {
 		{
 			props.label &&
 			<div className="py-6 h-6 flex items-center">
-				<span className="inline-block ml-9 w-8 h-px bg-slate-300 dark:bg-slate-700" />
+				<span className="inline-block ml-9 w-8 h-px bg-divider-strong" />
 				<AnimatePresence>
 					{
 						props.isSidebarOpen &&

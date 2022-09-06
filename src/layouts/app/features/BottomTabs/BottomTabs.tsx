@@ -11,7 +11,7 @@ export function BottomTabs(props: BottomTabsProps) {
 
 	// const createTransactionDialog = useTransactionCreateFormDialogState();
 
-	return <div className="bg-white dark:bg-slate-840 h-screenMinusTabs d:h-screen flex items-stretch shadow-lg">
+	return <div className="bg-white-bg-2 dark:bg-black-bg h-screenMinusTabs d:h-screen flex items-stretch shadow-lg">
 
 		<BottomTabItem
 			active={props.active}

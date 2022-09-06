@@ -21,7 +21,7 @@ export function FeedbackForm() {
 
 		<div className="p-2" />
 
-		<p className="text-sm text-black-secondary dark:text-white-secondary max-w-md">
+		<p className="text-sm text-black-3 dark:text-white-3 max-w-md">
 			Please contact us and leave feedback about the application, any
 			bugs or features you would like to see.
 		</p>

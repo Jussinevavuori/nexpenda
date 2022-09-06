@@ -69,7 +69,7 @@ export function PeriodSelectorButtons(props: PeriodSelectorButtonsProps) {
 			<Icon.Material icon="chevron_right" />
 		</Button>
 
-		<span className="bg-slate-100 dark:bg-slate-840 rounded py-[0.62rem] w-[155px]">
+		<span className="bg-white-bg-5 dark:bg-black-bg-5 rounded py-[0.62rem] w-[155px]">
 			<p className="px-4 text-center text-sm dark:text-slate-100 font-semibold">
 				{isActiveQuery ? "Search results" : formatPeriod(period)}
 			</p>
