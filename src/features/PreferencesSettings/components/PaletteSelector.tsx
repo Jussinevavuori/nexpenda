@@ -9,7 +9,11 @@ import { PaletteSelectorButton } from "./PaletteSelectorButton";
 
 const EFFECT_DURATION = 900;
 
-export function PaletteSelector() {
+export type PaletteSelectorProps = {
+	disableSplash?: boolean;
+}
+
+export function PaletteSelector(props: PaletteSelectorProps) {
 	const palette = usePreference("palette")
 	const setPalette = useUpdatePreference("palette")
 
@@ -25,7 +29,7 @@ export function PaletteSelector() {
 
 	return <ul className="flex flex-row flex-wrap gap-4">
 
-		<FullscreenSplash ref={splash.ref} defaultDurationMs={EFFECT_DURATION} />
+		{!props.disableSplash && <FullscreenSplash ref={splash.ref} defaultDurationMs={EFFECT_DURATION} />}
 
 		{
 			palettes.staticColor.map(p => (

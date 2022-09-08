@@ -36,7 +36,7 @@
   }
   .dark ::-webkit-scrollbar-track {
     /* Slate 840 */
-    background: theme("colors.slate.840");
+    background: theme("colors.black.bg.4");
   }
 }
 
