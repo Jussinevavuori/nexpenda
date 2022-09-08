@@ -7,11 +7,8 @@ import { MINIMUM_ACTIVE_QUERY_LENGTH, transactionSearchAtom } from "@/stores/tra
 import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
 
-export type TransactionSearchProps = {
 
-}
-
-export const TransactionSearch = Object.assign(function TransactionSearch(props: TransactionSearchProps) {
+export const TransactionSearch = Object.assign(function TransactionSearch() {
 	const isMobile = useBreakpoint("!desktop")
 
 	const [query, setQuery] = useAtom(transactionSearchAtom)

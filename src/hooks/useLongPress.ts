@@ -93,30 +93,24 @@ export default function useLongPress(
   );
 
   // End long press function
-  const endLongPress = useCallback(
-    (e: React.MouseEvent | React.TouchEvent | React.PointerEvent) => {
-      origin.current = null;
+  const endLongPress = useCallback(() => {
+    origin.current = null;
 
-      setPressed(false);
+    setPressed(false);
 
-      if (timeout.current) {
-        clearTimeout(timeout.current);
-        timeout.current = null;
-      }
-    },
-    [setPressed, timeout]
-  );
+    if (timeout.current) {
+      clearTimeout(timeout.current);
+      timeout.current = null;
+    }
+  }, [setPressed, timeout]);
 
   // Cancel long press function
-  const cancelLongPress = useCallback(
-    (e: React.MouseEvent | React.TouchEvent | React.PointerEvent) => {
-      if (timeout.current) {
-        clearTimeout(timeout.current);
-        timeout.current = null;
-      }
-    },
-    [timeout]
-  );
+  const cancelLongPress = useCallback(() => {
+    if (timeout.current) {
+      clearTimeout(timeout.current);
+      timeout.current = null;
+    }
+  }, [timeout]);
 
   // Cancel long press on move
   const cancelLongPressOnMove = useCallback(
@@ -130,9 +124,11 @@ export default function useLongPress(
 
       if ("touches" in e) {
         if (e.touches.length > 1) {
-          cancelLongPress(e);
+          cancelLongPress();
         } else if (e.touches.length > 0) {
+          // eslint-disable-next-line
           x = e.touches[0]!.clientX;
+          // eslint-disable-next-line
           y = e.touches[0]!.clientY;
         }
       } else {
@@ -148,7 +144,7 @@ export default function useLongPress(
       const d2 = dx * dx + dy * dy;
 
       if (d2 > movementCancelThreshold) {
-        cancelLongPress(e);
+        cancelLongPress();
       }
     },
     [cancelLongPress]

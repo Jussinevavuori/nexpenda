@@ -24,4 +24,5 @@ export function useMatchMedia(query: string) {
   return matches;
 }
 
-let _querycache = new Map<string, boolean>();
+// Cache query results during session to withstand page transitions
+const _querycache = new Map<string, boolean>();

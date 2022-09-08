@@ -5,11 +5,7 @@ import { formatMoney } from "@/utils/currency/formatMoney";
 import { selectableCurrencies, SelectableCurrency } from "@/utils/currency/selectableCurrencies";
 import { useState } from "react";
 
-export type CurrencySelectorProps = {
-
-}
-
-export function CurrencySelector(props: CurrencySelectorProps) {
+export function CurrencySelector() {
 
 	// Force updates on formatting changes
 	usePreference("hideCurrency");

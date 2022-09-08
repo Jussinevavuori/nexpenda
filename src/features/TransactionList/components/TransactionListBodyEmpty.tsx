@@ -4,11 +4,7 @@ import { useActiveQuery } from "@/stores/transactionSearchAtom";
 import { formatPeriod } from "@/utils/dates/formatPeriod";
 import { getPeriodLength } from "@/utils/dates/getPeriodLength";
 
-export interface TransactionListBodyEmptyProps {
-
-}
-
-export function TransactionListBodyEmpty(props: TransactionListBodyEmptyProps) {
+export function TransactionListBodyEmpty() {
 	const period = usePeriodStore(_ => _.period);
 	const query = useActiveQuery();
 
@@ -21,5 +17,4 @@ export function TransactionListBodyEmpty(props: TransactionListBodyEmptyProps) {
 
 		<TransactionActions.Create />
 	</div>
-
 }

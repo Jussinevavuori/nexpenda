@@ -1,4 +1,3 @@
-import { HoverOverlay } from "@/components/HoverOverlay/HoverOverlay";
 import { Icon } from "@/components/Icon/Icon";
 import { useShouldFlashTransaction } from "@/stores/transactionFlashStore";
 import { useTransactionSelectionStore } from "@/stores/transactionSelectionStore";
@@ -8,6 +7,7 @@ import { c } from "@/utils/generic/classnames";
 import { lineClamp } from "@/utils/styles/lineClamp";
 import { isFuture } from "date-fns";
 
+// eslint-disable-next-line
 const { motion, AnimatePresence } = require("framer-motion")
 
 export interface TransactionListItemProps {
@@ -70,10 +70,10 @@ export function TransactionListItem({ transaction }: TransactionListItemProps) {
 		<div className={c(
 			"flex-1 flex flex-col items-stretch"
 		)}>
-			<p className="text-black dark:text-white font-semibold" style={lineClamp(1)}>
+			<p className="text-black dark:text-white font-semibold" style={lineClamp()}>
 				{transaction.category.name}
 			</p>
-			<p className="text-slate-700 dark:text-slate-300" style={lineClamp(1)}>
+			<p className="text-slate-700 dark:text-slate-300" style={lineClamp()}>
 				{
 					isUpcoming &&
 					<span className="mr-2 text-xs bg-white-bg-3 dark:bg-black-bg-5 text-slate-800 dark:text-slate-300 px-2 py-1 rounded">

@@ -7,11 +7,8 @@ import { getPeriodLength } from "@/utils/dates/getPeriodLength";
 import { periodIncludesToday } from "@/utils/dates/periodIncludesToday";
 import { capitalize } from "@/utils/generic/capitalize";
 
-type PeriodSelectorButtonsProps = {
-	disabledOnQuery?: boolean;
-}
 
-export function PeriodSelectorButtons(props: PeriodSelectorButtonsProps) {
+export function PeriodSelectorButtons() {
 	const isActiveQuery = !!useActiveQuery();
 
 	const reset = usePeriodStore(_ => _.reset);
