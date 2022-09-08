@@ -76,7 +76,7 @@ export function AccountSettings() {
 						onConfirm={() => updateUserMutation.mutate({ image: null })}
 						variant="danger"
 					>
-						<Button disabled={!user.image} variant="ghost" color="danger">
+						<Button disabled={!user.image} variant="flat" color="danger">
 							Remove picture
 						</Button>
 					</AlertDialog>
@@ -177,7 +177,7 @@ export function AccountSettings() {
 
 		<section className="flex flex-col gap-4">
 			<Button
-				variant="ghost"
+				variant="bordered"
 				color="danger"
 				onClick={() => signOut({ callbackUrl: pages.signout })}
 			>

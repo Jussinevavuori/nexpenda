@@ -32,8 +32,9 @@ export function PeriodLengthToggle() {
 	return <Button
 		variant="flat"
 		color="monochrome"
-		endIcon={<Icon.Material icon="unfold_more" />}
-		className="min-w-[140px] pr-1 pl-3  justify-between"
+		endIcon={<Icon.Material icon="unfold_more" size={20} />}
+		style={{ width: 140 }}
+		className="pr-1 pl-3 justify-between"
 		onClick={cycleIntervalLength}
 		disabled={isActiveQuery}
 	>

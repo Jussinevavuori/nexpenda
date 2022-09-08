@@ -98,7 +98,7 @@ export function Toast({ onDismiss, action, ...props }: ToastProps) {
 					loading={isActionLoading}
 					endIcon={
 						action.icon
-							? <Icon.Material icon={action.icon} className="text-primary-500" />
+							? <Icon.Material icon={action.icon} size={20} className="text-primary-500" />
 							: undefined
 					}
 				>

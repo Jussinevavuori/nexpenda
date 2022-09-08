@@ -6,7 +6,6 @@ import { useOnKeyCombination } from '@/hooks/useOnKeyCombination';
 import { Icon } from '@/components/Icon/Icon';
 import { c } from '@/utils/generic/classnames';
 import { Tooltip } from '@/components/Tooltip/Tooltip';
-import { HoverOverlay } from '@/components/HoverOverlay/HoverOverlay';
 
 // eslint-disable-next-line
 const { motion, AnimatePresence } = require("framer-motion");
@@ -39,13 +38,10 @@ export function SidebarItem(props: SidebarItemProps) {
 		}} side="right" sideOffset={2}>
 			<li
 				className={c(
-					"group relative w-full px-3 py-2 inline-flex items-center gap-4 rounded-lg transition-colors duration-100",
-					active ? "bg-primary-500" : "bg-transparent",
+					"relative w-full px-3 py-2 inline-flex items-center gap-4 rounded-lg duration-100",
+					active ? "bg-primary-500" : "bg-transparent hover:bg-hover-overlay active:bg-active-overlay",
 				)}
 			>
-
-				<HoverOverlay />
-
 				<motion.span
 					initial={false}
 					animate={{

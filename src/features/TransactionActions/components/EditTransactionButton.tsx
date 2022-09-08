@@ -32,7 +32,7 @@ export function EditTransactionButton(props: EditTransactionButtonProps) {
 	return <Button
 		disabled={!transaction}
 		// onClick={() => transaction ? state.setValue(transaction.id) : null}
-		startIcon={<Icon.Material icon="edit" />}
+		startIcon={<Icon.Material size={20} icon="edit" />}
 		{...props}
 	>
 		Edit

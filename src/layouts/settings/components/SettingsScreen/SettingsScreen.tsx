@@ -16,7 +16,7 @@ export function SettingsScreen() {
 				Account
 			</p>
 			<div className="flex flex-col items-stretch gap-1">
-				<div className="w-full flex flex-col items-center xl:flex-row gap-4 xl:gap-6 mx-auto px-4 py-6 bg-slate-50 dark:bg-slate-780 rounded-lg">
+				<div className="w-full flex flex-col items-center xl:flex-row gap-4 xl:gap-6 mx-auto px-4 py-6 bg-white-bg-2 dark:bg-black-bg-3 rounded-lg">
 					<Avatar size={84} image={user?.image} name={user?.name} />
 					<div className="flex flex-col items-center xl:items-start">
 						<p className="dark:text-slate-100">

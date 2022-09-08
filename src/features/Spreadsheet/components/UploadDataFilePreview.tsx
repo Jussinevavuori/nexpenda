@@ -1,4 +1,3 @@
-import { HoverOverlay } from '@/components/HoverOverlay/HoverOverlay';
 import { Icon } from '@/components/Icon/Icon';
 import { IconButton } from '@/components/IconButton/IconButton';
 import { useArrayPagination } from '@/hooks/useArrayPagination';
@@ -31,7 +30,7 @@ export function UploadDataFilePreview(props: UploadDataFilePreviewProps) {
 						return <li
 							key={sheet}
 							className={c(
-								"group relative cursor-pointer w-fit rounded-t px-3 py-1 text-sm",
+								"relative cursor-pointer w-fit rounded-t px-3 py-1 text-sm",
 								isSelected
 									? "bg-primary-500 text-slate-100 dark:text-slate-900"
 									: "bg-slate-200 dark:bg-slate-700 text-slate-900 dark:text-slate-100"
@@ -39,7 +38,6 @@ export function UploadDataFilePreview(props: UploadDataFilePreviewProps) {
 							onClick={() => props.onSheetSelect?.(sheet)}
 						>
 							{sheet}
-							<HoverOverlay />
 						</li>
 					})
 				}

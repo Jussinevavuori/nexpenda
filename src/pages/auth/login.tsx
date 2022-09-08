@@ -64,7 +64,6 @@ export default function LoginPage() {
 					Continue as {user?.name}
 				</Button.Link>
 				<Button
-
 					onClick={() => signOut()}
 					color="monochrome"
 					variant="bordered"
@@ -81,7 +80,7 @@ export default function LoginPage() {
 					onClick={() => signIn("google", { callbackUrl: pages.dashboard })}
 					color="monochrome"
 					variant="bordered"
-					startIcon={<Icon.Simple icon="google" />}
+					startIcon={<Icon.Simple size={20} icon="google" />}
 				>
 					Login with Google
 				</Button>

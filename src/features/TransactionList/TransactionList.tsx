@@ -26,7 +26,7 @@ export interface TransactionListProps {
 	disableTools?: boolean;
 }
 
-export const TransactionList = Object.assign(memo(function (props: TransactionListProps) {
+export const TransactionList = Object.assign(memo(function TransactionList(props: TransactionListProps) {
 	const period = usePeriodStore(_ => _.period)
 	const query = useActiveQuery();
 
@@ -77,7 +77,7 @@ export const TransactionList = Object.assign(memo(function (props: TransactionLi
 
 	return <div
 		ref={listContainerRef}
-		className="dark:bg-slate-820 relative w-full h-full overflow-auto"
+		className="relative w-full h-full overflow-auto"
 	>
 		<TransactionListLoadingBar isFetching={isFetching} />
 

@@ -7,7 +7,7 @@ export type CreateTransactionButtonProps = Omit<ButtonProps, "onClick"> & {
 
 export function CreateTransactionButton({ ...ButtonProps }: CreateTransactionButtonProps) {
 	return <Button
-		startIcon={<Icon.Material icon="add" />}
+		startIcon={<Icon.Material size={20} icon="add" />}
 		{...ButtonProps}
 		className="min-w-[200px]"
 	>

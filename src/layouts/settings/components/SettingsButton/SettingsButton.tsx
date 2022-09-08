@@ -21,7 +21,7 @@ export function SettingsButton(props: SettingsButtonProps) {
 			"flex items-center justify-between px-4 py-3 rounded-lg w-full mx-auto",
 			isSelected
 				? "bg-primary-500"
-				: "bg-slate-50 dark:bg-slate-780 hover:bg-slate-100 dark:hover:bg-slate-740 focus:bg-slate-200 dark:focus:bg-slate-740 active:bg-slate-300 dark:active:bg-slate-700"
+				: "bg-white-bg-2 dark:bg-black-bg-3 hover:bg-white-bg-3 dark:hover:bg-black-bg-4 active:bg-white-bg-4 dark:active:bg-black-bg-5"
 		)}
 	>
 

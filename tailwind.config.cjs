@@ -24,16 +24,19 @@ module.exports = {
 				"tabs": "3.5rem",
 			},
 			minHeight: {
+				"button": "2.25rem",
 				"tabs": "3.5rem",
 				"screen": "var(--full-vh, 100vh)",
 				"screenMinusTabs": "calc(var(--full-vh, 100vh) - 3.5rem)",
 			},
 			maxHeight: {
+				"button": "2.25rem",
 				"tabs": "3.5rem",
 				"screenMinusTabs": "calc(var(--full-vh, 100vh) - 3.5rem)",
 				"screen": "var(--full-vh, 100vh)",
 			},
 			height: {
+				"button": "2.25rem",
 				"tabs": "3.5rem",
 				"screenMinusTabs": "calc(var(--full-vh, 100vh) - 3.5rem)",
 				"screen": "var(--full-vh, 100vh)",

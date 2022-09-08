@@ -39,7 +39,7 @@ export function UploadDataFileCommitter(props: UploadDataFileCommitterProps) {
 				variant="bordered"
 				color="monochrome"
 				onClick={props.onReset}
-				startIcon={<Icon.Material icon="refresh" />}
+				startIcon={<Icon.Material size={20} icon="refresh" />}
 			>
 				Upload another file
 			</Button>
@@ -47,7 +47,7 @@ export function UploadDataFileCommitter(props: UploadDataFileCommitterProps) {
 			<Button
 				color="primary"
 				onClick={props.file.handleUploadTransactions}
-				startIcon={<Icon.Material icon="file_upload" />}
+				startIcon={<Icon.Material size={20} icon="file_upload" />}
 				disabled={rows.length === 0}
 				loading={props.state.state === "uploading"}
 			>

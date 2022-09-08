@@ -38,7 +38,7 @@ export default function AccountSettingsPage() {
 				</p>
 				<Button
 					disabled={transactions.isLoading}
-					endIcon={<Icon.Material icon="file_download" />}
+					endIcon={<Icon.Material size={20} icon="file_download" />}
 					onClick={handleDownload}
 					loading={isLoading}
 				>

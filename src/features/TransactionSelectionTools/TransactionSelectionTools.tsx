@@ -1,7 +1,6 @@
 import { Icon } from '@/components/Icon/Icon';
 import { IconButton } from '@/components/IconButton/IconButton';
 import { TransactionActions } from '@/features/TransactionActions/TransactionActions';
-import { useBreakpoint } from '@/hooks/useBreakpoint';
 import { useTransactionsSummary } from '@/hooks/useTransactionsSummary';
 import { formatMoney } from '@/utils/currency/formatMoney';
 import { c } from '@/utils/generic/classnames';
@@ -18,7 +17,7 @@ export function TransactionSelectionTools(props: TransactionSelectionToolsProps)
 	const clear = useTransactionSelectionStore(_ => _.clear);
 	const summary = useTransactionsSummary(props.transactions, selection);
 
-	return <div className="pt-2 pb-3 px-4 bg-white-bg dark:bg-black-bg flex flex-col gap-2 shadow-lg border border-slate-100 dark:border-slate-840 rounded-t-lg d:rounded-lg">
+	return <div className="pt-2 pb-3 px-4 bg-white-bg dark:bg-black-bg flex flex-col gap-2 shadow-lg border border-white-bg-2 dark:border-black-bg-1 rounded-t-lg d:rounded-lg">
 
 		<div className="flex items-baseline d:items-center justify-between m:gap-2 m:pb-1">
 			<p className="flex flex-1 items-baseline m:justify-between gap-2">

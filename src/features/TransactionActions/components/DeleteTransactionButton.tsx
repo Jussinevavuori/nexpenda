@@ -36,7 +36,7 @@ export function DeleteTransactionButton(props: DeleteTransactionButtonProps) {
 	return <Button
 		disabled={selectedTransactions.length === 0}
 		onClick={() => deleteMutation.mutate({ ids: selectedIds })}
-		startIcon={<Icon.Material icon="delete" />}
+		startIcon={<Icon.Material size={20} icon="delete" />}
 		variant="bordered"
 		color="danger"
 		loading={deleteMutation.isLoading}

@@ -30,7 +30,7 @@ export function CopyTransactionButton(props: CopyTransactionButtonProps) {
 		// createDialogState.open();
 		// copy.copy(selection.selectedTransactions[0]);
 		// }}
-		startIcon={<Icon.Material icon="content_copy" />}
+		startIcon={<Icon.Material size={20} icon="content_copy" />}
 		variant="bordered"
 	>
 		Copy

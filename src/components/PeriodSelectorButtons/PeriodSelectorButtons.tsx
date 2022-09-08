@@ -43,9 +43,8 @@ export function PeriodSelectorButtons(props: PeriodSelectorButtonsProps) {
 
 		<Button
 			onClick={() => cycleIntervalLength()}
-			color="primary"
 			className="w-28 pr-2 py-[0.45rem] justify-between"
-			endIcon={<Icon.Material icon="unfold_more" />}
+			endIcon={<Icon.Material size={20} icon="unfold_more" />}
 			disabled={isActiveQuery}
 		>
 			{isActiveQuery ? "Results" : capitalize(periodLength)}
@@ -57,7 +56,7 @@ export function PeriodSelectorButtons(props: PeriodSelectorButtonsProps) {
 			disabled={isActiveQuery || periodLength === "all"}
 			className="px-2 py-[0.45rem]"
 		>
-			<Icon.Material icon="chevron_left" />
+			<Icon.Material size={20} icon="chevron_left" />
 		</Button>
 
 
@@ -66,10 +65,10 @@ export function PeriodSelectorButtons(props: PeriodSelectorButtonsProps) {
 			disabled={isActiveQuery || periodLength === "all"}
 			className="px-2 py-[0.45rem]"
 		>
-			<Icon.Material icon="chevron_right" />
+			<Icon.Material size={20} icon="chevron_right" />
 		</Button>
 
-		<span className="bg-white-bg-5 dark:bg-black-bg-5 rounded py-[0.62rem] w-[155px]">
+		<span className="bg-white-bg-5 dark:bg-black-bg-5 rounded w-[155px] h-button flex items-center justify-center">
 			<p className="px-4 text-center text-sm dark:text-slate-100 font-semibold">
 				{isActiveQuery ? "Search results" : formatPeriod(period)}
 			</p>
@@ -78,10 +77,9 @@ export function PeriodSelectorButtons(props: PeriodSelectorButtonsProps) {
 		<Button
 			onClick={() => reset()}
 			disabled={isActiveQuery || periodIncludesToday(period)}
-			color={periodIncludesToday(period) ? "monochrome" : "primary"}
 			className="px-2 py-[0.45rem]"
 		>
-			<Icon.Material icon="replay" />
+			<Icon.Material size={20} icon="replay" />
 		</Button>
 
 	</div >;

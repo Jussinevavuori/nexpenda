@@ -4,7 +4,7 @@ import { UITester } from "@/features/UITester/UITester";
 
 export default function ButtonsUITest() {
 	return <UITester
-		rows={["primary", "danger", "monochrome"]}
+		rows={["primary", "danger", "monochrome", "warning", "success"]}
 		columns={["default", "bordered", "flat", "text"]}
 		toggles={["disabled", "loading", "startIcon", "endIcon"]}
 		renderInstance={({ toggles, col: variant, row: color }) => {
