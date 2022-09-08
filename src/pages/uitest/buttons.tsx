@@ -4,8 +4,8 @@ import { UITester } from "@/features/UITester/UITester";
 
 export default function ButtonsUITest() {
 	return <UITester
-		rows={["primary", "success", "warning", "danger", "monochrome"]}
-		columns={["default", "bordered", "flat", "ghost", "text"]}
+		rows={["primary", "danger", "monochrome"]}
+		columns={["default", "bordered", "flat", "text"]}
 		toggles={["disabled", "loading", "startIcon", "endIcon"]}
 		renderInstance={({ toggles, col: variant, row: color }) => {
 			return <Button
@@ -13,8 +13,8 @@ export default function ButtonsUITest() {
 				color={color}
 				disabled={!!toggles.disabled}
 				loading={!!toggles.loading}
-				startIcon={!!toggles.startIcon && <Icon.Material icon="send" />}
-				endIcon={!!toggles.endIcon && <Icon.Material icon="send" />}
+				startIcon={!!toggles.startIcon && <Icon.Material size={20} icon="send" />}
+				endIcon={!!toggles.endIcon && <Icon.Material size={20} icon="send" />}
 			>
 				Click me
 			</Button>

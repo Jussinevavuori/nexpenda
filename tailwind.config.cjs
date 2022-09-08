@@ -1,4 +1,4 @@
-
+// eslint-disable-next-line
 const { rose, emerald, amber, slate } = require("tailwindcss/colors");
 
 const withOpacity = (color, opacity) => {
@@ -18,6 +18,7 @@ module.exports = {
 		extend: {
 			opacity: {
 				15: "0.15",
+				85: "0.85",
 			},
 			spacing: {
 				"tabs": "3.5rem",
