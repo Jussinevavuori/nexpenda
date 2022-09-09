@@ -2,14 +2,14 @@ import { BottomTabItem } from './components/BottomTabItem';
 import { Icon } from '@/components/Icon/Icon';
 import { AppLayoutProps } from '../../AppLayout';
 import { pages } from '@/utils/pages';
+import { useGlobalModal } from '@/stores/globalModalAtom';
 
 export interface BottomTabsProps {
 	active?: AppLayoutProps["active"];
 }
 
 export function BottomTabs(props: BottomTabsProps) {
-
-	// const createTransactionDialog = useTransactionCreateFormDialogState();
+	const { open: openCreateTransaction } = useGlobalModal("createTransaction")
 
 	return <div className="bg-white-bg-2 dark:bg-black-bg h-screenMinusTabs d:h-screen flex items-stretch shadow-lg">
 
@@ -29,7 +29,7 @@ export function BottomTabs(props: BottomTabsProps) {
 
 		<BottomTabItem
 			active={props.active}
-			// onClick={() => createTransactionDialog.open()}
+			onClick={() => openCreateTransaction({})}
 			items={[]}
 			icon={<Icon.Material icon="add_circle" className="text-primary-600" size={30} />}
 		/>

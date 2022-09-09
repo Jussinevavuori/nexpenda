@@ -37,8 +37,7 @@ export const schedulesRouter = createProtectedRouter()
       every: z.number().positive().int(),
       amount: z.number().int(),
       category: z.string().min(1),
-      comment: z.string().optional(),
-      categoryIcon: z.string().optional(),
+      comment: z.string(),
       assignTransactions: z.array(z.string().min(1)).optional(),
     }),
     async resolve({ ctx, input }) {
@@ -71,14 +70,6 @@ export const schedulesRouter = createProtectedRouter()
           category: { select: { id: true, name: true, icon: true } },
         },
       });
-
-      // Update category icon if specified
-      if (input.categoryIcon) {
-        await ctx.prisma.category.update({
-          where: { id: created.categoryId },
-          data: { icon: input.categoryIcon },
-        });
-      }
 
       // Assign specified transactions to schedules, first ensuring they
       // belong to the user.
@@ -242,8 +233,7 @@ export const schedulesRouter = createProtectedRouter()
       every: z.number().positive().int().optional(),
       amount: z.number().int().optional(),
       category: z.string().min(1).optional(),
-      comment: z.string().optional().nullable(),
-      categoryIcon: z.string().optional().optional(),
+      comment: z.string(),
     }),
     async resolve({ ctx, input }) {
       // Ensure user owns transactions being updated
@@ -290,16 +280,6 @@ export const schedulesRouter = createProtectedRouter()
           category: { select: { id: true, name: true, icon: true } },
         },
       });
-
-      /**
-       * Update category icon if specified
-       */
-      if (input.categoryIcon) {
-        await ctx.prisma.category.update({
-          where: { id: updated.categoryId },
-          data: { icon: input.categoryIcon },
-        });
-      }
 
       /**
        * Return updated

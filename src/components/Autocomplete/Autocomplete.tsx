@@ -9,14 +9,14 @@ export type AutocompleteProps = Parameters<typeof Combobox>[0]
 export const Autocomplete = Object.assign(function Autocomplete({ children, ...props }: AutocompleteProps) {
 
 	if (typeof children === "function") {
-		return <Combobox {...props} >
+		return <Combobox {...props} className={"relative " + props.className}>
 			{(renderProps) => <div className="relative">
 				{children(renderProps)}
 			</div>}
 		</Combobox>
 	}
 
-	return <Combobox {...props} >
+	return <Combobox {...props} className={"relative " + props.className} >
 		<div className="relative">
 			{children}
 		</div>

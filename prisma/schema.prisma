@@ -13,7 +13,7 @@ datasource db {
 
 model Transaction {
   id         String               @id @default(uuid())
-  comment    String?
+  comment    String
   amount     Int
   time       DateTime
   categoryId String               @map("category_id")
@@ -33,7 +33,7 @@ model TransactionSchedule {
   latestCreatedOccurrence DateTime?     @map("latest_created_occurrence")
   userId                  String        @map("user_id")
   amount                  Int
-  comment                 String?
+  comment                 String
   categoryId              String        @map("category_id")
   category                Category      @relation(fields: [categoryId], references: [id])
   intervals               IntervalType

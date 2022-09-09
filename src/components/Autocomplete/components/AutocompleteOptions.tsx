@@ -5,9 +5,10 @@ import React from "react";
 
 export type AutocompleteOptionsProps = Parameters<typeof Combobox.Options>[0] & {
 	onResetQuery?(): void;
+	maxHeight?: number;
 }
 
-export function AutocompleteOptions({ onResetQuery, children, ...props }: AutocompleteOptionsProps) {
+export function AutocompleteOptions({ onResetQuery, maxHeight, children, ...props }: AutocompleteOptionsProps) {
 	return <Transition
 		as={Fragment}
 		leave="transition ease-in duration-100"
@@ -19,6 +20,7 @@ export function AutocompleteOptions({ onResetQuery, children, ...props }: Autoco
 	>
 		<Combobox.Options
 			{...props}
+			style={{ maxHeight }}
 			className={c("absolute top-[100%] mt-1 max-h-60 w-full overflow-auto",
 				"rounded-lg z-10 bg-white-bg dark:bg-black-bg py-1 text-base shadow-lg",
 				"ring-1 ring-divider focus:outline-none sm:text-sm",

@@ -39,7 +39,7 @@ export const InputBase = Object.assign(function InputBase(props: InputBaseProps)
 
 		// Default styles
 		c.if(!props.error)(c.variant(props.variant ?? "default")({
-			default: "bg-slate-500/10",
+			default: "bg-slate-500/15 dark:bg-slate-500/25",
 			bordered: "border-slate-300 dark:border-slate-600",
 			underlined: "border-slate-300 dark:border-slate-600",
 		})),

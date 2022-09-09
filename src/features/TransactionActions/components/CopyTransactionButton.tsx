@@ -1,6 +1,10 @@
+import { AlertDialog } from "@/components/AlertDialog/AlertDialog";
 import { Button } from "@/components/Button/Button";
 import { Icon } from "@/components/Icon/Icon";
 import { IconButton } from "@/components/IconButton/IconButton";
+import { useGlobalModal } from "@/stores/globalModalAtom";
+import { transactionCopyAtom } from "@/stores/transactionCopyAtom";
+import { useAtom } from "jotai";
 import { useTransactionSelectionStore } from "../../../stores/transactionSelectionStore";
 
 export type CopyTransactionButtonProps = {
@@ -15,24 +19,34 @@ export function CopyTransactionButton(props: CopyTransactionButtonProps) {
 		? props.transactions.find(_ => selection.has(_.id))
 		: undefined
 
-	if (props.icon) {
-		return <IconButton
-			variant="bordered"
-			disabled={!transaction}
-		>
-			<Icon.Material icon="content_copy" />
-		</IconButton>
+	const { 1: setCopy } = useAtom(transactionCopyAtom)
+	const { open } = useGlobalModal("createTransaction");
+
+	const handleCopy = () => {
+		if (transaction) {
+			setCopy(transaction);
+			open({})
+		}
 	}
 
-	return <Button
-		disabled={!transaction}
-		// onClick={() => {
-		// createDialogState.open();
-		// copy.copy(selection.selectedTransactions[0]);
-		// }}
-		startIcon={<Icon.Material size={20} icon="content_copy" />}
-		variant="bordered"
-	>
-		Copy
-	</Button>
+	return <>
+		{
+			props.icon
+				? <IconButton
+					variant="bordered"
+					disabled={!transaction}
+					onClick={handleCopy}
+				>
+					<Icon.Material icon="content_copy" />
+				</IconButton>
+				: <Button
+					disabled={!transaction}
+					onClick={handleCopy}
+					startIcon={<Icon.Material size={20} icon="content_copy" />}
+					variant="bordered"
+				>
+					Copy
+				</Button>
+		}
+	</>
 }

@@ -1,6 +1,7 @@
 import { Button } from "@/components/Button/Button";
 import { Icon } from "@/components/Icon/Icon";
 import { IconButton } from "@/components/IconButton/IconButton";
+import { useGlobalModal } from "@/stores/globalModalAtom";
 import { useTransactionSelectionStore } from "../../../stores/transactionSelectionStore";
 
 export interface EditTransactionButtonProps {
@@ -16,22 +17,26 @@ export function EditTransactionButton(props: EditTransactionButtonProps) {
 		? props.transactions.find(_ => selection.has(_.id))
 		: undefined
 
-	// const state = useTransactionEditFormDialogState();
-
-
+	const { open } = useGlobalModal("editTransaction");
+	const handleOpen = () => {
+		if (transaction) {
+			open({ id: transaction.id })
+		}
+	}
 
 	if (props.icon) {
 		return <IconButton
 			variant="bordered"
 			disabled={!transaction}
+			onClick={handleOpen}
 		>
 			<Icon.Material icon="edit" />
 		</IconButton>
 	}
 
 	return <Button
+		onClick={handleOpen}
 		disabled={!transaction}
-		// onClick={() => transaction ? state.setValue(transaction.id) : null}
 		startIcon={<Icon.Material size={20} icon="edit" />}
 		{...props}
 	>

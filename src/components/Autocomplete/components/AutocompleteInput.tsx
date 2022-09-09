@@ -6,10 +6,11 @@ import { Combobox } from "@headlessui/react"
 export type AutocompleteInputProps = Parameters<typeof Combobox.Input>[0]
 	& InputBaseProps
 	& {
+		placeholder?: string;
 		helperText?: string;
 	}
 
-export function AutocompleteInput({ helperText, onChange, ...props }: AutocompleteInputProps) {
+export function AutocompleteInput({ helperText, placeholder, onChange, ...props }: AutocompleteInputProps) {
 	return <InputBase
 		endIcon={<Combobox.Button className="flex items-center">
 			<Icon.Material icon="unfold_more" />
@@ -18,15 +19,14 @@ export function AutocompleteInput({ helperText, onChange, ...props }: Autocomple
 	>
 		<Combobox.Input
 			onChange={onChange}
-			className={
-				c("bg-transparent py-2 text-black dark:text-white outline-none",
-					"placeholder:text-black-4 dark:placeholder:text-white-4 w-full",
-					c.variant(props.variant ?? "default")({
-						bordered: "px-2",
-						default: "px-2",
-						underlined: "px-0"
-					}))
-			}
+			placeholder={placeholder}
+			className={c("bg-transparent py-2 text-black dark:text-white outline-none",
+				"placeholder:text-black-4 dark:placeholder:text-white-4 w-full",
+				c.variant(props.variant ?? "default")({
+					bordered: "px-2",
+					default: "px-4",
+					underlined: "px-0"
+				}))}
 		/>
 
 		{

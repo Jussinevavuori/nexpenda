@@ -1,4 +1,5 @@
 import { Switch } from "@/components/Switch/Switch";
+import { setTheme } from "@/utils/color/setTheme";
 import React, { useState } from "react"
 import { usePreference } from "../Preferences/hooks/usePreference";
 import { useUpdatePreference } from "../Preferences/hooks/useUpdatePreference";
@@ -38,7 +39,7 @@ export function UITester<Toggle extends string, Col extends string, Row extends 
 					<p>
 						Dark Theme
 					</p>
-					<Switch value={theme === "dark"} onChange={v => updateTheme(v ? "dark" : "light")} />
+					<Switch value={theme === "dark"} onChange={v => { updateTheme(v ? "dark" : "light"); setTheme(v ? "dark" : "light") }} />
 				</section>
 
 				{

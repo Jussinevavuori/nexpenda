@@ -23,7 +23,7 @@ export function CurrencySelector() {
 	const filteredCurrencies = currencyQuery.trim() === ''
 		? selectableCurrencies
 		: selectableCurrencies.filter((curr) => {
-			return `${curr.code}${curr.countries}${curr.currency}`.toLowerCase().replace(/\s+/g, "")
+			return `${curr.code} ${curr.countries} ${curr.currency}`.toLowerCase().replace(/\s+/g, "")
 				.includes(currencyQuery.trim().toLowerCase().replace(/\s+/g, ""))
 		})
 

@@ -24,7 +24,7 @@ function getKeySymbol(symbol: string) {
 // List of mac key mappings
 const macKeys: Record<string, string> = {
 	ctrl: "⌘",
-	shift: "↑",
+	shift: "⇧",
 	alt: "⌥",
 	delete: "⌫"
 }

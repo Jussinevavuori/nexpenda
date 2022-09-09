@@ -85,7 +85,7 @@ export const transactionsRouter = createProtectedRouter()
       time: z.date(),
       category: z.string().min(1),
       amount: z.number().int(),
-      comment: z.string().optional(),
+      comment: z.string(),
     }),
     async resolve({ ctx, input }) {
       return ctx.prisma.transaction.create({
@@ -128,7 +128,7 @@ export const transactionsRouter = createProtectedRouter()
         time: z.date(),
         category: z.string().min(1),
         amount: z.number().int(),
-        comment: z.string().optional(),
+        comment: z.string(),
       })
     ),
     async resolve({ ctx, input }) {
@@ -177,7 +177,6 @@ export const transactionsRouter = createProtectedRouter()
       category: z.string().min(1),
       amount: z.number().int(),
       comment: z.string().optional(),
-      categoryIcon: z.string().optional(),
     }),
     async resolve({ ctx, input }) {
       // Ensure user owns transactions being updated

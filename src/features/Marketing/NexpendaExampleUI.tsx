@@ -1,9 +1,17 @@
 import { Icon } from "@/components/Icon/Icon";
 import { NexpendaLogo } from "@/components/NexpendaLogo/NexpendaLogo";
 
+const randomWidth = (min: number, max: number, i: number) => {
+	const l = i + 124893
+	const rand = (l + l * l + l * l * l) / (l + 7);
+	const d = max - min;
+	const r = rand % d;
+	return { width: (min + r) + "%" };
+}
+
 export function NexpendaExampleUI() {
 	return (
-		<div className="relative w-full aspect-video">
+		<div className="relative w-full h-[480px] m:scale-75">
 
 			{/** Main window */}
 			<div className="absolute rounded-xl border border-divider shadow-xl top-4 bottom-0 left-8 right-8">
@@ -58,6 +66,31 @@ export function NexpendaExampleUI() {
 								<Icon.Material icon="unfold_more" size={16} />
 							</div>
 						</div>
+					</div>
+
+					{/* Table */}
+					<div className="absolute flex flex-col top-28 left-0 right-0">
+
+						{/* Header */}
+						<div className="w-full h-2 grid grid-cols-[5fr_3fr_7fr_3fr] gap-2">
+							<div className="rounded bg-slate-300 h-full w-8" />
+							<div className="rounded bg-slate-300 h-full w-8 ml-auto" />
+							<div className="rounded bg-slate-300 h-full w-8" />
+							<div className="rounded bg-slate-300 h-full w-8 ml-auto" />
+						</div>
+						<div className="h-4" />
+
+						{/* Rows */}
+						{
+							[true, true, true, false, false, false, true, false, false, true, false, true, true, false, false].map((isPositive, i) => (
+								<div className="w-full h-2 grid grid-cols-[5fr_3fr_7fr_3fr] my-[5px] gap-2" key={i}>
+									<div style={randomWidth(40, 80, i + 1)} className="rounded bg-slate-300 h-full" />
+									<div style={randomWidth(30, 50, i + 2)} className={"rounded h-full ml-auto " + (isPositive ? "bg-success-400" : "bg-danger-400")} />
+									<div style={randomWidth(40, 90, i + 4)} className="rounded bg-slate-300 h-full" />
+									<div style={randomWidth(20, 50, i + 3)} className="ml-auto rounded bg-slate-300 h-full" />
+								</div>
+							))
+						}
 					</div>
 
 				</div>

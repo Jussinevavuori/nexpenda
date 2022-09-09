@@ -1,3 +1,4 @@
+import { AlertDialog } from '@/components/AlertDialog/AlertDialog';
 import { Button } from '@/components/Button/Button';
 import { Icon } from '@/components/Icon/Icon';
 import { IconButton } from '@/components/IconButton/IconButton';
@@ -20,27 +21,33 @@ export function DeleteTransactionButton(props: DeleteTransactionButtonProps) {
 		}
 	})
 
-
-	if (props.icon) {
-		return <IconButton
-			variant="bordered"
-			disabled={selectedTransactions.length === 0}
-			onClick={() => deleteMutation.mutate({ ids: selectedIds })}
-			color="danger"
-			loading={deleteMutation.isLoading}
-		>
-			<Icon.Material icon="delete" />
-		</IconButton>
-	}
-
-	return <Button
-		disabled={selectedTransactions.length === 0}
-		onClick={() => deleteMutation.mutate({ ids: selectedIds })}
-		startIcon={<Icon.Material size={20} icon="delete" />}
-		variant="bordered"
-		color="danger"
-		loading={deleteMutation.isLoading}
+	return <AlertDialog
+		title="Confirm deletion"
+		description={`Are you sure you want to delete ${selectedIds.length} transactions?`}
+		confirmLabel="Delete"
+		cancelLabel="Cancel"
+		variant="danger"
+		onConfirm={() => deleteMutation.mutate({ ids: selectedIds })}
 	>
-		Delete
-	</Button>
+		{
+			props.icon
+				? <IconButton
+					variant="bordered"
+					disabled={selectedTransactions.length === 0}
+					color="danger"
+					loading={deleteMutation.isLoading}
+				>
+					<Icon.Material icon="delete" />
+				</IconButton>
+				: <Button
+					disabled={selectedTransactions.length === 0}
+					startIcon={<Icon.Material size={20} icon="delete" />}
+					variant="bordered"
+					color="danger"
+					loading={deleteMutation.isLoading}
+				>
+					Delete
+				</Button>
+		}
+	</AlertDialog>
 }

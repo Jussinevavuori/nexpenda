@@ -1,6 +1,6 @@
 import { c } from "@/utils/generic/classnames";
 import Link, { LinkProps } from "next/link";
-import React from "react"
+import React, { forwardRef } from "react"
 import { LoadingSpinner } from "../LoadingSpinner/LoadingSpinner";
 
 export type ButtonVariant = "default" | "flat" | "bordered" | "flat" | "text";
@@ -24,7 +24,7 @@ export type ButtonLinkProps = LinkProps & React.AnchorHTMLAttributes<HTMLAnchorE
 	children?: React.ReactNode;
 }
 
-export const Button = Object.assign(function Button({
+export const Button = Object.assign(forwardRef<HTMLButtonElement, ButtonProps>(function Button({
 	loading,
 	startIcon,
 	endIcon,
@@ -33,9 +33,10 @@ export const Button = Object.assign(function Button({
 	children,
 	className,
 	...htmlProps
-}: ButtonProps) {
+}, ref) {
 	return <button
 		{...htmlProps}
+		ref={ref}
 		disabled={loading || htmlProps.disabled}
 		className={getClassName({ loading, variant, color, className, disabled: htmlProps.disabled, startIcon, endIcon })}
 	>
@@ -50,7 +51,7 @@ export const Button = Object.assign(function Button({
 		{children}
 		{endIcon}
 	</button>
-}, {
+}), {
 	Link: function LinkButton({
 		startIcon,
 		endIcon,
@@ -119,7 +120,7 @@ function getClassName(props: {
 				danger: "bg-danger/0 text-danger enabled:hover:bg-danger/10 enabled:active:bg-danger/20",
 				success: "bg-success/0 text-success enabled:hover:bg-success/10 enabled:active:bg-success/20",
 				warning: "bg-warning/0 text-warning enabled:hover:bg-warning/10 enabled:active:bg-warning/20",
-				monochrome: "bg-black/0 dark:bg-white/0 enabled:hover:bg-black/10 enabled:active:bg-black/20 dark:enabled:hover:bg-white/10 dark:enabled:active:bg-white/20"
+				monochrome: "text-black dark:text-white bg-black/0 dark:bg-white/0 enabled:hover:bg-black/10 enabled:active:bg-black/20 dark:enabled:hover:bg-white/10 dark:enabled:active:bg-white/20"
 			})),
 		}),
 		c.if(props.disabled)("opacity-40"),
