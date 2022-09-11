@@ -3,6 +3,7 @@ export const pages = {
   welcome: "/app/welcome",
   dashboard: "/app/dashboard",
   analytics: "/app/analytics",
+  budgets: "/app/budgets",
   schedules: "/app/schedules",
   login: "/auth/login",
   signout: "/auth/signout",

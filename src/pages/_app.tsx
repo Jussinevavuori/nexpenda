@@ -12,7 +12,7 @@ import { Notifications } from "@/features/Notifications/Notifications";
 import { Meta } from "@/features/Meta/Meta";
 import { GlobalModalManager } from "@/features/GlobalModalManager/GlobalModalManager";
 
-const MyApp: AppType = ({
+const App: AppType = ({
 	Component,
 	pageProps: { session, ...pageProps },
 }) => {
@@ -32,6 +32,8 @@ const MyApp: AppType = ({
 		</SessionProvider>
 	);
 };
+
+// Configure TRPC router to wrap App
 
 const getBaseUrl = () => {
 	// Browser should use relative URL
@@ -53,4 +55,4 @@ export default withTRPC<AppRouter>({
 		};
 	},
 	ssr: false,
-})(MyApp);
+})(App);

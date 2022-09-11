@@ -1,6 +1,8 @@
+import { Button } from "@/components/Button/Button";
 import { PageHead } from "@/components/PageHead/PageHead";
-import { NexpendaExampleUI } from "@/features/Marketing/NexpendaExampleUI";
 import { SiteLayout } from "@/layouts/SiteLayout/SiteLayout";
+import { pages } from "@/utils/pages";
+import Image from "next/future/image";
 
 export default function HomePage() {
 	return <SiteLayout>
@@ -20,44 +22,20 @@ export default function HomePage() {
 						{" "}Better.
 					</span>
 				</h2>
+
+				<div className="relative flex gap-12 mt-8">
+					<Button.Link href={pages.login} color="monochrome" className="scale-125 origin-top-left">
+						Get started for free
+					</Button.Link>
+					<Button.Link href={pages.login} variant="text" color="monochrome" className="scale-125 origin-top-left">
+						Login
+					</Button.Link>
+				</div>
 			</div>
 
-			<div className="py-8">
-				<NexpendaExampleUI />
+			<div className="mt-16 w-full relative" style={{ height: 600 }}>
+				<Image src={"/assets/svg/ui-example.svg"} alt="" fill />
 			</div>
-		</section>
-
-		<section id="home" className="max-w-4xl mx-auto py-16">
-			<p>Test</p>
-		</section>
-		<section id="home" className="max-w-4xl mx-auto py-16">
-			<p>Test</p>
-		</section>
-		<section id="home" className="max-w-4xl mx-auto py-16">
-			<p>Test</p>
-		</section>
-		<section id="home" className="max-w-4xl mx-auto py-16">
-			<p>Test</p>
-		</section>
-		<section id="home" className="max-w-4xl mx-auto py-16">
-			<p>Test</p>
-		</section>
-
-
-		<section id="home" className="max-w-4xl mx-auto py-16">
-			<p>Test</p>
-		</section>
-		<section id="home" className="max-w-4xl mx-auto py-16">
-			<p>Test</p>
-		</section>
-		<section id="home" className="max-w-4xl mx-auto py-16">
-			<p>Test</p>
-		</section>
-		<section id="home" className="max-w-4xl mx-auto py-16">
-			<p>Test</p>
-		</section>
-		<section id="home" className="max-w-4xl mx-auto py-16">
-			<p>Test</p>
 		</section>
 
 	</SiteLayout>

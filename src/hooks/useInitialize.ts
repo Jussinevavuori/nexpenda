@@ -3,9 +3,12 @@ import { useUpdatePreference } from "@/features/Preferences/hooks/useUpdatePrefe
 import { offsetPalette } from "@/utils/color/offsetPalette";
 import { setPrimaryColor } from "@/utils/color/setPrimaryColor";
 import { setTheme } from "@/utils/color/setTheme";
+import { exposeToWindow } from "@/utils/dom/exposeToWindow";
+import { trpc } from "@/utils/trpc";
 import { enableMapSet } from "immer";
 import { useEffect } from "react";
 import { useOnKeyCombination } from "./useOnKeyCombination";
+import superjson from "superjson";
 
 /**
  * Initialize all required properties.
@@ -23,6 +26,18 @@ export function useInitialize() {
   useEffect(() => {
     enableMapSet();
   }, []);
+
+  // Utility to access TRPC for testing
+  useEffect(
+    () =>
+      exposeToWindow({
+        trpc: trpc.createClient({
+          url: "http://localhost:3000/api/trpc",
+          transformer: superjson,
+        }),
+      }),
+    []
+  );
 
   // Utility for toggling theme and palette
   const updateTheme = useUpdatePreference("theme");

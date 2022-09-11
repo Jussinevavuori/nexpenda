@@ -4,6 +4,7 @@ import { getPeriodStartDate } from "@/utils/dates/getPeriodStartDate";
 import { filterTransactions } from "@/utils/transaction/filterTransactions";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
+import { periodSchema } from "../utils/inputSchemas";
 import { createProtectedRouter } from "./protectedRouter";
 
 export const transactionsRouter = createProtectedRouter()
@@ -35,20 +36,7 @@ export const transactionsRouter = createProtectedRouter()
   .query("list", {
     input: z.object({
       query: z.string().optional(),
-      period: z
-        .object({
-          year: z.number().positive().int().optional(),
-          month: z.number().min(0).max(11).int().optional(),
-        })
-        .refine(
-          ({ year, month }) =>
-            !(year === undefined && typeof month === "number"),
-          {
-            message: "Invalid period. Period can't contain only month.",
-            path: ["year"],
-          }
-        )
-        .optional(),
+      period: periodSchema.optional(),
     }),
     async resolve({ ctx, input }) {
       const transactions = await ctx.prisma.transaction.findMany({

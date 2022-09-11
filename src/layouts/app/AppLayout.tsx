@@ -6,7 +6,7 @@ import { Sidebar } from "./features/Sidebar/Sidebar";
 
 export type AppLayoutProps = {
 	children?: React.ReactNode;
-	active?: "dashboard" | "analytics" | "schedules" | "settings"
+	active?: "dashboard" | "analytics" | "schedules" | "settings" | "budgets"
 }
 
 export const AppLayout = Object.assign(function AppLayout(props: AppLayoutProps) {

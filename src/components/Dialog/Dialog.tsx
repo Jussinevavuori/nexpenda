@@ -17,7 +17,7 @@ export const Dialog = Object.assign(function Dialog(props: DialogProps) {
 	return <AnimatePresence>
 		{
 			props.open && (
-				<HeadlessDialog static open={props.open} onClose={props.onClose}>
+				<HeadlessDialog static open={props.open} onClose={props.onClose}>+
 					<motion.div
 						className="fixed z-10 inset-0 flex flex-col items-center justify-end d:justify-center p-3 backdrop-blur-sm bg-black-bg bg-opacity-50"
 						transition={{ duration: 0.12 }}
@@ -30,7 +30,7 @@ export const Dialog = Object.assign(function Dialog(props: DialogProps) {
 							initial={{ y: 100 }}
 							animate={{ y: 0 }}
 							exit={{ y: 100 }}
-							className="relative bg-white-bg-2 dark:bg-black-bg-2 border border-white-bg-3 dark:border-black-bg-3 text-black dark:text-black rounded-xl d:rounded-lg shadow-lg p-4 w-full d:w-auto"
+							className="relative bg-white-bg-2 dark:bg-black-bg-2 border border-white-bg-3 dark:border-black-bg-3 text-black dark:text-white rounded-xl d:rounded-lg shadow-lg p-4 w-full d:w-auto"
 						>
 
 							{

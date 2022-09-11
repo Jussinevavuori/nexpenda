@@ -8,11 +8,11 @@ export default class MyDocument extends Document {
 
 	render() {
 		return (
-			<Html className="text-black dark:text-white">
+			<Html>
 				<Head>
 					<Meta.Document />
 				</Head>
-				<body>
+				<body className="text-black dark:text-white">
 					<Main />
 					<NextScript />
 				</body>

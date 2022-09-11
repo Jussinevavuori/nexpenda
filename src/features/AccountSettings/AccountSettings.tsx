@@ -3,9 +3,7 @@ import { Avatar } from "@/components/Avatar/Avatar";
 import { Button } from "@/components/Button/Button";
 import { Divider } from "@/components/Divider/Divider";
 import { Icon } from "@/components/Icon/Icon";
-import { IconButton } from "@/components/IconButton/IconButton";
 import { Input } from "@/components/Input/Input";
-import { Tooltip } from "@/components/Tooltip/Tooltip";
 import { useNotify } from "@/stores/notificationStore";
 import { PictureChanger } from "@/features/PictureChanger/PictureChanger";
 import { capitalize } from "@/utils/generic/capitalize";
@@ -107,15 +105,18 @@ export function AccountSettings() {
 					readOnly
 					disabled={updateUserMutation.isLoading}
 					value={user.email ?? "No email"}
-					endIcon={user.email ? user.emailVerified
-						? <IconButton variant="text" color="success" inputAdornment="end" startLabel="Verified">
-							<Icon.Material icon="check" />
-						</IconButton>
-						: <IconButton variant="text" color="warning" inputAdornment="end" startLabel="Unverified">
-							<Icon.Material icon="warning" />
-						</IconButton>
-						: undefined
-					}
+				/*
+				Disabled until email auth introduced
+				endIcon={user.email ? user.emailVerified
+					? <IconButton variant="text" color="success" inputAdornment="end" startLabel="Verified">
+						<Icon.Material icon="check" />
+					</IconButton>
+					: <IconButton variant="text" color="warning" inputAdornment="end" startLabel="Unverified">
+						<Icon.Material icon="warning" />
+					</IconButton>
+					: undefined
+				}
+				*/
 				/>
 			</div>
 
@@ -127,11 +128,14 @@ export function AccountSettings() {
 					fullWidth
 					readOnly
 					value={"No password"}
-					endIcon={<Tooltip value="Request password change email">
-						<IconButton variant="text" color="primary" inputAdornment="end" startLabel="Change">
-							<Icon.Material icon="lock_reset" />
-						</IconButton>
-					</Tooltip>}
+				/*
+				Disabled until email auth introduced
+				endIcon={<Tooltip value="Request password change email">
+					<IconButton variant="text" color="primary" inputAdornment="end" startLabel="Change">
+						<Icon.Material icon="lock_reset" />
+					</IconButton>
+				</Tooltip>}
+				*/
 				/>
 			</div>
 

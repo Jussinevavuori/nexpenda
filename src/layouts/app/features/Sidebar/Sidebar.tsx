@@ -56,10 +56,19 @@ export const Sidebar = React.memo(function Sidebar(props: SidebarProps) {
 					isSidebarOpen={isSidebarOpen}
 				/>
 				<SidebarItem
+					item="budgets"
+					label="Budget"
+					href={pages.budgets}
+					shortcut={{ alt: true, key: "3" }}
+					icon="savings"
+					active={props.active}
+					isSidebarOpen={isSidebarOpen}
+				/>
+				<SidebarItem
 					item="schedules"
 					label="Schedules"
 					href={pages.schedules}
-					shortcut={{ alt: true, key: "3" }}
+					shortcut={{ alt: true, key: "4" }}
 					icon="update"
 					active={props.active}
 					isSidebarOpen={isSidebarOpen}
@@ -69,7 +78,7 @@ export const Sidebar = React.memo(function Sidebar(props: SidebarProps) {
 					label="Settings"
 					href={pages.settings.root}
 					icon="tune"
-					shortcut={{ alt: true, key: "4" }}
+					shortcut={{ alt: true, key: "5" }}
 					active={props.active}
 					isSidebarOpen={isSidebarOpen}
 				/>

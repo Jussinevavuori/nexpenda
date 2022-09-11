@@ -21,7 +21,7 @@ export function SettingsLayout(props: SettingsLayoutProps) {
 			<div className="flex-[1]">
 				<SettingsScreen />
 			</div>
-			<Divider variant="vertical" className={c("mx-10", isPanelOpen ? "opacity-100" : "opacity-0")} />
+			<Divider vertical className={c("mx-10", isPanelOpen ? "opacity-100" : "opacity-0")} />
 			<div className={c("flex-[2]", isPanelOpen ? "" : "")}>
 				<div className="h-full pt-10">
 					{

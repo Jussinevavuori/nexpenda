@@ -1,8 +1,9 @@
 import { c } from "@/utils/generic/classnames";
 
 export interface DividerProps {
-	variant?: "horizontal" | "vertical";
+	vertical?: boolean;
 	className?: string;
+	disableMargin?: boolean;
 }
 
 export function Divider(props: DividerProps) {
@@ -10,10 +11,14 @@ export function Divider(props: DividerProps) {
 	return <div
 		className={c(
 			"relative bg-divider",
-			c.variant(props.variant ?? "horizontal")({
-				horizontal: "w-full h-px my-4",
-				vertical: "w-px mx-4"
+			c.variant(props.vertical ? "vertical" : "horizontal")({
+				horizontal: "w-full h-px",
+				vertical: "w-px"
 			}),
+			c.if(!props.disableMargin)(c.variant(props.vertical ? "vertical" : "horizontal")({
+				horizontal: "my-4",
+				vertical: "mx-4"
+			})),
 			props.className
 		)}
 	/>

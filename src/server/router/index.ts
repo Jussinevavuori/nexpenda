@@ -7,6 +7,8 @@ import { feedbackRouter } from "./feedbackRouter";
 import { schedulesRouter } from "./schedulesRouter";
 import { preferencesRouter } from "./preferencesRouter";
 import { categoriesRouter } from "./categoriesRouter";
+import { budgetsRouter } from "./budgetsRouter";
+import { budgetsSummaryRouter } from "./budgetsSummaryRouter";
 
 export const appRouter = createRouter()
   .transformer(superjson)
@@ -15,4 +17,6 @@ export const appRouter = createRouter()
   .merge("categories.", categoriesRouter)
   .merge("feedback.", feedbackRouter)
   .merge("schedules.", schedulesRouter)
+  .merge("budgets.", budgetsRouter)
+  .merge("budgets.summary.", budgetsSummaryRouter)
   .merge("preferences.", preferencesRouter);

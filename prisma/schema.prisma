@@ -65,10 +65,41 @@ model Category {
   user                User                  @relation(fields: [userId], references: [id])
   createdAt           DateTime              @default(now()) @map("created_at")
   updatedAt           DateTime              @default(now()) @updatedAt @map("updated_at")
+  budgetEntries       BudgetEntry[]
 
   @@unique([userId, name], name: "uniqueUidName")
   @@unique([userId, id], name: "unique_uid_id")
   @@map(name: "categories")
+}
+
+model Budget {
+  id            String        @id @default(uuid())
+  name          String?
+  entries       BudgetEntry[]
+  date          DateTime // Start of month
+  savingsTarget Int           @default(0) @map("savings_target")
+  userId        String        @map("user_id")
+  user          User          @relation(fields: [userId], references: [id])
+  createdAt     DateTime      @default(now()) @map("created_at")
+  updatedAt     DateTime      @default(now()) @updatedAt @map("updated_at")
+
+  @@map(name: "budgets")
+}
+
+model BudgetEntry {
+  id                 String   @id @default(uuid())
+  amount             Int
+  averagedOverMonths Int      @default(1) @map("averaged_over_months")
+  category           Category @relation(fields: [categoryId], references: [id])
+  categoryId         String   @map("category_id")
+  budgetId           String   @map("budget_id")
+  budget             Budget   @relation(fields: [budgetId], references: [id])
+  userId             String   @map("user_id")
+  user               User     @relation(fields: [userId], references: [id])
+  createdAt          DateTime @default(now()) @map("created_at")
+  updatedAt          DateTime @default(now()) @updatedAt @map("updated_at")
+
+  @@map(name: "budget_entries")
 }
 
 model Feedback {
@@ -154,6 +185,8 @@ model User {
   transactions         Transaction[]
   transactionSchedules TransactionSchedule[]
   categories           Category[]
+  budget               Budget[]
+  budgetEntries        BudgetEntry[]
   feedback             Feedback[]
 
   @@map("users")

@@ -7,4 +7,14 @@ import { createContext } from "../../../server/router/context";
 export default createNextApiHandler({
   router: appRouter,
   createContext: createContext,
+  onError({ error, type, path, input }) {
+    console.error(
+      `❌ An error occured on ${type} ${path} with input ${JSON.stringify(
+        input,
+        null,
+        2
+      )}`,
+      error
+    );
+  },
 });

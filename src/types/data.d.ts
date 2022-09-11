@@ -20,3 +20,6 @@ type MutationInput<TRouteKey extends keyof AppRouterMutations> =
 type TransactionItem = Unwrap<QueryOutput<"transactions.list">>;
 type CategoryItem = Unwrap<QueryOutput<"categories.list">>;
 type ScheduleItem = Unwrap<QueryOutput<"schedules.list">>;
+type BudgetItem = NonNullable<Unwrap<QueryOutput<"budgets.get">>>;
+type BudgetEntryItem = Unwrap<BudgetItem["entries"]>;
+type BudgetSummary = NonNullable<Unwrap<QueryOutput<"budgets.summary.get">>>;

@@ -36,7 +36,7 @@ export function CurrencySelector() {
 		}}
 	>
 		<Autocomplete.Input
-			placeholder="Search by name, code or country..."
+			// placeholder="Search by name, code or country..."
 			onChange={e => setCurrencyQuery(e.target.value)}
 			fullWidth
 			displayValue={(_currency: SelectableCurrency) => _currency.code}
