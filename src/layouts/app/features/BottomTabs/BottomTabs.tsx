@@ -2,18 +2,16 @@ import { BottomTabItem } from './components/BottomTabItem';
 import { Icon } from '@/components/Icon/Icon';
 import { AppLayoutProps } from '../../AppLayout';
 import { pages } from '@/utils/pages';
-import { useGlobalModal } from '@/stores/globalModalAtom';
 
 export interface BottomTabsProps {
 	active?: AppLayoutProps["active"];
 }
 
 export function BottomTabs(props: BottomTabsProps) {
-	const { open: openCreateTransaction } = useGlobalModal("createTransaction")
-
 	return <div className="bg-white-bg-2 dark:bg-black-bg h-screenMinusTabs d:h-screen flex items-stretch shadow-lg">
 
 		<BottomTabItem
+			label="Home"
 			active={props.active}
 			href={pages.dashboard}
 			items={["dashboard"]}
@@ -21,6 +19,7 @@ export function BottomTabs(props: BottomTabsProps) {
 		/>
 
 		<BottomTabItem
+			label="Analytics"
 			active={props.active}
 			href={pages.analytics}
 			items={["analytics"]}
@@ -28,13 +27,15 @@ export function BottomTabs(props: BottomTabsProps) {
 		/>
 
 		<BottomTabItem
+			label="Budgets"
 			active={props.active}
-			onClick={() => openCreateTransaction({})}
-			items={[]}
-			icon={<Icon.Material icon="add_circle" className="text-primary-600" size={30} />}
+			href={pages.budgets}
+			items={["budgets"]}
+			icon={<Icon.Material icon="savings" />}
 		/>
 
 		<BottomTabItem
+			label="Schedules"
 			active={props.active}
 			href={pages.schedules}
 			items={["schedules"]}
@@ -42,6 +43,7 @@ export function BottomTabs(props: BottomTabsProps) {
 		/>
 
 		<BottomTabItem
+			label="Settings"
 			active={props.active}
 			href={pages.settings.root}
 			items={["settings"]}

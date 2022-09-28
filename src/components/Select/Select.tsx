@@ -60,8 +60,16 @@ export const Select = Object.assign(function Select<T>(props: SelectProps<T>) {
 	</Listbox >
 }, {
 	Option: function SelectOption<T>({ children, ...props }: SelectOptionProps<T>) {
-		return <Listbox.Option {...props} className="w-full hover:bg-hover-overlay active:bg-active-overlay p-2 ui-selected:text-primary">
-			{children}
+		return <Listbox.Option {...props}>
+			{({ active, disabled, selected }) => (
+				<div className={c("w-full hover:bg-hover-overlay active:bg-active-overlay p-2",
+					c.if(active)("bg-hover-overlay"),
+					c.if(selected)("text-primary"),
+					c.if(disabled)("opacity-50")
+				)}>
+					{children}
+				</div>
+			)}
 		</Listbox.Option>
 	}
 })

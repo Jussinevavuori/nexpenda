@@ -9,11 +9,16 @@ import { enableMapSet } from "immer";
 import { useEffect } from "react";
 import { useOnKeyCombination } from "./useOnKeyCombination";
 import superjson from "superjson";
+import { useEffectOnce } from "./useEffectOnce";
 
 /**
  * Initialize all required properties.
  */
 export function useInitialize() {
+  // Sync schedule mutations
+  const syncTransactionsMutation = trpc.useMutation("schedules.sync");
+  useEffectOnce(() => syncTransactionsMutation.mutate());
+
   // Apply palette and theme
   const palette = usePreference("palette");
   const theme = usePreference("theme");

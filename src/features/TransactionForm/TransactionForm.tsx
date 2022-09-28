@@ -234,14 +234,14 @@ export function TransactionForm(props: TransactionFormProps) {
 			scheduleEditor.isOpen && <div className="flex flex-col gap-4 -mb-4">
 				<Divider />
 				<div className="flex items-center gap-4 space-between">
-					<label htmlFor="scheduleEnabled">
-						Repeat every
-					</label>
 					<Switch
 						id="scheduleEnabled"
 						value={form.watch("scheduleEnabled")}
 						onChange={value => setValue("scheduleEnabled", value)}
 					/>
+					<label htmlFor="scheduleEnabled">
+						Repeat every
+					</label>
 				</div>
 				<div className="flex items-center gap-4 space-between">
 					<div className="flex-1">
@@ -254,7 +254,7 @@ export function TransactionForm(props: TransactionFormProps) {
 							{...selectProperties(register("scheduleEvery"), ["onBlur"])}
 						/>
 					</div>
-					<div className="flex-1">
+					<div className="flex-[2]">
 						<Select<IntervalType>
 							renderValue={(value) => capitalize(pluralize(form.watch("scheduleEvery"), value.toLowerCase()))}
 							value={form.watch("scheduleIntervals")}
@@ -275,6 +275,35 @@ export function TransactionForm(props: TransactionFormProps) {
 								{pluralize(form.watch("scheduleEvery"), "Year")}
 							</Select.Option>
 						</Select>
+					</div>
+				</div>
+				<div className="flex items-center gap-4 space-between">
+					<Switch
+						id="scheduleOccurrencesEnabled"
+						value={form.watch("scheduleEnabled") && form.watch("scheduleOccurrencesEnabled")}
+						onChange={value => {
+							if (form.watch("scheduleEnabled")) {
+								setValue("scheduleOccurrencesEnabled", value)
+							}
+						}}
+					/>
+					<label htmlFor="scheduleOccurrencesEnabled">
+						End after
+					</label>
+				</div>
+				<div className="flex items-center gap-4 space-between">
+					<div className="flex-1">
+						<IntegerInput
+							disabled={!form.watch("scheduleEnabled") || !form.watch("scheduleOccurrencesEnabled")}
+							value={form.watch("scheduleOccurrences")}
+							onChange={value => setValue("scheduleOccurrences", value)}
+							min={0}
+							error={!!errors.scheduleOccurrences}
+							{...selectProperties(register("scheduleOccurrences"), ["onBlur"])}
+						/>
+					</div>
+					<div className="flex-[2]">
+						occurrences
 					</div>
 				</div>
 				<Divider />

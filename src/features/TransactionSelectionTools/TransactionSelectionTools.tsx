@@ -41,6 +41,9 @@ export function TransactionSelectionTools(props: TransactionSelectionToolsProps)
 			<TransactionActions.Edit icon={props.list} transactions={props.transactions} />
 			<TransactionActions.Copy icon={props.list} transactions={props.transactions} />
 			<TransactionActions.Delete icon={props.list} transactions={props.transactions} />
+			{
+				props.list && <TransactionActions.SelectAll icon={props.list} transactions={props.transactions} />
+			}
 
 			{
 				props.list &&

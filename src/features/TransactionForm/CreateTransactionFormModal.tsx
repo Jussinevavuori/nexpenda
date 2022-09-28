@@ -50,7 +50,7 @@ export function CreateTransactionFormModal() {
 							comment: result.comment,
 							firstOccurrence: new Date(values.date),
 							every: values.scheduleEvery,
-							intervals: values.scheduleType,
+							intervals: values.scheduleIntervals,
 							occurrences: values.scheduleOccurrences,
 							assignTransactions: [result.id]
 						})

@@ -58,6 +58,10 @@ export default function DashboardPage() {
 					</div>
 				</AppLayout.Header>
 				<TransactionList />
+
+				<div className="fixed bottom-16 right-2 flex items-end justify-end">
+					<TransactionActions.Create.Floating />
+				</div>
 			</div>
 		</MobileView>
 	</AppLayout>

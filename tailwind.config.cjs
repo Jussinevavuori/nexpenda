@@ -16,6 +16,9 @@ module.exports = {
 			"mono": "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace;"
 		},
 		extend: {
+			backgroundImage: {
+				'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+			},
 			opacity: {
 				15: "0.15",
 				85: "0.85",
@@ -192,7 +195,7 @@ module.exports = {
 		},
 	},
 	plugins: [
+		require('@headlessui/tailwindcss'),
 		require('@tailwindcss/typography'),
-		require('@headlessui/tailwindcss')({ prefix: 'ui' })
 	],
 };

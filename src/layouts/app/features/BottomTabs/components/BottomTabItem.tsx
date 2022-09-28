@@ -11,28 +11,31 @@ export interface BottomTabItemProps {
 	items: SidebarItemKey[],
 	active?: AppLayoutProps["active"];
 	href?: string,
-	onClick?(): void;
+	label?: string;
 }
 
 export function BottomTabItem(props: BottomTabItemProps) {
 
 	const active = !!props.items.find(_ => _ === props.active);
 
-	const element = <button
-		onClick={props.onClick}
-		className="relative h-full w-full flex items-center justify-center"
-	>
+	const element = <button className="relative h-full w-full flex flex-col items-center justify-center gap-1">
 
 		<div className={c(active ? "text-primary-600" : "text-slate-600")}>
 			{props.icon}
+		</div>
+
+		<div className={c("text-xs", c.if(active)("text-primary-600").else("text-slate-500"))}>
+			{props.label}
 		</div>
 
 		<AnimatePresence>
 			{
 				active &&
 				<motion.div
-					className="bg-primary-600 rounded-t absolute h-1 left-0 bottom-0 right-0"
-					animate={{}}
+					className="bg-primary-600 rounded-t absolute h-3 left-0 -bottom-2 right-0"
+					initial={{ y: 30 }}
+					animate={{ y: 0 }}
+					exit={{ y: 10 }}
 				/>
 			}
 		</AnimatePresence>

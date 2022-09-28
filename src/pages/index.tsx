@@ -13,7 +13,7 @@ export default function HomePage() {
 		<section id="home" className="max-w-4xl mx-auto">
 			<div className="flex flex-col gap-4">
 				<h1 className="text-6xl font-bold">
-					Piece of mind is here.
+					Peace of mind is here.
 				</h1>
 
 				<h2 className="text-2xl text-black-2">
