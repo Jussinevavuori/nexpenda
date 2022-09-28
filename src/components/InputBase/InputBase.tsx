@@ -1,4 +1,5 @@
 import { c } from "@/utils/generic/classnames";
+import { forwardRef } from "react";
 export type InputBaseVariant = "default" | "bordered" | "underlined";
 
 export type ExtensionInputBaseProps = {
@@ -17,9 +18,9 @@ export type InputBaseProps = ExtensionInputBaseProps & {
 	children?: React.ReactNode;
 }
 
-export const InputBase = Object.assign(function InputBase(props: InputBaseProps) {
+export const InputBase = Object.assign(forwardRef<HTMLDivElement, InputBaseProps>(function InputBase(props, ref) {
 
-	return <div className={c(
+	return <div ref={ref} className={c(
 		"relative flex items-center group",
 
 		// Variant specific styles
@@ -85,7 +86,7 @@ export const InputBase = Object.assign(function InputBase(props: InputBaseProps)
 			{props.endIcon}
 		</span>}
 	</div>
-}, {
+}), {
 	extractInputBaseProps<T extends InputBaseProps>(props: T): InputBaseProps {
 		/* eslint-disable-next-line */
 		const { children, readOnly, fullWidth, startIcon, startLabel, endIcon, endLabel, variant, error, disabled } = props;

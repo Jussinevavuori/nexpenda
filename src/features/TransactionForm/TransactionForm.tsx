@@ -14,6 +14,15 @@ import { useEffect } from "react";
 import { useAtom } from "jotai";
 import { transactionCopyAtom } from "@/stores/transactionCopyAtom";
 import { getSign } from "@/utils/generic/getSign";
+import { useOpenState } from "@/hooks/useOpenState";
+import { Divider } from "@/components/Divider/Divider";
+import { Switch } from "@/components/Switch/Switch";
+import { IntegerInput } from "@/components/IntegerInput/IntegerInput";
+import { Select } from "@/components/Select/Select";
+import type { IntervalType } from "@prisma/client";
+import { selectProperties } from "@/utils/generic/selectProperties";
+import { pluralize } from "@/utils/generic/pluralize";
+import { capitalize } from "@/utils/generic/capitalize";
 
 // Define full form schema
 export const transactionFormSchema = z.object({
@@ -32,9 +41,11 @@ export const transactionFormSchema = z.object({
 	category: z.string().refine((s) => !!s.trim(), "Category cannot be empty"),
 	comment: z.string(),
 	date: z.string().refine((s) => z.date().safeParse(new Date(s)).success),
+
 	scheduleEnabled: z.boolean(),
 	scheduleEvery: z.number().int().positive(),
-	scheduleType: z.enum(["DAY", "WEEK", "MONTH", "YEAR"]),
+	scheduleIntervals: z.enum(["DAY", "WEEK", "MONTH", "YEAR"]),
+	scheduleOccurrencesEnabled: z.boolean(),
 	scheduleOccurrences: z.number().int(),
 })
 
@@ -76,7 +87,8 @@ export function TransactionForm(props: TransactionFormProps) {
 			icon: undefined,
 			scheduleEnabled: false,
 			scheduleEvery: 1,
-			scheduleType: "MONTH",
+			scheduleIntervals: "MONTH",
+			scheduleOccurrencesEnabled: false,
 			scheduleOccurrences: 0,
 
 			// Copied initial values
@@ -95,7 +107,11 @@ export function TransactionForm(props: TransactionFormProps) {
 			// Custom initial values
 			...props.initialValues,
 		},
+		reValidateMode: "onBlur",
 	})
+
+	// Schedule editor open status
+	const scheduleEditor = useOpenState();
 
 	// Autofocus input field (autofocus prop has trouble)
 	useEffect(() => document.getElementById("amount")?.focus(), []);
@@ -214,9 +230,69 @@ export function TransactionForm(props: TransactionFormProps) {
 			/>
 		</div>
 
+		{
+			scheduleEditor.isOpen && <div className="flex flex-col gap-4 -mb-4">
+				<Divider />
+				<div className="flex items-center gap-4 space-between">
+					<label htmlFor="scheduleEnabled">
+						Repeat every
+					</label>
+					<Switch
+						id="scheduleEnabled"
+						value={form.watch("scheduleEnabled")}
+						onChange={value => setValue("scheduleEnabled", value)}
+					/>
+				</div>
+				<div className="flex items-center gap-4 space-between">
+					<div className="flex-1">
+						<IntegerInput
+							disabled={!form.watch("scheduleEnabled")}
+							value={form.watch("scheduleEvery")}
+							onChange={value => setValue("scheduleEvery", value)}
+							min={0}
+							error={!!errors.scheduleEvery}
+							{...selectProperties(register("scheduleEvery"), ["onBlur"])}
+						/>
+					</div>
+					<div className="flex-1">
+						<Select<IntervalType>
+							renderValue={(value) => capitalize(pluralize(form.watch("scheduleEvery"), value.toLowerCase()))}
+							value={form.watch("scheduleIntervals")}
+							onChange={value => setValue("scheduleIntervals", value)}
+							disabled={!form.watch("scheduleEnabled")}
+							{...selectProperties(register("scheduleIntervals"), ["onBlur"])}
+						>
+							<Select.Option<IntervalType> value="DAY">
+								{pluralize(form.watch("scheduleEvery"), "Day")}
+							</Select.Option>
+							<Select.Option<IntervalType> value="WEEK">
+								{pluralize(form.watch("scheduleEvery"), "Week")}
+							</Select.Option>
+							<Select.Option<IntervalType> value="MONTH">
+								{pluralize(form.watch("scheduleEvery"), "Month")}
+							</Select.Option>
+							<Select.Option<IntervalType> value="YEAR">
+								{pluralize(form.watch("scheduleEvery"), "Year")}
+							</Select.Option>
+						</Select>
+					</div>
+				</div>
+				<Divider />
+			</div>
+		}
+
 		{/* Submit button */}
-		<Button type="submit">
-			Create
-		</Button>
+		<div className="flex gap-4 pt-4">
+			{
+				!props.disableScheduleForm &&
+				<Button type="button" onClick={scheduleEditor.toggle} variant="flat">
+					<Icon.Material icon={scheduleEditor.isOpen ? "unfold_less" : "unfold_more"} />
+				</Button>
+			}
+
+			<Button type="submit" className="w-full">
+				Create
+			</Button>
+		</div>
 	</form >
 }

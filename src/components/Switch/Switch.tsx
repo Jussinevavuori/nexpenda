@@ -6,12 +6,14 @@ const { motion } = require("framer-motion");
 
 export interface SwitchProps {
 	value: boolean;
+	id?: string;
 	onChange(b: boolean): void;
 }
 
 export function Switch(props: SwitchProps) {
 
 	return <button
+		id={props.id}
 		type="button"
 		className="inline-block"
 		onClick={() => props.onChange(!props.value)}

@@ -1,4 +1,4 @@
-// eslint-disable-next-line
+/* eslint-disable @typescript-eslint/no-var-requires */
 const { rose, emerald, amber, slate } = require("tailwindcss/colors");
 
 const withOpacity = (color, opacity) => {
@@ -191,5 +191,8 @@ module.exports = {
 			}
 		},
 	},
-	plugins: [require('@tailwindcss/typography')],
+	plugins: [
+		require('@tailwindcss/typography'),
+		require('@headlessui/tailwindcss')({ prefix: 'ui' })
+	],
 };
