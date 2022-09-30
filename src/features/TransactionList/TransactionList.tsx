@@ -1,7 +1,7 @@
 import { useVirtual } from '@tanstack/react-virtual';
 import { useOpenState } from "@/hooks/useOpenState";
 import { usePeriodStore } from "@/stores/periodStore";
-import { useSelectedTransactions } from "@/stores/transactionSelectionStore";
+import { useSelectedTransactions, useTransactionSelectionStore } from "@/stores/transactionSelectionStore";
 import { flatGroupByDate } from "@/utils/dates/flatGroupByDate";
 import { periodIncludesToday } from "@/utils/dates/periodIncludesToday";
 import { divide } from "@/utils/generic/group";
@@ -17,6 +17,7 @@ import { TransactionListGroupHeader } from './components/TransactionListGroupHea
 import { TransactionListItem } from './components/TransactionListItem';
 import { TransactionSelectionTools } from '../TransactionSelectionTools/TransactionSelectionTools';
 import { useActiveQuery } from '@/stores/transactionSearchAtom';
+import { useOnKeyCombination } from '@/hooks/useOnKeyCombination';
 
 // eslint-disable-next-line
 const { motion, AnimatePresence } = require("framer-motion")
@@ -74,6 +75,13 @@ export const TransactionList = Object.assign(memo(function TransactionList(props
 		overscan: 2,
 		paddingEnd: props.disableBottomPadding ? 0 : 120
 	});
+
+	// Select / deselect all
+	const selectMany = useTransactionSelectionStore(_ => _.selectMany);
+	const clearSelection = useTransactionSelectionStore(_ => _.clear);
+	const selectAll = () => selectMany(sortedTransactions.map(_ => _.id), true)
+	useOnKeyCombination({ key: "a", shift: true }, selectAll)
+	useOnKeyCombination({ key: "d", shift: true }, clearSelection)
 
 	return <div
 		ref={listContainerRef}

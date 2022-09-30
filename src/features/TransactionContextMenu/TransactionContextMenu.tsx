@@ -1,9 +1,11 @@
 import { ContextMenu } from "@/components/ContextMenu/ContextMenu";
 import { Icon } from "@/components/Icon/Icon";
-import { getCategoryLabel } from "@/utils/category/getCategoryLabel";
-import { formatMoney } from "@/utils/currency/formatMoney";
-import { formatDateString } from "@/utils/dates/formatDateString";
-import { c } from "@/utils/generic/classnames";
+import { useGlobalModal } from "@/stores/globalModalAtom";
+import { usePeriodStore } from "@/stores/periodStore";
+import { transactionCopyAtom } from "@/stores/transactionCopyAtom";
+import { useActiveQuery } from "@/stores/transactionSearchAtom";
+import { trpc } from "@/utils/trpc";
+import { useAtom } from "jotai";
 import { useTransactionSelectionStore } from "../../stores/transactionSelectionStore";
 
 export interface TransactionContextMenuProps {
@@ -12,13 +14,49 @@ export interface TransactionContextMenuProps {
 }
 
 export function TransactionContextMenu({ transaction, ...props }: TransactionContextMenuProps) {
-	// const { selection, search, copy } = useTransactionContext();
-	// const editDialogState = useTransactionEditFormDialogState();
-	// const createDialogState = useTransactionCreateFormDialogState();
-	// const deleteMutation = useDeleteTransactionsMutation();
+	const period = usePeriodStore(_ => _.period)
+	const query = useActiveQuery();
+	const { data: transactions } = trpc.useQuery(["transactions.list", query ? { query } : { period }])
 
+	const selectOne = useTransactionSelectionStore(_ => _.select);
+	const selectMany = useTransactionSelectionStore(_ => _.selectMany);
+	const clearSelection = useTransactionSelectionStore(_ => _.clear);
 	const selection = useTransactionSelectionStore(_ => _.selection);
 	const isSelected = selection.has(transaction.id);
+	const utils = trpc.useContext();
+	const deleteMutation = trpc.useMutation("transactions.delete", {
+		onSettled() {
+			utils.invalidateQueries(["transactions.list"])
+		}
+	})
+	const editModal = useGlobalModal("editTransaction");
+	const createModal = useGlobalModal("createTransaction")
+	const { 1: setCopy } = useAtom(transactionCopyAtom)
+
+	const handleEdit = () => {
+		editModal.open({ id: transaction.id });
+	}
+
+	const handleCopy = () => {
+		setCopy(transaction)
+		createModal.open({});
+	}
+
+	const handleDelete = () => {
+		deleteMutation.mutate({ id: transaction.id })
+	}
+
+	const handleSelect = () => {
+		selectOne(transaction.id, true)
+	}
+
+	const handleSelectAll = () => {
+		if (transactions) selectMany(transactions.map(_ => _.id))
+	}
+
+	const handleDeselect = () => {
+		clearSelection();
+	}
 
 	return <ContextMenu>
 		<ContextMenu.Trigger>
@@ -30,7 +68,7 @@ export function TransactionContextMenu({ transaction, ...props }: TransactionCon
 					<ContextMenu.Item
 						startIcon={<Icon.Material icon="edit" />}
 						keyCombination={{ key: "e", shift: true }}
-						// onSelect={() => { editDialogState.setValue(transaction.id) }}
+						onSelect={handleEdit}
 						textValue="edit"
 					>
 						Edit
@@ -38,7 +76,7 @@ export function TransactionContextMenu({ transaction, ...props }: TransactionCon
 					<ContextMenu.Item
 						startIcon={<Icon.Material icon="content_copy" />}
 						keyCombination={{ key: "c", shift: true }}
-						// onSelect={() => { createDialogState.open(); copy.copy(transaction) }}
+						onSelect={handleCopy}
 						textValue="copy"
 					>
 						Copy
@@ -46,7 +84,7 @@ export function TransactionContextMenu({ transaction, ...props }: TransactionCon
 					<ContextMenu.Item
 						startIcon={<Icon.Material icon="delete" className="text-danger" />}
 						keyCombination={{ key: "delete" }}
-						// onSelect={() => { deleteMutation.mutate(transaction) }}
+						onSelect={handleDelete}
 						textValue="delete"
 					>
 						Delete
@@ -57,16 +95,16 @@ export function TransactionContextMenu({ transaction, ...props }: TransactionCon
 
 				<ContextMenu.Group>
 					<ContextMenu.Item
-					// startIcon={<Icon.Material icon={isSelected />}? "check_box" : "check_box_outline_blank"}
-					// onSelect={(e) => { selection.select(transaction, { ctrl: true, shift: false }) }}
-					// textValue={isSelected ? "deselect" : "select"}
+						startIcon={<Icon.Material icon={isSelected ? "check_box" : "check_box_outline_blank"} />}
+						onSelect={handleSelect}
+						textValue={isSelected ? "deselect" : "select"}
 					>
 						{isSelected ? "Deselect" : "Select"}
 					</ContextMenu.Item>
 					<ContextMenu.Item
 						startIcon={<Icon.Material icon="select_all" />}
 						keyCombination={{ key: "a", shift: true }}
-						// onSelect={() => { if (!selection.areAllCurrentlySelected) selection.toggleSelectAll() }}
+						onSelect={handleSelectAll}
 						textValue={"select all"}
 					>
 						{"Select all"}
@@ -74,7 +112,7 @@ export function TransactionContextMenu({ transaction, ...props }: TransactionCon
 					<ContextMenu.Item
 						startIcon={<Icon.Material icon="deselect" />}
 						keyCombination={{ key: "d", shift: true }}
-						// onSelect={() => { selection.clearSelection() }}
+						onSelect={handleDeselect}
 						textValue={"deselect all"}
 					>
 						{"Deselect all"}
@@ -83,7 +121,7 @@ export function TransactionContextMenu({ transaction, ...props }: TransactionCon
 
 				<ContextMenu.Separator />
 
-				<ContextMenu.Sub>
+				{/* <ContextMenu.Sub>
 					<ContextMenu.Group>
 						<ContextMenu.SubTrigger
 							startIcon={<Icon.Material icon="search" />}
@@ -139,7 +177,7 @@ export function TransactionContextMenu({ transaction, ...props }: TransactionCon
 							</ContextMenu.SubContent>
 						</ContextMenu.Portal>
 					</ContextMenu.Group>
-				</ContextMenu.Sub>
+				</ContextMenu.Sub> */}
 			</ContextMenu.Content >
 		</ContextMenu.Portal>
 	</ContextMenu >

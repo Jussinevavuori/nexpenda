@@ -2,8 +2,10 @@ import { Button, ButtonProps } from "@/components/Button/Button"
 import { Icon } from "@/components/Icon/Icon"
 import { IconButton } from "@/components/IconButton/IconButton"
 import { Tooltip } from "@/components/Tooltip/Tooltip"
+import { useOnKeyCombination } from "@/hooks/useOnKeyCombination"
 import { useGlobalModal } from "@/stores/globalModalAtom"
 import { useTransactionSelectionStore } from "@/stores/transactionSelectionStore"
+import { useRef } from "react"
 
 // eslint-disable-next-line
 const { motion } = require("framer-motion");
@@ -15,8 +17,12 @@ export type CreateTransactionButtonProps = Omit<ButtonProps, "onClick"> & {
 export const CreateTransactionButton = Object.assign(function CreateTransactionButton({ ...ButtonProps }: CreateTransactionButtonProps) {
 	const { open } = useGlobalModal("createTransaction");
 
+	const ref = useRef<HTMLButtonElement>(null);
+	useOnKeyCombination({ key: "n", shift: true }, () => ref.current?.click());
+
 	return <Tooltip value={{ title: "New transaction", keyCombination: { key: "n", shift: true } }}>
 		<Button
+			ref={ref}
 			onClick={() => open({})}
 			startIcon={<Icon.Material size={20} icon="add" />}
 			{...ButtonProps}

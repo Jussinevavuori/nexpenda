@@ -2,9 +2,11 @@ import { AlertDialog } from "@/components/AlertDialog/AlertDialog";
 import { Button } from "@/components/Button/Button";
 import { Icon } from "@/components/Icon/Icon";
 import { IconButton } from "@/components/IconButton/IconButton";
+import { useOnKeyCombination } from "@/hooks/useOnKeyCombination";
 import { useGlobalModal } from "@/stores/globalModalAtom";
 import { transactionCopyAtom } from "@/stores/transactionCopyAtom";
 import { useAtom } from "jotai";
+import { useRef } from "react";
 import { useTransactionSelectionStore } from "../../../stores/transactionSelectionStore";
 
 export type CopyTransactionButtonProps = {
@@ -29,6 +31,9 @@ export function CopyTransactionButton(props: CopyTransactionButtonProps) {
 		}
 	}
 
+	const ref = useRef<HTMLButtonElement>(null);
+	useOnKeyCombination({ key: "c", shift: true }, () => ref.current?.click());
+
 	return <>
 		{
 			props.icon
@@ -36,6 +41,7 @@ export function CopyTransactionButton(props: CopyTransactionButtonProps) {
 					variant="bordered"
 					disabled={!transaction}
 					onClick={handleCopy}
+					ref={ref}
 				>
 					<Icon.Material icon="content_copy" />
 				</IconButton>
@@ -44,6 +50,7 @@ export function CopyTransactionButton(props: CopyTransactionButtonProps) {
 					onClick={handleCopy}
 					startIcon={<Icon.Material size={20} icon="content_copy" />}
 					variant="bordered"
+					ref={ref}
 				>
 					Copy
 				</Button>

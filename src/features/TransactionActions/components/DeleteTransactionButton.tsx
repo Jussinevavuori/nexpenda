@@ -2,7 +2,9 @@ import { AlertDialog } from '@/components/AlertDialog/AlertDialog';
 import { Button } from '@/components/Button/Button';
 import { Icon } from '@/components/Icon/Icon';
 import { IconButton } from '@/components/IconButton/IconButton';
+import { useOnKeyCombination } from '@/hooks/useOnKeyCombination';
 import { trpc } from '@/utils/trpc';
+import { useRef } from 'react';
 import { useSelectedTransactions } from '../../../stores/transactionSelectionStore';
 
 export type DeleteTransactionButtonProps = {
@@ -21,6 +23,10 @@ export function DeleteTransactionButton(props: DeleteTransactionButtonProps) {
 		}
 	})
 
+
+	const ref = useRef<HTMLButtonElement>(null);
+	useOnKeyCombination({ key: "delete" }, () => ref.current?.click());
+
 	return <AlertDialog
 		title="Confirm deletion"
 		description={`Are you sure you want to delete ${selectedIds.length} transactions?`}
@@ -36,6 +42,7 @@ export function DeleteTransactionButton(props: DeleteTransactionButtonProps) {
 					disabled={selectedTransactions.length === 0}
 					color="danger"
 					loading={deleteMutation.isLoading}
+					ref={ref}
 				>
 					<Icon.Material icon="delete" />
 				</IconButton>
@@ -45,6 +52,7 @@ export function DeleteTransactionButton(props: DeleteTransactionButtonProps) {
 					variant="bordered"
 					color="danger"
 					loading={deleteMutation.isLoading}
+					ref={ref}
 				>
 					Delete
 				</Button>

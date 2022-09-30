@@ -1,6 +1,9 @@
 export const pages = {
   home: "/",
-  welcome: "/app/welcome",
+  onboarding: {
+    welcome: "/app/welcome",
+    whatnext: "/app/welcome/whatnext",
+  },
   dashboard: "/app/dashboard",
   analytics: "/app/analytics",
   budgets: "/app/budgets",

@@ -6,7 +6,7 @@ import { usePeriodStore } from "../../stores/periodStore";
 import { TransactionTableLoadingBar } from "./components/TransactionTableLoadingBar";
 import { useVirtual } from '@tanstack/react-virtual';
 import { TransactionTableBodyEmpty } from "./components/TransactionTableBodyEmpty";
-import { useSelectedTransactions } from "../../stores/transactionSelectionStore";
+import { useSelectedTransactions, useTransactionSelectionStore } from "../../stores/transactionSelectionStore";
 import { TransactionContextMenu } from "../TransactionContextMenu/TransactionContextMenu";
 import { TransactionTableRow } from "./components/TransactionTableRow";
 import { TransactionTableHeader } from "./components/TransactionTableHeader";
@@ -15,6 +15,7 @@ import { useTransactionSortStore } from "@/stores/transactionSortStore";
 import { sortTransactions } from "@/utils/transaction/sortTransactions";
 import { filterTransactions } from "@/utils/transaction/filterTransactions";
 import { useActiveQuery } from "@/stores/transactionSearchAtom";
+import { useOnKeyCombination } from "@/hooks/useOnKeyCombination";
 
 // eslint-disable-next-line
 const { motion, AnimatePresence } = require("framer-motion")
@@ -48,6 +49,12 @@ export const TransactionTable = Object.assign(function TransactionTable(props: T
 		paddingEnd: props.disableBottomPadding ? 0 : 120
 	});
 
+	// Select / deselect all
+	const selectMany = useTransactionSelectionStore(_ => _.selectMany);
+	const clearSelection = useTransactionSelectionStore(_ => _.clear);
+	const selectAll = () => selectMany(sortedTransactions.map(_ => _.id), true)
+	useOnKeyCombination({ key: "a", shift: true }, selectAll)
+	useOnKeyCombination({ key: "d", shift: true }, clearSelection)
 
 	return <div
 		ref={parentRef}

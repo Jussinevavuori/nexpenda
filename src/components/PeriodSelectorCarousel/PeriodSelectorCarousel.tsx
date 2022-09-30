@@ -67,8 +67,8 @@ export function PeriodSelectorCarousel() {
 	// release offset ref's value.
 	const commit = useCallback((specifiedOffset?: number) => {
 		const offset = specifiedOffset ?? releaseOffsetRef.current
-		if (offset < 0) forward(Math.abs(offset))
-		if (offset > 0) back(Math.abs(offset));
+		if (offset < 0) back(Math.abs(offset))
+		if (offset > 0) forward(Math.abs(offset));
 		releaseOffsetRef.current = 0;
 		return offset;
 	}, [releaseOffsetRef, forward, back])
@@ -195,6 +195,12 @@ export function PeriodSelectorCarousel() {
 		}
 	}, [drag, endDrag, previousTouchX])
 
+	// Register a selectable carousel element
+	const registerElement = useCallback((offset: number, period: Period) => (el: HTMLParagraphElement | null) => {
+		if (!el) return;
+		paragraphsRef.current[offset] = { el, period, offset, x: 0 }
+	}, [paragraphsRef])
+
 	return (
 
 		<div className="relative">
@@ -222,7 +228,7 @@ export function PeriodSelectorCarousel() {
 							key={formatted}
 							className="absolute left-0 top-0 text-2xl pr-6 dark:text-slate-100 select-none whitespace-nowrap"
 							onClick={() => select(offset)}
-							ref={el => { if (el) paragraphsRef.current[offset] = { el, period: _period, offset, x: 0 } }}
+							ref={registerElement(offset, _period)}
 						>
 							{formatted}
 						</p>
@@ -232,7 +238,7 @@ export function PeriodSelectorCarousel() {
 				{/* Current interval */}
 				<p
 					className="absolute left-0 top-0 text-2xl pr-6 dark:text-slate-100 select-none whitespace-nowrap"
-					ref={el => { if (el) paragraphsRef.current[0] = { el, period, offset: 0, x: 0 } }}
+					ref={registerElement(0, period)}
 				>
 					{
 						isActiveQuery
@@ -252,7 +258,7 @@ export function PeriodSelectorCarousel() {
 							key={formatted}
 							className="absolute left-0 top-0 text-2xl pr-6 dark:text-slate-100 select-none whitespace-nowrap"
 							onClick={() => select(offset)}
-							ref={el => { if (el) paragraphsRef.current[offset] = { el, period: _period, offset, x: 0 } }}
+							ref={registerElement(offset, _period)}
 						>
 							{formatted}
 						</p>

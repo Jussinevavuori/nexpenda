@@ -11,7 +11,7 @@ export const authOptions: NextAuthOptions = {
     signIn: pages.login,
     signOut: pages.signout,
     verifyRequest: pages.verify_request,
-    newUser: pages.welcome,
+    newUser: pages.onboarding.welcome,
   },
   // Include user.id on session
   callbacks: {

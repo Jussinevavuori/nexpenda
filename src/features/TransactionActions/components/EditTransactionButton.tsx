@@ -1,7 +1,9 @@
 import { Button } from "@/components/Button/Button";
 import { Icon } from "@/components/Icon/Icon";
 import { IconButton } from "@/components/IconButton/IconButton";
+import { useOnKeyCombination } from "@/hooks/useOnKeyCombination";
 import { useGlobalModal } from "@/stores/globalModalAtom";
+import { useRef } from "react";
 import { useTransactionSelectionStore } from "../../../stores/transactionSelectionStore";
 
 export interface EditTransactionButtonProps {
@@ -24,11 +26,15 @@ export function EditTransactionButton(props: EditTransactionButtonProps) {
 		}
 	}
 
+	const ref = useRef<HTMLButtonElement>(null);
+	useOnKeyCombination({ key: "e", shift: true }, () => ref.current?.click());
+
 	if (props.icon) {
 		return <IconButton
 			variant="bordered"
 			disabled={!transaction}
 			onClick={handleOpen}
+			ref={ref}
 		>
 			<Icon.Material icon="edit" />
 		</IconButton>
@@ -38,6 +44,7 @@ export function EditTransactionButton(props: EditTransactionButtonProps) {
 		onClick={handleOpen}
 		disabled={!transaction}
 		startIcon={<Icon.Material size={20} icon="edit" />}
+		ref={ref}
 		{...props}
 	>
 		Edit

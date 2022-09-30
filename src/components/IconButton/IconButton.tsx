@@ -1,6 +1,6 @@
 import { c } from "@/utils/generic/classnames";
 import Link, { LinkProps } from "next/link";
-import React from "react"
+import React, { forwardRef } from "react"
 import { LoadingSpinner } from "../LoadingSpinner/LoadingSpinner";
 
 export type IconButtonVariant = "default" | "flat" | "bordered" | "flat" | "text";
@@ -25,7 +25,7 @@ export type IconButtonLinkProps = LinkProps & React.AnchorHTMLAttributes<HTMLAnc
 	endLabel?: string;
 }
 
-export const IconButton = Object.assign(function Button({
+export const IconButton = Object.assign(forwardRef<HTMLButtonElement, IconButtonProps>(function IconButton({
 	loading,
 	variant,
 	color,
@@ -35,10 +35,11 @@ export const IconButton = Object.assign(function Button({
 	startLabel,
 	endLabel,
 	...htmlProps
-}: IconButtonProps) {
+}, ref) {
 
 	return <button
 		{...htmlProps}
+		ref={ref}
 		disabled={loading || htmlProps.disabled}
 		className={getClassName({ loading, variant, color, className, inputAdornment, disabled: htmlProps.disabled })}
 	>
@@ -63,7 +64,7 @@ export const IconButton = Object.assign(function Button({
 			</p>
 		}
 	</button>
-}, {
+}), {
 	Link: function LinkButton({
 		variant,
 		color,
