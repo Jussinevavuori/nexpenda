@@ -1,5 +1,6 @@
 import { getPeriodEndDate } from "@/utils/dates/getPeriodEndDate";
 import { getPeriodLength } from "@/utils/dates/getPeriodLength";
+import { getPeriodPrismaFilter } from "@/utils/dates/getPeriodPrismaFilter";
 import { getPeriodStartDate } from "@/utils/dates/getPeriodStartDate";
 import { maxAbs } from "@/utils/generic/maxAbs";
 import { sum } from "@/utils/generic/sum";
@@ -22,13 +23,7 @@ export const budgetsSummaryRouter = createProtectedRouter().query("get", {
     const transactions = await ctx.prisma.transaction.findMany({
       where: {
         userId: ctx.session.user.id,
-        time:
-          period && getPeriodLength(period) !== "all"
-            ? {
-                gte: getPeriodStartDate(period),
-                lte: getPeriodEndDate(period),
-              }
-            : undefined,
+        time: getPeriodPrismaFilter(period),
       },
     });
 

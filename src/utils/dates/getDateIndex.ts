@@ -1,3 +1,5 @@
+import { startOfDay } from "date-fns";
+
 const MS_IN_DAY = 1000 * 60 * 60 * 24;
 
 /**
@@ -8,7 +10,6 @@ const MS_IN_DAY = 1000 * 60 * 60 * 24;
  * Dates' indices have the property, that subsequent days have subsequent indices.
  */
 export function getDateIndex(date: Date | number) {
-  return Math.floor(
-    (typeof date === "number" ? date : date.getTime()) / MS_IN_DAY
-  );
+  const normalized = startOfDay(new Date(date));
+  return Math.floor(normalized.getTime() / MS_IN_DAY);
 }

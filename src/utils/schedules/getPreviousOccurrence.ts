@@ -19,7 +19,7 @@ export function getPreviousOccurrence<S extends Schedule>(
 
   // Get index of last or infinite
   const last = getLastOccurrence(s);
-  const iLast = last ? getDateIndex(last) : Infinity;
+  const iLast = last ? getDateIndex(last) : Number.POSITIVE_INFINITY;
 
   // If today is before first, no previous occurrence exists
   if (iDiff < 0) {

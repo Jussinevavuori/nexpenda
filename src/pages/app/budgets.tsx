@@ -13,6 +13,7 @@ import { getPeriodLength } from "@/utils/dates/getPeriodLength";
 import { PeriodSelectorCarousel } from "@/components/PeriodSelectorCarousel/PeriodSelectorCarousel";
 import { PeriodLengthToggle } from "@/components/PeriodLengthToggle/PeriodLengthToggle";
 import { useBreakpoint } from "@/hooks/useBreakpoint";
+import { Icon } from "@/components/Icon/Icon";
 
 export default function AnalyticsPage() {
 	useRequireAuth();
@@ -49,6 +50,19 @@ export default function AnalyticsPage() {
 				{!isDesktop && <PeriodSelectorCarousel />}
 			</div>
 		</AppLayoutHeader>
+
+		<div className="border border-amber-500 rounded bg-amber-100 p-6 mx-6 my-6 flex gap-6">
+			<Icon.Material icon="warning" className="text-amber-600" />
+			<div className="flex flex-col gap-2">
+				<p>
+					Work in progress
+				</p>
+				<p className="opacity-75">
+					If you want to have a look around, go ahead, but don't expect anything
+					to work here just yet. This might all just end up changing.
+				</p>
+			</div>
+		</div>
 
 		<div className="px-10 py-8 w-full">
 			<BudgetSummary />

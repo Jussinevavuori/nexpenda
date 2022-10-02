@@ -94,11 +94,7 @@ export function IntegerInput(props: IntegerInputProps) {
 		<input
 			className={c("bg-transparent py-2 text-black dark:text-white outline-none",
 				"placeholder:text-black-4 dark:placeholder:text-white-4 w-full text-center",
-				c.variant(props.variant ?? "default")({
-					bordered: "px-2",
-					default: "px-4",
-					underlined: "px-0"
-				}))}
+			)}
 			value={value}
 			onChange={handleChange}
 			{...htmlProps}

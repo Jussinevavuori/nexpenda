@@ -1,10 +1,15 @@
+import { Avatar } from "@/components/Avatar/Avatar";
 import { Button } from "@/components/Button/Button";
 import { PageHead } from "@/components/PageHead/PageHead";
 import { SiteLayout } from "@/layouts/SiteLayout/SiteLayout";
 import { pages } from "@/utils/pages";
+import { trpc } from "@/utils/trpc";
 import Image from "next/future/image";
 
 export default function HomePage() {
+
+	const { data: user } = trpc.useQuery(["user.me"])
+
 	return <SiteLayout>
 		<PageHead title="Home" />
 
@@ -24,12 +29,23 @@ export default function HomePage() {
 				</h2>
 
 				<div className="relative flex gap-12 mt-8">
-					<Button.Link href={pages.login} color="monochrome" className="scale-125 origin-top-left">
-						Get started for free
-					</Button.Link>
-					<Button.Link href={pages.login} variant="text" color="monochrome" className="scale-125 origin-top-left">
-						Login
-					</Button.Link>
+					{
+						user ? (<>
+							<Button.Link href={pages.dashboard}
+								color="monochrome"
+								endIcon={<Avatar name={user.name} image={user.image} />}
+							>
+								Continue as {user.name?.split(/\s/)[0]}
+							</Button.Link>
+						</>) : (<>
+							<Button.Link href={pages.login} color="monochrome" className="scale-125 origin-top-left">
+								Get started for free
+							</Button.Link>
+							<Button.Link href={pages.login} variant="text" color="monochrome" className="scale-125 origin-top-left">
+								Login
+							</Button.Link>
+						</>)
+					}
 				</div>
 			</div>
 
@@ -38,5 +54,5 @@ export default function HomePage() {
 			</div>
 		</section>
 
-	</SiteLayout>
+	</SiteLayout >
 }

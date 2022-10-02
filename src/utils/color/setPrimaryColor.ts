@@ -4,14 +4,14 @@ import { getColorValue } from "./getColorValue";
 import { offsetPalette } from "./offsetPalette";
 import { shades } from "./shades";
 
-export function toRgbList(hex: string) {
+export function toRgbList(hex: string, join = " ") {
   const offset = hex.startsWith("#") ? 1 : 0;
 
   const r = Number.parseInt(hex.substring(offset + 0, offset + 2), 16);
   const g = Number.parseInt(hex.substring(offset + 2, offset + 4), 16);
   const b = Number.parseInt(hex.substring(offset + 4, offset + 6), 16);
 
-  return [r, g, b].join(" ");
+  return [r, g, b].join(join);
 }
 
 export function setPrimaryColor(

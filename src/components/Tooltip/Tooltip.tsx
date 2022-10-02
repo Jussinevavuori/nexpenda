@@ -25,7 +25,7 @@ export function Tooltip({ children, value, side, sideOffset, ...tooltipProps }: 
 		<RadixTooltip.Portal>
 			<RadixTooltip.Content side={side} sideOffset={(sideOffset ?? 0) * 4}>
 				<motion.div
-					className="rounded-lg bg-white-bg dark:bg-black-bg-4 shadow-lg px-2 py-1 z-[1000]"
+					className="rounded-lg bg-white-bg dark:bg-black-bg-4 border border-divider shadow-xl px-2 py-1 z-[1000]"
 					initial={{ y: 5, opacity: 0 }}
 					animate={{ y: 0, opacity: 1 }}
 					exit={{ y: -5, opacity: 0 }}

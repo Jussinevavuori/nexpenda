@@ -26,7 +26,7 @@ export const NexpendaLogo = {
 		)}>
 			<span className={"text-black dark:text-white"}>N</span>
 			<span className={"text-black dark:text-white"}>e</span>
-			<span className={"text-primary-500"}>x</span>
+			<span className={"text-primary"}>x</span>
 			<span className={"text-black dark:text-white"}>p</span>
 			<span className={"text-black dark:text-white"}>e</span>
 			<span className={"text-black dark:text-white"}>n</span>

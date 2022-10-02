@@ -1,3 +1,4 @@
+import { c } from "@/utils/generic/classnames";
 import { Dialog as HeadlessDialog } from "@headlessui/react"
 import React from "react";
 
@@ -10,6 +11,7 @@ export type DialogProps = {
 	title?: string;
 	description?: string;
 	children?: React.ReactNode;
+	unstyled?: boolean;
 }
 
 export const Dialog = Object.assign(function Dialog(props: DialogProps) {
@@ -30,17 +32,20 @@ export const Dialog = Object.assign(function Dialog(props: DialogProps) {
 							initial={{ y: 100 }}
 							animate={{ y: 0 }}
 							exit={{ y: 100 }}
-							className="relative bg-white-bg-2 dark:bg-black-bg-2 border border-white-bg-3 dark:border-black-bg-3 text-black dark:text-white rounded-xl d:rounded-lg shadow-lg p-4 w-full d:w-auto"
+							className={c(
+								"overflow-y-auto relative",
+								c.if(!props.unstyled)("bg-white-bg-2 dark:bg-black-bg-2 border border-white-bg-3 dark:border-black-bg-3 text-black dark:text-white rounded-xl d:rounded-lg shadow-lg p-4 w-full d:w-auto")
+							)}
 						>
 
 							{
-								props.title && <HeadlessDialog.Title className="font-medium text-black dark:text-white">
+								props.title && !props.unstyled && <HeadlessDialog.Title className="font-medium text-black dark:text-white">
 									{props.title}
 								</HeadlessDialog.Title>
 							}
 
 							{
-								props.description && <HeadlessDialog.Description className="text-sm text-black-4 dark:text-white-4 py-4">
+								props.description && !props.unstyled && <HeadlessDialog.Description className="text-sm text-black-4 dark:text-white-4 py-4">
 									{props.description}
 								</HeadlessDialog.Description>
 							}

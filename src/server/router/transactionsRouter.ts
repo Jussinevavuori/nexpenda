@@ -1,5 +1,6 @@
 import { getPeriodEndDate } from "@/utils/dates/getPeriodEndDate";
 import { getPeriodLength } from "@/utils/dates/getPeriodLength";
+import { getPeriodPrismaFilter } from "@/utils/dates/getPeriodPrismaFilter";
 import { getPeriodStartDate } from "@/utils/dates/getPeriodStartDate";
 import { filterTransactions } from "@/utils/transaction/filterTransactions";
 import { TRPCError } from "@trpc/server";
@@ -42,13 +43,7 @@ export const transactionsRouter = createProtectedRouter()
       const transactions = await ctx.prisma.transaction.findMany({
         where: {
           userId: ctx.session.user.id,
-          time:
-            input.period && getPeriodLength(input.period) !== "all"
-              ? {
-                  gte: getPeriodStartDate(input.period),
-                  lte: getPeriodEndDate(input.period),
-                }
-              : undefined,
+          time: getPeriodPrismaFilter(input.period),
         },
         include: {
           category: true,

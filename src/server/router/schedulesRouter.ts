@@ -18,6 +18,7 @@ export const schedulesRouter = createProtectedRouter()
         where: { userId: ctx.session.user.id },
         include: {
           category: { select: { id: true, name: true, icon: true } },
+          transactions: { select: { id: true } },
         },
       });
     },

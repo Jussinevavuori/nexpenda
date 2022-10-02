@@ -8,10 +8,9 @@ export const defaultCategoryIcons = {
  * income or expense icon based on the given sign. If no sign is given, default
  * to the expense icon.
  */
-export function getDefaultedCategoryIcon(
-  category: CategoryItem,
-  sign: number | "+" | "-" = "-"
-) {
+export function getDefaultedCategoryIcon<
+  CategoryLike extends { icon?: string | null | undefined }
+>(category: CategoryLike, sign: number | "+" | "-" = "-") {
   const isPositive = typeof sign === "number" ? sign > 0 : sign === "+";
   return (
     category.icon || defaultCategoryIcons[isPositive ? "income" : "expense"]

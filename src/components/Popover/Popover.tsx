@@ -19,7 +19,7 @@ export function Popover(props: PopoverProps) {
 				</HeadlessPopover.Button>
 				{
 					open && <HeadlessPopover.Panel
-						className="z-10 absolute right-0 max-w-sm lg:max-w-2xl transform mt-2 min-w-full bg-white dark:bg-dark-bg-2 border border-white-bg-3 dark:border-black-bg-3 text-black dark:text-white rounded-xl d:rounded-lg shadow-lg"
+						className="z-10 absolute right-0 max-w-sm lg:max-w-2xl transform mt-2 min-w-full bg-white dark:bg-black-bg-2 border border-white-bg-3 dark:border-black-bg-3 text-black dark:text-white rounded-xl d:rounded-lg shadow-lg"
 						static
 						as={motion.div}
 						initial={{ opacity: 0 }}

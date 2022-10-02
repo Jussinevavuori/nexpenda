@@ -4,7 +4,7 @@ import { usePeriodStore } from "@/stores/periodStore";
 import { useSelectedTransactions, useTransactionSelectionStore } from "@/stores/transactionSelectionStore";
 import { flatGroupByDate } from "@/utils/dates/flatGroupByDate";
 import { periodIncludesToday } from "@/utils/dates/periodIncludesToday";
-import { divide } from "@/utils/generic/group";
+import { divide } from "@/utils/generic/divide";
 import { sortTransactions } from "@/utils/transaction/sortTransactions";
 import { trpc } from "@/utils/trpc";
 import { isFuture } from "date-fns";
@@ -72,7 +72,7 @@ export const TransactionList = Object.assign(memo(function TransactionList(props
 		size: transactionGroupItems.length,
 		parentRef: listContainerRef,
 		estimateSize,
-		overscan: 2,
+		overscan: 5,
 		paddingEnd: props.disableBottomPadding ? 0 : 120
 	});
 

@@ -10,7 +10,7 @@ import { Icon } from "@/components/Icon/Icon";
 import { trpc } from "@/utils/trpc";
 import { Autocomplete } from "@/components/Autocomplete/Autocomplete";
 import { defaultCategoryIcons, getDefaultedCategoryIcon } from "@/utils/category/getDefaultedCategoryIcon";
-import { useEffect } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import { useAtom } from "jotai";
 import { transactionCopyAtom } from "@/stores/transactionCopyAtom";
 import { getSign } from "@/utils/generic/getSign";
@@ -23,6 +23,9 @@ import type { IntervalType } from "@prisma/client";
 import { selectProperties } from "@/utils/generic/selectProperties";
 import { pluralize } from "@/utils/generic/pluralize";
 import { capitalize } from "@/utils/generic/capitalize";
+import { Dialog } from "@/components/Dialog/Dialog";
+import { LoadingSpinner } from "@/components/LoadingSpinner/LoadingSpinner";
+const EmojiPicker = lazy(() => import("emoji-picker-react"));
 
 // Define full form schema
 export const transactionFormSchema = z.object({
@@ -120,6 +123,7 @@ export function TransactionForm(props: TransactionFormProps) {
 	const watchAmount = form.watch("amount");
 	const watchSign = form.watch("sign");
 	const watchCategory = form.watch("category");
+	const watchIcon = form.watch("icon");
 
 	// Automatically clean "+" and "-" signs from amont input
 	useEffect(() => {
@@ -129,19 +133,56 @@ export function TransactionForm(props: TransactionFormProps) {
 		if (cleanedAmountInput !== watchAmount) setValue("amount", cleanedAmountInput, { shouldTouch: true });
 	}, [setValue, watchAmount])
 
+	// Automatically apply emojis from category input to icon and clear them
+	useEffect(() => {
+		const regex = emojiRegex();
+		const emojis = watchCategory.match(regex);
+		if (!emojis || emojis.length === 0) return;
+		setValue("icon", emojis[0], { shouldTouch: true, shouldValidate: true });
+		setValue("category", watchCategory.replace(regex, ""), { shouldTouch: true });
+	}, [setValue, watchCategory])
+
 	// Selected category icon
-	const previewCategoryIcon = (categories ?? []).find(cat => cat.name === watchCategory)?.icon
-		?? (watchSign === "+" ? defaultCategoryIcons["income"] : defaultCategoryIcons["expense"])
+	const previewCategoryIcon = watchIcon || ((categories ?? []).find(cat => cat.name === watchCategory)?.icon
+		?? (watchSign === "+" ? defaultCategoryIcons["income"] : defaultCategoryIcons["expense"]))
 
 	// Filtered categories by current search
 	const filteredCategories = !watchCategory.trim()
 		? (categories ?? [])
 		: (categories ?? []).filter(cat => cat.name.toLowerCase().includes(watchCategory.toLowerCase()));
 
+	const emojiPicker = useOpenState();
+	const calculator = useOpenState();
+
 	return <form
 		onSubmit={form.handleSubmit((values) => props.onSubmit(values))}
 		className="flex flex-col gap-4 pt-4 d:w-[520px]"
 	>
+
+		<Dialog
+			open={calculator.isOpen}
+			onClose={calculator.close}
+			unstyled
+		>
+			I'm a calculator brr
+		</Dialog>
+
+
+		<Dialog
+			open={emojiPicker.isOpen}
+			onClose={emojiPicker.close}
+			unstyled
+		>
+			<Suspense fallback={<LoadingSpinner />}>
+				<EmojiPicker
+					onEmojiClick={({ emoji }) => {
+						emojiPicker.close();
+						console.log(emoji);
+						setValue("icon", emoji, { shouldTouch: true, shouldValidate: true });
+					}}
+				/>
+			</Suspense>
+		</Dialog>
 
 		{/* Amount input with sign toggle button */}
 		<div className="flex gap-2">
@@ -167,6 +208,14 @@ export function TransactionForm(props: TransactionFormProps) {
 				endLabel={currency}
 				autoFocus
 			/>
+			<Button
+				type="button"
+				style={{ width: "2.5rem" }}
+				variant="flat"
+				onClick={calculator.open}
+			>
+				<Icon.Material icon="calculate" size={18} />
+			</Button>
 		</div>
 
 		{/* Category input */}
@@ -174,8 +223,9 @@ export function TransactionForm(props: TransactionFormProps) {
 			<Button
 				type="button"
 				style={{ width: "2.5rem" }}
-				color="monochrome"
+				color={!!errors.icon ? "danger" : "monochrome"}
 				variant="flat"
+				onClick={emojiPicker.open}
 			>
 				{previewCategoryIcon}
 			</Button>

@@ -5,10 +5,15 @@ import { useActiveQuery } from "@/stores/transactionSearchAtom";
 import { getPeriodLength } from "@/utils/dates/getPeriodLength";
 import { capitalize } from "@/utils/generic/capitalize";
 import { c } from "@/utils/generic/classnames";
+import React from "react";
 import { Divider } from "../Divider/Divider";
 import { Popover } from "../Popover/Popover";
 
-export function PeriodLengthToggle() {
+export type PeriodLengthToggleProps = {
+	children?: React.ReactNode;
+}
+
+export function PeriodLengthToggle({ children }: PeriodLengthToggleProps) {
 	const isActiveQuery = !!useActiveQuery();
 	const period = usePeriodStore(_ => _.period);
 	const changeLength = usePeriodStore(_ => _.changeLength)
@@ -16,7 +21,7 @@ export function PeriodLengthToggle() {
 	const periodLength = getPeriodLength(period);
 
 	return <Popover
-		button={<Button
+		button={children || <Button
 			variant="flat"
 			color="monochrome"
 			endIcon={<Icon.Material icon="unfold_more" size={20} />}
@@ -40,7 +45,7 @@ export function PeriodLengthToggle() {
 					<div className="flex gap-4">
 						<div className="relative">
 							<Icon.Material icon="calendar_today" />
-							<span className="absolute left-2 bottom-0 bg-white text-xs px-1 translate-y-1 rounded-full">
+							<span className={c("absolute left-2 bottom-0 text-xs px-1 translate-y-1 rounded-full", c.if(periodLength === "month")("bg-primary-500 text-white").else("bg-white text-black"))}>
 								30
 							</span>
 						</div>
@@ -62,7 +67,7 @@ export function PeriodLengthToggle() {
 					<div className="flex gap-4">
 						<div className="relative">
 							<Icon.Material icon="calendar_today" />
-							<span className="absolute left-2 bottom-0 bg-white text-xs px-1 translate-y-1 rounded-full">
+							<span className={c("absolute left-2 bottom-0 text-xs px-1 translate-y-1 rounded-full", c.if(periodLength === "year")("bg-primary-500 text-white").else("bg-white text-black"))}>
 								365
 							</span>
 						</div>
@@ -84,7 +89,7 @@ export function PeriodLengthToggle() {
 					<div className="flex gap-4">
 						<div className="relative">
 							<Icon.Material icon="calendar_today" />
-							<span className="absolute left-2 bottom-0 bg-white text-sm px-1 translate-y-1 rounded-full">
+							<span className={c("absolute left-2 bottom-0 text-xs px-1 translate-y-1 rounded-full", c.if(periodLength === "all")("bg-primary-500 text-white").else("bg-white text-black"))}>
 								{"∞"}
 							</span>
 						</div>
