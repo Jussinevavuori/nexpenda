@@ -24,6 +24,7 @@
     "@trpc/next": "^9.27.2",
     "@trpc/react": "^9.27.2",
     "@trpc/server": "^9.27.2",
+    "big.js": "^6.2.1",
     "chart.js": "^3.9.1",
     "classnames": "^2.3.1",
     "currency-codes": "^2.1.0",
@@ -59,6 +60,7 @@
     "zustand": "^4.1.1"
   },
   "devDependencies": {
+    "@types/big.js": "^6.1.6",
     "@types/markdown-it": "^12.2.3",
     "@types/node": "18.0.0",
     "@types/react": "18.0.14",

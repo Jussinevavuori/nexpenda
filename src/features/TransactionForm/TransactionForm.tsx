@@ -25,6 +25,9 @@ import { pluralize } from "@/utils/generic/pluralize";
 import { capitalize } from "@/utils/generic/capitalize";
 import { Dialog } from "@/components/Dialog/Dialog";
 import { LoadingSpinner } from "@/components/LoadingSpinner/LoadingSpinner";
+import { Calculator } from "../Calculator/Calculator";
+import { parseAmountStringWithSign } from "@/utils/transaction/parseAmountStringWithSign";
+import { useOnKeyCombination } from "@/hooks/useOnKeyCombination";
 const EmojiPicker = lazy(() => import("emoji-picker-react"));
 
 // Define full form schema
@@ -154,6 +157,13 @@ export function TransactionForm(props: TransactionFormProps) {
 	const emojiPicker = useOpenState();
 	const calculator = useOpenState();
 
+	// Alt + E for emoji picker
+	// Alt + C for calculator
+	// Alt + S for toggle sign
+	useOnKeyCombination({ key: "e", alt: true }, () => emojiPicker.open(), { enableOnInputFocused: true })
+	useOnKeyCombination({ key: "c", alt: true }, () => calculator.open(), { enableOnInputFocused: true })
+	useOnKeyCombination({ key: "s", alt: true }, () => setValue("sign", watchSign === "+" ? "-" : "+", { shouldTouch: true }), { enableOnInputFocused: true })
+
 	return <form
 		onSubmit={form.handleSubmit((values) => props.onSubmit(values))}
 		className="flex flex-col gap-4 pt-4 d:w-[520px]"
@@ -162,9 +172,21 @@ export function TransactionForm(props: TransactionFormProps) {
 		<Dialog
 			open={calculator.isOpen}
 			onClose={calculator.close}
-			unstyled
+			panelClassName="overflow-x-hidden"
 		>
-			I'm a calculator brr
+			<Calculator
+				initialValue={(parseAmountStringWithSign(watchAmount, watchSign) / 100)}
+				onSubmit={(value) => {
+					calculator.close();
+
+					// Keep same sign as was set before, unless the result was a negative
+					// number in which case flip the sign, except if the amount is zero
+					if (value < 0) setValue("sign", watchSign === "+" ? "-" : "+", { shouldTouch: true });
+
+					// Use absolute value of amount, formatted to 2 decimals
+					setValue("amount", Math.abs(value).toFixed(2), { shouldTouch: true });
+				}}
+			/>
 		</Dialog>
 
 
@@ -177,7 +199,6 @@ export function TransactionForm(props: TransactionFormProps) {
 				<EmojiPicker
 					onEmojiClick={({ emoji }) => {
 						emojiPicker.close();
-						console.log(emoji);
 						setValue("icon", emoji, { shouldTouch: true, shouldValidate: true });
 					}}
 				/>

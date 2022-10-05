@@ -12,6 +12,7 @@ export type DialogProps = {
 	description?: string;
 	children?: React.ReactNode;
 	unstyled?: boolean;
+	panelClassName?: string;
 }
 
 export const Dialog = Object.assign(function Dialog(props: DialogProps) {
@@ -34,7 +35,8 @@ export const Dialog = Object.assign(function Dialog(props: DialogProps) {
 							exit={{ y: 100 }}
 							className={c(
 								"overflow-y-auto relative",
-								c.if(!props.unstyled)("bg-white-bg-2 dark:bg-black-bg-2 border border-white-bg-3 dark:border-black-bg-3 text-black dark:text-white rounded-xl d:rounded-lg shadow-lg p-4 w-full d:w-auto")
+								c.if(!props.unstyled)("bg-white-bg-2 dark:bg-black-bg-2 border border-white-bg-3 dark:border-black-bg-3 text-black dark:text-white rounded-xl d:rounded-lg shadow-lg p-4 w-full d:w-auto"),
+								props.panelClassName
 							)}
 						>
 
