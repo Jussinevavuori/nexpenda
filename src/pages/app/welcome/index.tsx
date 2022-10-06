@@ -29,7 +29,8 @@ export default function WelcomePage() {
 	const notify = useNotify();
 
 	const migrationMutation = trpc.useMutation("migrations.migrate", {
-		onSuccess() {
+		onSuccess(res) {
+			console.log(res);
 			router.push(pages.onboarding.whatnext);
 		},
 		onError(err) {

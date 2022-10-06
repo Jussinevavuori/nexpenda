@@ -185,7 +185,7 @@ model User {
   transactions         Transaction[]
   transactionSchedules TransactionSchedule[]
   categories           Category[]
-  budget               Budget[]
+  budgets              Budget[]
   budgetEntries        BudgetEntry[]
   feedback             Feedback[]
 

@@ -16,6 +16,7 @@ import { Divider } from "@/components/Divider/Divider";
 import { useBreakpoint } from "@/hooks/useBreakpoint";
 import { PeriodLengthToggle } from "@/components/PeriodLengthToggle/PeriodLengthToggle";
 import { PeriodSelectorCarousel } from "@/components/PeriodSelectorCarousel/PeriodSelectorCarousel";
+import { CategoryBarChart } from "@/features/Charts/CategoryBarChart";
 
 export default function AnalyticsPage() {
 	useRequireAuth();
@@ -45,9 +46,13 @@ export default function AnalyticsPage() {
 			analytics ? (
 				<div className="px-10">
 					<div className="py-6">
-						<h2 className="">
-							Total
+						<h2 className="text-3xl font-semibold pb-6">
+							Summary
 						</h2>
+
+						<p className="">
+							Total
+						</p>
 
 						<p className={c("text-3xl font-semibold", analytics.sums.tot >= 0 ? "text-emerald-600" : "text-rose-500")}>
 							{formatMoney(analytics.sums.tot)}
@@ -86,6 +91,36 @@ export default function AnalyticsPage() {
 					</div>
 
 					<Divider className="my-8" />
+
+					<div className="py-6">
+						<h2 className="text-3xl font-semibold pb-6">
+							Categories
+						</h2>
+
+						<p>
+							{Object.keys(analytics.sums.cat).length} categories
+						</p>
+					</div>
+
+					<div className="">
+						<h3 className="text-3xl font-semibold pb-6">
+							Incomes per category
+						</h3>
+
+						<CategoryBarChart type="inc" />
+
+						<div className="h-24" />
+					</div>
+
+					<div className="">
+						<h3 className="text-3xl font-semibold pb-6">
+							Expenses per category
+						</h3>
+
+						<CategoryBarChart type="exp" />
+
+						<div className="h-24" />
+					</div>
 				</div>
 			) : (
 				<div className="flex items-center justify-center py-16">

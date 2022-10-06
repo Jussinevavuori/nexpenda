@@ -3,7 +3,7 @@ import { colorValuesMap } from "@/utils/color/colorValuesMap";
 import { toRgbList } from "@/utils/color/setPrimaryColor";
 import { getSystemThemeMode } from "@/utils/dom/getSystemThemeMode";
 import { trpc } from "@/utils/trpc";
-import { ChartOptions } from "chart.js";
+import type { ChartOptions } from "chart.js";
 import { useMemo } from "react";
 import { Line } from "react-chartjs-2";
 import { usePreference } from "../Preferences/hooks/usePreference";
@@ -46,7 +46,6 @@ const chartOptions = (options: {
 }): ChartOptions<"line"> => {
 
 	const dark = options.theme === "dark" || (options.theme === "system" && getSystemThemeMode() === "dark");
-	const palette = options.palette;
 	const c = colorValuesMap;
 
 	const withOpacity = (_: string, opacity: number) => `rgba(${toRgbList(_, ", ")}, ${opacity})`

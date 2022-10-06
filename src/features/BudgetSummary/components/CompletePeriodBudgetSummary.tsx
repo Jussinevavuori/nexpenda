@@ -3,7 +3,7 @@ export type CompletePeriodBudgetSummaryProps = {
 	summary: BudgetSummary;
 }
 
-export function CompletePeriodBudgetSummary({ budget, summary }: CompletePeriodBudgetSummaryProps) {
+export function CompletePeriodBudgetSummary({ }: CompletePeriodBudgetSummaryProps) {
 
 	return <div>
 	</div>

@@ -6,7 +6,6 @@ import { getDefaultedCategoryIcon } from "@/utils/category/getDefaultedCategoryI
 import { formatMoney } from "@/utils/currency/formatMoney";
 import { formatDateString } from "@/utils/dates/formatDateString";
 import { c } from "@/utils/generic/classnames";
-import { cleanString } from "@/utils/generic/cleanString";
 import { formatOccurrenceInterval } from "@/utils/schedules/formatOccurrenceInterval";
 import { getLastOccurrence } from "@/utils/schedules/getLastOccurrence";
 import { getNextOccurrence } from "@/utils/schedules/getNextOccurrence";
@@ -156,8 +155,3 @@ export function ScheduleItem({ schedule }: ScheduleItemProps) {
 		</div>
 	</div>
 }
-
-const alertDescription = cleanString(`
-Are you sure you want to cancel this transaction schedule? Existing transactions
-from this schedule will not be deleted.
-`)

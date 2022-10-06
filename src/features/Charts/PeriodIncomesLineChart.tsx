@@ -46,7 +46,6 @@ const chartOptions = (options: {
 }): ChartOptions<"line"> => {
 
 	const dark = options.theme === "dark" || (options.theme === "system" && getSystemThemeMode() === "dark");
-	const palette = options.palette;
 	const c = colorValuesMap;
 
 	const withOpacity = (_: string, opacity: number) => `rgba(${toRgbList(_, ", ")}, ${opacity})`

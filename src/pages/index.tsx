@@ -21,7 +21,7 @@ export default function HomePage() {
 					Peace of mind is here.
 				</h1>
 
-				<h2 className="text-2xl text-black-2">
+				<h2 className="text-2xl text-black-2 dark:text-white-2">
 					Control your budgets, spending and personal finances.
 					<span className="font-semibold text-primary">
 						{" "}Better.

@@ -51,6 +51,10 @@ export const analyticsRouter = createProtectedRouter().query("get", {
       tot: 0,
       exp: 0,
       inc: 0,
+      cat: {} as Record<
+        string,
+        { name: string; tot: number; exp: number; inc: number }
+      >,
     };
 
     // Start iterating from current date
@@ -67,6 +71,20 @@ export const analyticsRouter = createProtectedRouter().query("get", {
         if (amount > 0) sums.inc += amount;
         if (amount < 0) sums.exp += amount;
         sums.tot += amount;
+
+        // Category
+        const catId = transactions[i]!.categoryId;
+        if (!sums.cat[catId])
+          sums.cat[catId] = {
+            tot: 0,
+            exp: 0,
+            inc: 0,
+            name: transactions[i]!.category.name,
+          };
+        if (amount > 0) sums.cat[catId]!.inc += amount;
+        if (amount < 0) sums.cat[catId]!.exp += amount;
+        sums.cat[catId]!.tot += amount;
+
         i++;
       }
 

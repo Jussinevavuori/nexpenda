@@ -51,7 +51,7 @@ export default function AnalyticsPage() {
 			</div>
 		</AppLayoutHeader>
 
-		<div className="border border-amber-500 rounded bg-amber-100 p-6 mx-6 my-6 flex gap-6">
+		<div className="border border-amber-500 rounded bg-amber-500/10 p-6 mx-6 my-6 flex gap-6">
 			<Icon.Material icon="warning" className="text-amber-600" />
 			<div className="flex flex-col gap-2">
 				<p>

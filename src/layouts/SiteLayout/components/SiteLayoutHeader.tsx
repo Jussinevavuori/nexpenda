@@ -16,7 +16,7 @@ export function SiteLayoutHeader(props: SiteLayoutHeaderProps) {
 
 	const { data: user } = trpc.useQuery(["user.me"])
 
-	return <header className={c("sticky top-0 transition-all", c.if(isPageScrolled)("border-b border-b-divider bg-white/50 backdrop-blur-md"))}>
+	return <header className={c("sticky top-0 transition-all", c.if(isPageScrolled)("border-b border-b-divider bg-white/50 dark:bg-black/50 backdrop-blur-md"))}>
 
 		<div className="mx-auto max-w-6xl flex gap-4 py-4 px-6 sm:px-16">
 

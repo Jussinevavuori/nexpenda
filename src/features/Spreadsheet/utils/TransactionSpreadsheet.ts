@@ -7,7 +7,7 @@ import { createSpreadsheet } from "./createSpreadsheet";
 const spreadsheetTransactionSchema = z.object({
   time: z.date(),
   amount: z.number().int(),
-  comment: z.string().optional(),
+  comment: z.string(),
   category: z.string().min(1),
   categoryIcon: z.string().optional(),
 });

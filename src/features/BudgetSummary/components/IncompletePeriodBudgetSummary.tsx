@@ -1,7 +1,4 @@
 import { Divider } from "@/components/Divider/Divider";
-import { Tooltip, TooltipProps } from "@/components/Tooltip/Tooltip";
-import { formatMoney } from "@/utils/currency/formatMoney";
-import { c } from "@/utils/generic/classnames";
 import { BudgetSummaryField } from "./BudgetSummaryField";
 import { BudgetSummaryFieldCollection } from "./BudgetSummaryFieldCollection";
 
@@ -10,7 +7,7 @@ export type IncompletePeriodBudgetSummaryProps = {
 	summary: BudgetSummary;
 }
 
-export function IncompletePeriodBudgetSummary({ budget, summary }: IncompletePeriodBudgetSummaryProps) {
+export function IncompletePeriodBudgetSummary({ summary }: IncompletePeriodBudgetSummaryProps) {
 
 	return <div className="py-8 flex flex-col gap-4">
 

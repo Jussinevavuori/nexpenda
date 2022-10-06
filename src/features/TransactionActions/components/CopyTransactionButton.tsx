@@ -1,4 +1,3 @@
-import { AlertDialog } from "@/components/AlertDialog/AlertDialog";
 import { Button } from "@/components/Button/Button";
 import { Icon } from "@/components/Icon/Icon";
 import { IconButton } from "@/components/IconButton/IconButton";
