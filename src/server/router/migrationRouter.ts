@@ -13,7 +13,7 @@ export const migrationRouter = createProtectedRouter().mutation("migrate", {
   }) {
     // Connect to old DB
     const _prisma = new (await (
-      await import("../../../prisma-prev/index")
+      await import("@internal/prisma-next-prod/prisma/client")
     ).PrismaClient)();
 
     // Find previous user
