@@ -1,3 +1,4 @@
+import { Button } from "@/components/Button/Button";
 import { LoadingSpinner } from "@/components/LoadingSpinner/LoadingSpinner";
 import { PageHead } from "@/components/PageHead/PageHead";
 import { useEffectOnce } from "@/hooks/useEffectOnce";
@@ -6,8 +7,7 @@ import { useTimeSinceMount } from "@/hooks/useTimeSinceMount";
 import { useNotify } from "@/stores/notificationStore";
 import { pages } from "@/utils/pages";
 import { trpc } from "@/utils/trpc";
-import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useState } from "react";
 
 const messages = [
 	"Setting you up...",
@@ -25,18 +25,20 @@ export default function WelcomePage() {
 
 	const time = useTimeSinceMount();
 	const message = messages[Math.min(messages.length - 1, Math.floor(time / 1500))]
-	const router = useRouter();
 	const notify = useNotify();
+
+	const [isMigrated, setIsMigrated] = useState(false);
 
 	const migrationMutation = trpc.useMutation("migrations.migrate", {
 		onSuccess(res) {
 			console.log(res);
-			router.push(pages.onboarding.whatnext);
 		},
 		onError(err) {
 			notify.error("Something went wrong while transferring your data!")
 			console.error(err)
-			router.push(pages.onboarding.whatnext);
+		},
+		onSettled() {
+			setIsMigrated(true);
 		}
 	})
 	useEffectOnce(() => migrationMutation.mutate({}));
@@ -58,12 +60,19 @@ export default function WelcomePage() {
 			<p>
 				But first - let's you get set up with the new Nexpenda!
 			</p>
+			<p>
+				Please, do not exit this page.
+			</p>
 
-			<LoadingSpinner color="primary-500" />
 
-			<div>
-				{message}
-			</div>
+			{
+				isMigrated ? <Button.Link href={pages.onboarding.whatnext}>
+					Continue
+				</Button.Link> : <>
+					<LoadingSpinner color="primary-500" />
+					<div>{message}</div>
+				</>
+			}
 		</div>
 
 	</div>
