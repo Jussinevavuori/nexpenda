@@ -8,6 +8,7 @@ import { useNotify } from "@/stores/notificationStore";
 import { pages } from "@/utils/pages";
 import { trpc } from "@/utils/trpc";
 import { useState } from "react";
+import { useMutation } from "react-query";
 
 const messages = [
 	"Setting you up...",
@@ -29,19 +30,28 @@ export default function WelcomePage() {
 
 	const [isMigrated, setIsMigrated] = useState(false);
 
-	const migrationMutation = trpc.useMutation("migrations.migrate", {
-		onSuccess(res) {
-			console.log(res);
-		},
-		onError(err) {
-			notify.error("Something went wrong while transferring your data!")
-			console.error(err)
-		},
+	const userdataMutation = trpc.useMutation("migrations.migrate.userdata")
+	const cleardataMutation = trpc.useMutation("migrations.migrate.cleardata")
+	const getOldDataMutation = trpc.useMutation("migrations.migrate.getOldData")
+	const pushCategoriesMutation = trpc.useMutation("migrations.migrate.pushCategories")
+	const pushSchedulesMutation = trpc.useMutation("migrations.migrate.pushSchedules")
+	const pushTransactionsMutation = trpc.useMutation("migrations.migrate.pushTransactions")
+	const migrationMutation = useMutation(async () => {
+		if (window.location.href.includes("localhost")) {
+			console.log("Clearing data")
+			await cleardataMutation.mutateAsync({});
+		}
+		const user = await userdataMutation.mutateAsync({});
+		const data = await getOldDataMutation.mutateAsync({ oldUserId: user.id })
+		await pushCategoriesMutation.mutateAsync({ categories: data.oldCategories })
+		await pushSchedulesMutation.mutateAsync({ schedules: data.oldSchedules })
+		await pushTransactionsMutation.mutateAsync({ transactions: data.oldTransactions })
+	}, {
 		onSettled() {
 			setIsMigrated(true);
 		}
 	})
-	useEffectOnce(() => migrationMutation.mutate({}));
+	useEffectOnce(() => migrationMutation.mutate());
 
 	return <div className="bg-white-bg dark:bg-black-bg min-h-screen">
 		<PageHead title="Welcome" />
