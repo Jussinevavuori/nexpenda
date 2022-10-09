@@ -1,4 +1,5 @@
 import { readPersistedPreference } from "@/features/Preferences/utils/readPersistedPreference";
+import { selectableCurrencies } from "./selectableCurrencies";
 
 export function formatMoney(
   value: number,
@@ -18,39 +19,21 @@ export function formatMoney(
   const hideCurrency =
     options.hideCurrency ?? readPersistedPreference("hideCurrency") === "true";
 
-  // Default formatting
-  const formatResult = new Intl.NumberFormat(
-    new Intl.NumberFormat().resolvedOptions().locale,
-    {
-      style: "currency",
-      currency: currency.toUpperCase(),
-      currencyDisplay: "narrowSymbol",
-    }
-  )
-    // Optionally take absolute value
-    .format((options.absolute ? Math.abs(value) : value) / 100);
+  // Get currency symbol
+  const currencySymbol = new Intl.NumberFormat("fi-FI", {
+    style: "currency",
+    currency: currency.toUpperCase(),
+    currencyDisplay: "narrowSymbol",
+  })
+    .format(0)
+    .split(/\s/g)[1];
 
-  const sign = formatResult.includes("-") ? "-" : "";
+  // Format numeric to 2 decimals (divide to euros)
+  const numeric = (value / 100).toFixed(2);
 
-  const nonnumeric = Array.from(formatResult)
-    .filter((char) => char.match(nonNumericRegex) && char !== "-")
-    .join("");
+  if (hideCurrency) return numeric;
 
-  const numeric = Array.from(formatResult)
-    .filter((char) => !char.match(nonNumericRegex) && char !== "-")
-    .join("");
+  if (flip) return `${currencySymbol} ${numeric}`;
 
-  // Format:
-  // $ stands for the symbol
-  // # stands for the numeric part
-  // - stands for the sign
-  const format = hideCurrency ? "-#" : flip ? "$ -#" : "-# $";
-
-  return format
-    .replace("-", sign)
-    .replace("$", nonnumeric)
-    .replace("#", numeric);
+  return `${numeric} ${currencySymbol}`;
 }
-
-// Numeric regex for all number characters
-const nonNumericRegex = /[^-\d\.,]+/;
