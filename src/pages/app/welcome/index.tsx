@@ -37,9 +37,9 @@ export default function WelcomePage() {
 		const data = await getOldDataMutation.mutateAsync({ oldUserId: user.id })
 		ProgressBarPubSub.publish({ key: "welcome", value: 2, target: 5 })
 
-		const ctChunks = chunkify(data.oldCategories, 50);
-		const scChunks = chunkify(data.oldSchedules, 50);
-		const txChunks = chunkify(data.oldTransactions, 50);
+		const ctChunks = chunkify(data.oldCategories, 25);
+		const scChunks = chunkify(data.oldSchedules, 25);
+		const txChunks = chunkify(data.oldTransactions, 25);
 
 		setMessage(`Copying ${data.oldCategories.length} categories`)
 		await Promise.allSettled(ctChunks.map(categories => pushCategoriesMutation.mutateAsync({ categories })))
@@ -75,7 +75,7 @@ export default function WelcomePage() {
 				We've changed some things around here!
 			</h2>
 			<p>
-				But first - let's you get set up with the new Nexpenda!
+				Let's fist you get set up with the new Nexpenda!
 			</p>
 			<p>
 				Please, do not exit this page.
