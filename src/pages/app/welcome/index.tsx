@@ -4,7 +4,6 @@ import { PageHead } from "@/components/PageHead/PageHead";
 import { useEffectOnce } from "@/hooks/useEffectOnce";
 import { useRequireAuth } from "@/hooks/useRequireAuth";
 import { useTimeSinceMount } from "@/hooks/useTimeSinceMount";
-import { useNotify } from "@/stores/notificationStore";
 import { pages } from "@/utils/pages";
 import { trpc } from "@/utils/trpc";
 import { useState } from "react";
@@ -25,8 +24,7 @@ export default function WelcomePage() {
 	useRequireAuth();
 
 	const time = useTimeSinceMount();
-	const message = messages[Math.min(messages.length - 1, Math.floor(time / 1500))]
-	const notify = useNotify();
+	const message = messages[Math.min(messages.length - 1, Math.floor(time / 2500))]
 
 	const [isMigrated, setIsMigrated] = useState(false);
 

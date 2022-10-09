@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
+const plugin = require("tailwindcss/plugin");
 const { rose, emerald, amber, slate } = require("tailwindcss/colors");
 
 const withOpacity = (color, opacity) => {
@@ -197,5 +198,7 @@ module.exports = {
 	plugins: [
 		require('@headlessui/tailwindcss'),
 		require('@tailwindcss/typography'),
+		plugin(({ addVariant }) => addVariant("d-active", "&[data-active=true]"))
+
 	],
 };
