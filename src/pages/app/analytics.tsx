@@ -103,7 +103,7 @@ export default function AnalyticsPage() {
 					</div>
 
 					<div className="">
-						<h3 className="text-3xl font-semibold pb-6">
+						<h3 className="text-xl font-semibold pb-6">
 							Incomes per category
 						</h3>
 
@@ -113,7 +113,7 @@ export default function AnalyticsPage() {
 					</div>
 
 					<div className="">
-						<h3 className="text-3xl font-semibold pb-6">
+						<h3 className="text-xl font-semibold pb-6">
 							Expenses per category
 						</h3>
 
