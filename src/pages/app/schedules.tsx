@@ -28,7 +28,7 @@ export default function SchedulesPage() {
 
 		{
 			!schedules ? (
-				<div className="flex flex-col gap-4 items-center justify-center">
+				<div className="flex flex-col gap-4 py-10 items-center justify-center">
 					<LoadingSpinner />
 					<p>Loading schedules...</p>
 				</div>
