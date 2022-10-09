@@ -126,7 +126,7 @@ export function ScheduleItem({ schedule }: ScheduleItemProps) {
 				<div className="ml-auto self-end translate-x-4 translate-y-2">
 					<AlertDialog
 						title="Confirm cancel"
-						description="Are you sure you want to cancel this transaction? Canceli"
+						description="Are you sure you want to cancel this transaction? Canceling will not delete previous transactions from this schedule."
 						cancelLabel="Do not cancel"
 						confirmLabel="Confirm"
 						variant="danger"
