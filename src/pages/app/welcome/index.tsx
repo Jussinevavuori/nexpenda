@@ -4,7 +4,6 @@ import { ProgressBar } from "@/components/ProgressBar/ProgressBar";
 import { ProgressBarPubSub } from "@/components/ProgressBar/utils/ProgressBarPubSub";
 import { useEffectOnce } from "@/hooks/useEffectOnce";
 import { useRequireAuth } from "@/hooks/useRequireAuth";
-import { useTimeSinceMount } from "@/hooks/useTimeSinceMount";
 import { chunkify } from "@/utils/generic/chunkify";
 import { pages } from "@/utils/pages";
 import { trpc } from "@/utils/trpc";
@@ -13,8 +12,6 @@ import { useMutation } from "react-query";
 
 export default function WelcomePage() {
 	useRequireAuth();
-
-	const time = useTimeSinceMount();
 
 	const [message, setMessage] = useState("Setting you up...");
 	const [isMigrated, setIsMigrated] = useState(false);
@@ -60,20 +57,27 @@ export default function WelcomePage() {
 			})
 		}
 
-		for (const chunk of ctChunks) {
-			await pushCategoriesMutation.mutateAsync({ categories: chunk });
-			update(chunk.length);
-		}
+		const ctPromises: Promise<any>[] = []; // eslint-disable-line
+		ctChunks.forEach(categories => ctPromises.push(
+			pushCategoriesMutation.mutateAsync({ categories })
+				.then(() => update(categories.length))
+		))
+		await Promise.allSettled(ctPromises);
 
-		for (const chunk of scChunks) {
-			await pushSchedulesMutation.mutateAsync({ schedules: chunk });
-			update(chunk.length);
-		}
+		const scPromises: Promise<any>[] = []; // eslint-disable-line
+		scChunks.forEach(schedules => scPromises.push(
+			pushSchedulesMutation.mutateAsync({ schedules })
+				.then(() => update(schedules.length))
+		))
+		await Promise.allSettled(scPromises);
 
-		for (const chunk of txChunks) {
-			await pushTransactionsMutation.mutateAsync({ transactions: chunk });
-			update(chunk.length);
-		}
+		const txPromises: Promise<any>[] = []; // eslint-disable-line
+		txChunks.forEach(transactions => txPromises.push(
+			pushTransactionsMutation.mutateAsync({ transactions })
+				.then(() => update(transactions.length))
+		))
+		await Promise.allSettled(txPromises);
+
 	}, {
 		onSettled() {
 			setIsMigrated(true);
@@ -114,8 +118,4 @@ export default function WelcomePage() {
 		</div>
 
 	</div>
-}
-
-function useProgressBarValue(arg0: string) {
-	throw new Error("Function not implemented.");
 }
