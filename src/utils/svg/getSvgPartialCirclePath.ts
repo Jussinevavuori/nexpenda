@@ -1,9 +1,6 @@
 import { Angle } from "../geometry/Angle";
 import { Geometry } from "../geometry/Geometry";
 
-/**
- * Class used to draw Svg SparkLine Path and other relevant components.
- */
 export function getSvgPartialCirclePath(options: {
   radius: number;
   strokeWidth: number;
@@ -47,7 +44,7 @@ export function getSvgPartialCirclePath(options: {
   // Center point
   const center = Geometry.polarToCartesian({
     center: { x: R, y: R },
-    angle: new Angle(0, "degrees"),
+    angle: Angle.Zero(),
     radius: 0,
   });
 

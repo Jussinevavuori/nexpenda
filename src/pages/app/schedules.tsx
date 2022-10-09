@@ -61,7 +61,7 @@ export default function SchedulesPage() {
 					</p>
 				</div>
 			) : (
-				<div className="px-6 d:px-10 py-10 flex flex-col">
+				<div className="px-6 d:px-10 py-10 flex flex-col max-w-2xl mx-auto">
 					{
 						schedules.map((s, i, arr) => (<div key={s.id}>
 							<ScheduleItem schedule={s} />

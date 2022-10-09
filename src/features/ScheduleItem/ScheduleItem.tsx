@@ -1,7 +1,7 @@
 import { AlertDialog } from "@/components/AlertDialog/AlertDialog";
 import { Button } from "@/components/Button/Button";
 import { Icon } from "@/components/Icon/Icon";
-import { Tooltip } from "@/components/Tooltip/Tooltip";
+import { ProgressBar } from "@/components/ProgressBar/ProgressBar";
 import { getDefaultedCategoryIcon } from "@/utils/category/getDefaultedCategoryIcon";
 import { formatMoney } from "@/utils/currency/formatMoney";
 import { formatDateString } from "@/utils/dates/formatDateString";
@@ -40,8 +40,11 @@ export function ScheduleItem({ schedule }: ScheduleItemProps) {
 		return previous ? getNextOccurrenceFrom(schedule, previous) : getNextOccurrence(schedule);
 	}, [schedule, previous]);
 
-	return <div className="">
-		<div className={c("relative group flex items-center gap-4", c.if(!next)("opacity-50"))}>
+	return <div className="flex flex-col gap-4">
+		<div
+			className="relative group flex items-center gap-4 !d-active:opacity-50"
+			data-active={!!next}
+		>
 			<div className="relative w-12 h-12 bg-white-bg-4 dark:bg-black-bg-4 rounded-full flex items-center justify-center">
 				<span className="text-2xl">
 					{getDefaultedCategoryIcon(schedule.category, schedule.amount)}
@@ -67,79 +70,78 @@ export function ScheduleItem({ schedule }: ScheduleItemProps) {
 			</div>
 		</div >
 
-		<div className={c("py-8", c.if(!next)("opacity-50"))}>
+		<div data-active={!!next} className="!d-active:opacity-50">
 
 			<div className="flex flex-wrap justify-between items-start">
-				<p className="">
+				<p className="text-black-2 dark:text-white-2">
 					{next ? "Repeats" : "Repeated"} every{" "}
-					<span className="font-bold">
+					<span className="font-bold text-black dark:text-white">
 						{formatOccurrenceInterval(schedule)}
 					</span>
 					{
 						schedule.occurrences && <span>
 							{" until "}
-							<span className="font-bold">
+							<span className="font-bold text-black dark:text-white">
 								{formatDateString(getLastOccurrence(schedule) ?? new Date())}
 							</span>
 						</span>
 					}
 				</p>
-
-				<p className="text-black-3 dark:text-white-3">
-					{schedule.transactions.length} occurrences
-				</p>
 			</div>
+		</div>
 
-			<div className="py-4">
-				<div className="relative h-1 rounded-full w-full bg-primary bg-opacity-10">
-					<div
-						className="absolute h-1 left-0 bg-primary rounded-full"
-						style={{ width: getPercentageUntilNextOccurrence(schedule) + "%" }}
-					/>
-				</div>
-			</div>
+		<div data-active={!!next} className="!d-active:opacity-50">
 
+			<div className="flex gap-8 items-center">
+				<ProgressBar
+					progress={getPercentageUntilNextOccurrence(schedule) / 100}
+					variant="circle"
+					size={48}
+					strokeWidth={8}
+				/>
 
-			<div className="flex flex-wrap justify-between items-start">
-				<p className="text-sm text-black-2 dark:text-white-2 flex gap-2 items-center">
-					<span className="font-bold">
-						{formatDateString(previous ?? new Date())}
-					</span>
-					<span className="text-black-3 dark:text-white-3">
-						{previous ? "Previous" : "Today"}
-					</span>
-				</p>
-				<p className="text-sm text-black-2 dark:text-white-2 flex gap-2 items-center">
+				<div className="gap-x-4 text-sm text-black-2 dark:text-white-2 grid grid-cols-2 ">
 					<span className="text-black-3 dark:text-white-3">
 						{next ? `Next in ${differenceInCalendarDays(next, new Date())} days` : "No more occurrences"}
 					</span>
 					{
-						next &&
-						<span className="font-bold">
+						next ? <span className="font-bold">
 							{formatDateString(next)}
-						</span>
+						</span> : <span />
 					}
-				</p>
+					<span className="text-black-3 dark:text-white-3">
+						{previous ? "Previous" : "Today"}
+					</span>
+					<span className="font-bold">
+						{formatDateString(previous ?? new Date())}
+					</span>
+					<span className="text-black-3 dark:text-white-3">
+						Occurrences
+					</span>
+					<span className="font-bold">
+						x {schedule.transactions.length}
+					</span>
+				</div>
+
+				<div className="ml-auto self-end translate-x-4 translate-y-2">
+					<AlertDialog
+						title="Confirm cancel"
+						description="Are you sure you want to cancel this transaction? Canceli"
+						cancelLabel="Do not cancel"
+						confirmLabel="Confirm"
+						variant="danger"
+						onConfirm={handleCancel}
+					>
+						<Button
+							color="danger"
+							variant="text"
+							startIcon={<Icon.Material icon="clear" />}
+						>
+							Cancel
+						</Button>
+					</AlertDialog>
+				</div>
 			</div>
 		</div>
-
-		<div className="flex items-center justify-end gap-6">
-			<AlertDialog
-				title="Confirm cancel"
-				description="Are you sure you want to cancel this transaction? Canceli"
-				cancelLabel="Do not cancel"
-				confirmLabel="Confirm"
-				variant="danger"
-				onConfirm={handleCancel}
-			>
-				<Button
-					color="danger"
-					variant="flat"
-					startIcon={<Icon.Material icon="delete" />}
-				>
-					Cancel
-				</Button>
-			</AlertDialog>
-		</div>
-	</div>
+	</div >
 }

@@ -71,10 +71,10 @@ export class Angle {
     return angles.every((angle) => angle._value % 1 === angles[0]._value % 1);
   }
 
-  static Zero = new Angle(0, "degrees");
-  static Quarter = new Angle(90, "degrees");
-  static Half = new Angle(180, "degrees");
-  static Full = new Angle(360, "degrees");
+  static Zero = () => new Angle(0, "degrees");
+  static Quarter = () => new Angle(90, "degrees");
+  static Half = () => new Angle(180, "degrees");
+  static Full = () => new Angle(360, "degrees");
 
   /**
    * Ratio of units to internal value
