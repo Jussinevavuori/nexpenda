@@ -62,6 +62,9 @@ export default function AdminUsersPage() {
 			<h2 className="text-xl font-semibold pt-8">
 				Search users
 			</h2>
+			<p className="text-sm text-black-3 dark:text-white-3">
+				{resultUsers.length} / {users?.length ?? 0} users
+			</p>
 
 			<div className="w-full flex gap-4 pt-4">
 				<div className="w-full">
