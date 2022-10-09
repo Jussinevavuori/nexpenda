@@ -20,6 +20,7 @@ export function AutocompleteInput({ helperText, placeholder, onChange, ...props 
 		<Combobox.Input
 			onChange={onChange}
 			placeholder={placeholder}
+			type="search" // attempt to hide android chrome password suggestions
 			className={c("bg-transparent py-2 text-black dark:text-white outline-none",
 				"placeholder:text-black-4 dark:placeholder:text-white-4 w-full",
 				c.variant(props.variant ?? "default")({
