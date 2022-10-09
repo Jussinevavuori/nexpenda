@@ -37,9 +37,9 @@ export default function WelcomePage() {
 	const migrationMutation = useMutation(async () => {
 		if (window.location.href.includes("localhost")) await cleardataMutation.mutateAsync({});
 		const user = await userdataMutation.mutateAsync({});
-		ProgressBarPubSub.publish({ key: "welcome", value: 1, target: 6 })
+		ProgressBarPubSub.publish({ key: "welcome", value: 0.5, target: 3 })
 		const data = await getOldDataMutation.mutateAsync({ oldUserId: user.id })
-		ProgressBarPubSub.publish({ key: "welcome", value: 2, target: 6 })
+		ProgressBarPubSub.publish({ key: "welcome", value: 1, target: 3 })
 
 		const ctChunks = chunkify(data.oldCategories, 50);
 		const scChunks = chunkify(data.oldSchedules, 50);
@@ -52,31 +52,36 @@ export default function WelcomePage() {
 			itemsPosted += items;
 			ProgressBarPubSub.publish({
 				key: "welcome",
-				value: itemsPosted + itemsToPost,
-				target: 3 * itemsToPost,
+				value: 1 + 2 * (itemsPosted / itemsToPost),
+				target: 3,
 			})
 		}
 
-		const ctPromises: Promise<any>[] = []; // eslint-disable-line
-		ctChunks.forEach(categories => ctPromises.push(
-			pushCategoriesMutation.mutateAsync({ categories })
-				.then(() => update(categories.length))
-		))
-		await Promise.allSettled(ctPromises);
+		console.log({ ctChunks, scChunks, txChunks })
 
-		const scPromises: Promise<any>[] = []; // eslint-disable-line
-		scChunks.forEach(schedules => scPromises.push(
-			pushSchedulesMutation.mutateAsync({ schedules })
-				.then(() => update(schedules.length))
-		))
-		await Promise.allSettled(scPromises);
+		await Promise.allSettled(
+			ctChunks.map(categories =>
+				pushCategoriesMutation
+					.mutateAsync({ categories })
+					.then(() => update(categories.length))
+			)
+		)
 
-		const txPromises: Promise<any>[] = []; // eslint-disable-line
-		txChunks.forEach(transactions => txPromises.push(
-			pushTransactionsMutation.mutateAsync({ transactions })
-				.then(() => update(transactions.length))
-		))
-		await Promise.allSettled(txPromises);
+		await Promise.allSettled(
+			scChunks.map(schedules =>
+				pushSchedulesMutation
+					.mutateAsync({ schedules })
+					.then(() => update(schedules.length))
+			)
+		)
+
+		await Promise.allSettled(
+			txChunks.map(transactions =>
+				pushTransactionsMutation
+					.mutateAsync({ transactions })
+					.then(() => update(transactions.length))
+			)
+		)
 
 	}, {
 		onSettled() {
