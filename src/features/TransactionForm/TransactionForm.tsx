@@ -227,7 +227,7 @@ export function TransactionForm(props: TransactionFormProps) {
 				placeholder="Amount"
 				fullWidth
 				error={!!errors.amount}
-				endLabel={currency}
+				endLabel={currency.toUpperCase()}
 				autoFocus
 				type="search" // attempt to hide android chrome password suggestions
 			/>
