@@ -11,7 +11,7 @@ import withPWA from "next-pwa"
  */
 function defineNextConfig(config) {
 	const layers = [
-		withPWA,
+		withPWA({ dest: "public" }),
 		withAxiom
 	]
 
