@@ -1,4 +1,3 @@
-import { AlertDialog } from "@/components/AlertDialog/AlertDialog";
 import { Avatar } from "@/components/Avatar/Avatar";
 import { Button } from "@/components/Button/Button";
 import { Divider } from "@/components/Divider/Divider";
@@ -50,18 +49,6 @@ export function AccountSettings() {
 			onClose={pictureChanger.close}
 			onUploaded={pictureChanger.close}
 		/>
-
-		<AlertDialog
-			cancelLabel="Cancel"
-			confirmLabel="Confirm"
-			title="Testi"
-			onConfirm={() => { console.log("Conf") }}
-			description="Haluatko logata?"
-		>
-			<Button>
-				Test
-			</Button>
-		</AlertDialog>
 
 		<section className="flex flex-col gap-4">
 			<div className="flex py-4 items-center mx-auto gap-4 group w-fit">
