@@ -100,7 +100,7 @@ export function ScheduleItem({ schedule }: ScheduleItemProps) {
 					strokeWidth={8}
 				/>
 
-				<div className="gap-x-4 text-sm text-black-2 dark:text-white-2 grid grid-cols-2 ">
+				<div className="flex-1 gap-x-4 text-sm text-black-2 dark:text-white-2 grid grid-cols-[auto_1fr] ">
 					<span className="text-black-3 dark:text-white-3">
 						{next ? `Next in ${differenceInCalendarDays(next, new Date())} days` : "No more occurrences"}
 					</span>
