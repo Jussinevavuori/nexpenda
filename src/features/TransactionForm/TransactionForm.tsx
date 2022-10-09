@@ -197,6 +197,7 @@ export function TransactionForm(props: TransactionFormProps) {
 		>
 			<Suspense fallback={<LoadingSpinner />}>
 				<EmojiPicker
+					autoFocusSearch={false}
 					onEmojiClick={({ emoji }) => {
 						emojiPicker.close();
 						setValue("icon", emoji, { shouldTouch: true, shouldValidate: true });
