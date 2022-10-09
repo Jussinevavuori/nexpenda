@@ -4,8 +4,7 @@ import { pages } from '@/utils/pages';
 import { trpc } from '@/utils/trpc';
 import Link from 'next/link';
 
-// eslint-disable-next-line
-const { motion, AnimatePresence } = require("framer-motion");
+const { motion, AnimatePresence }: typeof import("framer-motion") = require("framer-motion"); // eslint-disable-line
 
 export interface SidebarUserProps {
 	isSidebarOpen: boolean;

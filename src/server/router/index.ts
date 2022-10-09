@@ -1,5 +1,5 @@
 // src/server/router/index.ts
-import { createRouter } from "./context";
+import { createRouter } from "../context/context";
 import superjson from "superjson";
 import { userRouter } from "./userRouter";
 import { transactionsRouter } from "./transactionsRouter";

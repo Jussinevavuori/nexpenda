@@ -2,9 +2,8 @@ import { User } from "@prisma/client";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import { requireRole } from "../utils/requireRole";
-import { createProtectedRouter } from "./protectedRouter";
-import { generate as shortId } from "shortid";
-import { uploadImage } from "../utils/uploadImage";
+import { createProtectedRouter } from "../utils/protectedRouter";
+import { env } from "@/env/env.server.mjs";
 
 export const userRouter = createProtectedRouter()
   /**
@@ -79,24 +78,12 @@ export const userRouter = createProtectedRouter()
         updateBatch.image = null;
       }
 
-      // Update image
-      if (input.image) {
-        // Directly
-        if (input.image.startsWith("http")) {
-          if (isAllowedDirectAvatarUrl(input.image)) {
-            updateBatch.image = input.image;
-          }
-        }
-
-        // From base-64 encoded image
-        else {
-          updateBatch.image = await uploadImage({
-            buffer: Buffer.from(input.image, "base64"),
-            filename: `avatar_${ctx.session.user.id}_${shortId()}`,
-            folder: "avatars",
-            processImage: (image) => image.resize(200),
-          });
-        }
+      // Upload image
+      if (
+        typeof input.image === "string" &&
+        input.image.startsWith(env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT)
+      ) {
+        updateBatch.image = input.image;
       }
 
       // Update and return updated user
@@ -121,8 +108,3 @@ export const userRouter = createProtectedRouter()
       });
     },
   });
-
-function isAllowedDirectAvatarUrl(url: string) {
-  const regex = /^https:\/\/lh\d+.googleusercontent.com\//;
-  return regex.test(url);
-}

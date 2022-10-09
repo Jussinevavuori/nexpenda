@@ -1,6 +1,6 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
-import { createProtectedRouter } from "./protectedRouter";
+import { createProtectedRouter } from "../utils/protectedRouter";
 
 export const categoriesRouter = createProtectedRouter()
   .query("list", {

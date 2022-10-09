@@ -7,8 +7,7 @@ import { Icon } from '@/components/Icon/Icon';
 import { c } from '@/utils/generic/classnames';
 import { Tooltip } from '@/components/Tooltip/Tooltip';
 
-// eslint-disable-next-line
-const { motion, AnimatePresence } = require("framer-motion");
+const { motion, AnimatePresence }: typeof import("framer-motion") = require("framer-motion"); // eslint-disable-line
 
 export interface SidebarItemProps {
 	children?: React.ReactNode;

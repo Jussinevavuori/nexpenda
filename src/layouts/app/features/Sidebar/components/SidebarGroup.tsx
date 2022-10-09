@@ -1,7 +1,6 @@
 import React from "react";
 
-// eslint-disable-next-line
-const { motion, AnimatePresence } = require("framer-motion");
+const { motion, AnimatePresence }: typeof import("framer-motion") = require("framer-motion"); // eslint-disable-line
 
 export interface SidebarGroupProps {
 	isSidebarOpen?: boolean;

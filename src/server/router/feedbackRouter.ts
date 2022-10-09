@@ -2,7 +2,7 @@ import { z } from "zod";
 import { mailTemplates } from "../utils/mailTemplates";
 import { requireRole } from "../utils/requireRole";
 import { sendMail } from "../utils/sendMail";
-import { createProtectedRouter } from "./protectedRouter";
+import { createProtectedRouter } from "../utils/protectedRouter";
 
 export const feedbackRouter = createProtectedRouter()
   /**

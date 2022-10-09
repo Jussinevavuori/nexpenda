@@ -1,7 +1,7 @@
 import { Category, Transaction, TransactionSchedule } from "@prisma/client";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
-import { createProtectedRouter } from "./protectedRouter";
+import { createProtectedRouter } from "../utils/protectedRouter";
 
 export const migrationRouter = createProtectedRouter()
   .mutation("migrate.userdata", {

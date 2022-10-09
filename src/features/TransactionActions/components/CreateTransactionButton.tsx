@@ -7,8 +7,7 @@ import { useGlobalModal } from "@/stores/globalModalAtom"
 import { useTransactionSelectionStore } from "@/stores/transactionSelectionStore"
 import { useRef } from "react"
 
-// eslint-disable-next-line
-const { motion } = require("framer-motion");
+const { motion, AnimatePresence }: typeof import("framer-motion") = require("framer-motion"); // eslint-disable-line
 
 export type CreateTransactionButtonProps = Omit<ButtonProps, "onClick"> & {
 

@@ -7,8 +7,7 @@ import { c } from "@/utils/generic/classnames";
 import { lineClamp } from "@/utils/styles/lineClamp";
 import { isFuture } from "date-fns";
 
-// eslint-disable-next-line
-const { motion, AnimatePresence } = require("framer-motion")
+const { motion, AnimatePresence }: typeof import("framer-motion") = require("framer-motion"); // eslint-disable-line
 
 export interface TransactionListItemProps {
 	transaction: TransactionItem;
@@ -50,13 +49,13 @@ export function TransactionListItem({ transaction }: TransactionListItemProps) {
 			<AnimatePresence>
 				{
 					isSelected && <motion.div
-						initial={{ opacity: 0, scale: 0, transition: { delay: 0.0 } }}
+						initial={{ opacity: 0, scale: 0 }}
 						animate={{ opacity: 1, scale: 1, transition: { delay: 0.0 } }}
 						exit={{ opacity: 0, scale: 0, transition: { delay: 0.1 } }}
 						className="rounded-full absolute inset-0 bg-primary-500 flex items-center justify-center"
 					>
 						<motion.span
-							initial={{ opacity: 0, rotate: "0deg", scale: 0, transition: { delay: 0.1 } }}
+							initial={{ opacity: 0, rotate: "0deg", scale: 0 }}
 							animate={{ opacity: 1, rotate: "360deg", scale: 1, transition: { delay: 0.1 } }}
 							exit={{ opacity: 0, rotate: "720deg", scale: 0, transition: { delay: 0.0 } }}
 						>

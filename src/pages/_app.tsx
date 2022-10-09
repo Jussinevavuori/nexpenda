@@ -17,7 +17,6 @@ const App: AppType = ({
 	Component,
 	pageProps: { session, ...pageProps },
 }) => {
-
 	useVhFix();
 	useInitialize();
 
@@ -30,13 +29,13 @@ const App: AppType = ({
 					<Component {...pageProps} />
 				</Notifications>
 			</RadixTooltipProvider>
-		</SessionProvider>
+		</SessionProvider >
 	);
 };
 
 // Configure TRPC router to wrap App
 
-const getBaseUrl = () => {
+export const getBaseUrl = () => {
 	// Browser should use relative URL
 	if (typeof window !== "undefined") return "";
 

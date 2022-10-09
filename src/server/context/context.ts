@@ -6,7 +6,8 @@ import {
   unstable_getServerSession as getServerSession,
 } from "next-auth";
 import { authOptions as nextAuthOptions } from "../../pages/api/auth/[...nextauth]";
-import { prisma } from "../db/client";
+import { prisma } from "./prisma";
+import { imageKit } from "./imageKit";
 
 type CreateContextOptions = {
   session: Session | null;
@@ -19,6 +20,7 @@ type CreateContextOptions = {
 export const createContextInner = async (opts: CreateContextOptions) => {
   return {
     session: opts.session,
+    imageKit,
     prisma,
   };
 };

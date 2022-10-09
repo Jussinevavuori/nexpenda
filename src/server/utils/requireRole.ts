@@ -1,6 +1,6 @@
 import { UserRole } from "@prisma/client";
 import { TRPCError } from "@trpc/server";
-import { RouterContext } from "../router/context";
+import { RouterContext } from "../context/context";
 
 export async function requireRole(role: UserRole, ctx: RouterContext) {
   if (!ctx.session?.user) throw new TRPCError({ code: "FORBIDDEN" });

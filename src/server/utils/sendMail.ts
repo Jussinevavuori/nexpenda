@@ -1,6 +1,6 @@
 import Mailgun from "mailgun.js";
 import formData from "form-data";
-import { env } from "@/env/server.mjs";
+import { env } from "@/env/env.server.mjs";
 import { MailTemplate } from "./mailTemplates";
 
 /**

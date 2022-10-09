@@ -1,6 +1,6 @@
 import sharp from "sharp";
 import ImageKit from "imagekit";
-import { env } from "@/env/server.mjs";
+import { env } from "@/env/env.server.mjs";
 
 export async function uploadImage(options: {
   filename: string;

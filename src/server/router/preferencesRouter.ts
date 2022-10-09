@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { createProtectedRouter } from "./protectedRouter";
+import { createProtectedRouter } from "../utils/protectedRouter";
 
 export const preferencesRouter = createProtectedRouter()
   /**

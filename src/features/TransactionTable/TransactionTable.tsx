@@ -17,8 +17,7 @@ import { filterTransactions } from "@/utils/transaction/filterTransactions";
 import { useActiveQuery } from "@/stores/transactionSearchAtom";
 import { useOnKeyCombination } from "@/hooks/useOnKeyCombination";
 
-// eslint-disable-next-line
-const { motion, AnimatePresence } = require("framer-motion")
+const { motion, AnimatePresence }: typeof import("framer-motion") = require("framer-motion"); // eslint-disable-line
 
 export type TransactionTableProps = {
 	disableBottomPadding?: boolean;

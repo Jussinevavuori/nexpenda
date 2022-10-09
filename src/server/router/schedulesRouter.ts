@@ -1,6 +1,6 @@
 import { groupByDateSerialToMap } from "@/utils/dates/groupByDateSerialToMap";
 import { z } from "zod";
-import { createProtectedRouter } from "./protectedRouter";
+import { createProtectedRouter } from "../utils/protectedRouter";
 import { compareDate } from "@/utils/dates/compareDate";
 import { serializeDate } from "@/utils/dates/serializeDate";
 import { isSameDay } from "date-fns";

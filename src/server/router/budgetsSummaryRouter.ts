@@ -7,7 +7,7 @@ import { sum } from "@/utils/generic/sum";
 import { toSet } from "@/utils/generic/toSet";
 import { z } from "zod";
 import { periodSchema } from "../utils/inputSchemas";
-import { createProtectedRouter } from "./protectedRouter";
+import { createProtectedRouter } from "../utils/protectedRouter";
 
 export const budgetsSummaryRouter = createProtectedRouter().query("get", {
   input: z.object({ period: periodSchema }),

@@ -10,8 +10,7 @@ import { useOnKeyCombination } from '@/hooks/useOnKeyCombination';
 import { pages } from '@/utils/pages';
 import { c } from '@/utils/generic/classnames';
 
-// eslint-disable-next-line
-const { motion } = require("framer-motion");
+const { motion, AnimatePresence }: typeof import("framer-motion") = require("framer-motion"); // eslint-disable-line
 
 export type SidebarItemKey = "dashboard" | "analytics" | "budgets" | "settings" | "schedules";
 

@@ -1,8 +1,6 @@
 import { c } from "@/utils/generic/classnames";
 
-
-// eslint-disable-next-line
-const { motion } = require("framer-motion");
+const { motion, AnimatePresence }: typeof import("framer-motion") = require("framer-motion"); // eslint-disable-line
 
 export interface SwitchProps {
 	value: boolean;

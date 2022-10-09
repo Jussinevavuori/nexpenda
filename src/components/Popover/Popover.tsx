@@ -1,8 +1,7 @@
 import React from "react";
 import { Popover as HeadlessPopover } from "@headlessui/react"
 
-// eslint-disable-next-line
-const { motion, AnimatePresence } = require("framer-motion");
+const { motion, AnimatePresence }: typeof import("framer-motion") = require("framer-motion"); // eslint-disable-line
 
 export type PopoverProps = {
 	button?: React.ReactNode;

@@ -11,6 +11,7 @@ import { pages } from "@/utils/pages";
 import { trpc } from "@/utils/trpc";
 import { signOut } from "next-auth/react";
 import { useState } from "react";
+import { useOpenState } from "@/hooks/useOpenState";
 
 export function AccountSettings() {
 
@@ -26,7 +27,6 @@ export function AccountSettings() {
 	const updateUserMutation = trpc.useMutation("user.update", {
 		onSuccess(_, vars) {
 			if (vars.name) notify.success("Name updated");
-			if (vars.image === null) notify.success("Image removed");
 			utils.invalidateQueries("user.me");
 		}
 	})
@@ -40,45 +40,37 @@ export function AccountSettings() {
 	}
 
 	// Change picture
-	const [pictureChangerIsOpen, setPictureChangerIsOpen] = useState(false);
+	const pictureChanger = useOpenState();
 
 	if (!user) return null;
 
 	return <div>
 		<PictureChanger.Dialog
-			open={pictureChangerIsOpen}
-			onClose={() => setPictureChangerIsOpen(false)}
+			open={pictureChanger.isOpen}
+			onClose={pictureChanger.close}
+			onUploaded={pictureChanger.close}
 		/>
 
+		<AlertDialog
+			cancelLabel="Cancel"
+			confirmLabel="Confirm"
+			title="Testi"
+			onConfirm={() => { console.log("Conf") }}
+			description="Haluatko logata?"
+		>
+			<Button>
+				Test
+			</Button>
+		</AlertDialog>
+
 		<section className="flex flex-col gap-4">
-			<p className="text-sm text-black-3 dark:text-white-3">
-				Your profile
-			</p>
-
-
-			<div className="flex py-4 items-center gap-4">
+			<div className="flex py-4 items-center mx-auto gap-4 group w-fit">
 				<Avatar
+					onClick={pictureChanger.open}
 					image={user.image}
 					name={user.name}
-					size={96}
+					size={160}
 				/>
-				<div className="space-y-2">
-					<Button variant="default" onClick={() => setPictureChangerIsOpen(true)}>
-						Change picture
-					</Button>
-					<AlertDialog
-						title="Remove picture"
-						description="Are you sure you want to remove your profile picture?"
-						cancelLabel="Cancel"
-						confirmLabel="Confirm"
-						onConfirm={() => updateUserMutation.mutate({ image: null })}
-						variant="danger"
-					>
-						<Button disabled={!user.image} variant="flat" color="danger">
-							Remove picture
-						</Button>
-					</AlertDialog>
-				</div>
 			</div>
 
 			<div className="flex flex-col gap-1">

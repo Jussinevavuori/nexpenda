@@ -19,8 +19,7 @@ import { TransactionSelectionTools } from '../TransactionSelectionTools/Transact
 import { useActiveQuery } from '@/stores/transactionSearchAtom';
 import { useOnKeyCombination } from '@/hooks/useOnKeyCombination';
 
-// eslint-disable-next-line
-const { motion, AnimatePresence } = require("framer-motion")
+const { motion, AnimatePresence }: typeof import("framer-motion") = require("framer-motion"); // eslint-disable-line
 
 export interface TransactionListProps {
 	disableBottomPadding?: boolean;

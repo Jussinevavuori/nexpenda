@@ -1,5 +1,5 @@
 import * as trpc from "@trpc/server";
-import { createRouter, RouterContext } from "./context";
+import { createRouter, RouterContext } from "../context/context";
 
 /**
  * Creates a tRPC router that asserts all queries and mutations are from an authorized user. Will throw an unauthorized error if a user is not signed in.

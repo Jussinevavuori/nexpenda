@@ -2,9 +2,7 @@ import { Icon } from '@/components/Icon/Icon';
 import * as RadixTooltip from '@radix-ui/react-tooltip';
 import { KeyCombination } from '../KeyCombination/KeyCombination';
 
-
-// eslint-disable-next-line
-const { motion } = require("framer-motion");
+const { motion, AnimatePresence }: typeof import("framer-motion") = require("framer-motion"); // eslint-disable-line
 
 export type TooltipProps = RadixTooltip.TooltipProps & {
 	value: string | {
