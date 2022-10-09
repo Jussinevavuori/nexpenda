@@ -23,7 +23,7 @@ export type SelectOptionProps<T> =
 	}
 
 export const Select = Object.assign(function Select<T>(props: SelectProps<T>) {
-	const { value, onChange, children, ...htmlProps } = InputBase.removeExtensionInputBaseProps(props)
+	const { value, onChange, renderValue, children, ...htmlProps } = InputBase.removeExtensionInputBaseProps(props)
 
 	return <Listbox value={value} onChange={onChange} disabled={props.disabled}>
 		<div className="relative">
@@ -44,7 +44,7 @@ export const Select = Object.assign(function Select<T>(props: SelectProps<T>) {
 						)}
 					>
 						<span>
-							{props.renderValue(value)}
+							{renderValue(value)}
 						</span>
 						<Icon.Material icon="unfold_more" className="-mr-2" />
 					</div>
