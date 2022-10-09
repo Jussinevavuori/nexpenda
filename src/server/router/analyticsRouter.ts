@@ -53,7 +53,7 @@ export const analyticsRouter = createProtectedRouter().query("get", {
       inc: 0,
       cat: {} as Record<
         string,
-        { name: string; tot: number; exp: number; inc: number }
+        { id: string; name: string; tot: number; exp: number; inc: number }
       >,
     };
 
@@ -80,6 +80,7 @@ export const analyticsRouter = createProtectedRouter().query("get", {
             exp: 0,
             inc: 0,
             name: transactions[i]!.category.name,
+            id: transactions[i]!.category.id,
           };
         if (amount > 0) sums.cat[catId]!.inc += amount;
         if (amount < 0) sums.cat[catId]!.exp += amount;

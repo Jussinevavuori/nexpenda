@@ -17,6 +17,7 @@ import { useBreakpoint } from "@/hooks/useBreakpoint";
 import { PeriodLengthToggle } from "@/components/PeriodLengthToggle/PeriodLengthToggle";
 import { PeriodSelectorCarousel } from "@/components/PeriodSelectorCarousel/PeriodSelectorCarousel";
 import { CategoryBarChart } from "@/features/Charts/CategoryBarChart";
+import { CategorySummaryChip } from "@/features/Charts/CategorySummaryChip";
 
 export default function AnalyticsPage() {
 	useRequireAuth();
@@ -50,7 +51,7 @@ export default function AnalyticsPage() {
 							Summary
 						</h2>
 
-						<p className="">
+						<p>
 							Total
 						</p>
 
@@ -59,7 +60,7 @@ export default function AnalyticsPage() {
 						</p>
 					</div>
 
-					<div className="">
+					<div>
 						<PeriodTotalLineChart height={240} />
 					</div>
 
@@ -67,7 +68,7 @@ export default function AnalyticsPage() {
 
 					<div className="flex gap-6 flex-wrap">
 						<div className="min-w-[240px] rounded px-6 pt-4 pb-16 relative border border-divider flex-1">
-							<p className="">
+							<p>
 								Incomes
 							</p>
 							<p className="text-xl font-semibold text-emerald-500">
@@ -78,7 +79,7 @@ export default function AnalyticsPage() {
 							</div>
 						</div>
 						<div className="min-w-[240px] rounded px-6 pt-4 pb-16 relative border border-divider flex-1">
-							<p className="">
+							<p>
 								Expenses
 							</p>
 							<p className="text-xl font-semibold text-rose-500">
@@ -92,17 +93,44 @@ export default function AnalyticsPage() {
 
 					<Divider className="my-8" />
 
-					<div className="py-6">
-						<h2 className="text-3xl font-semibold pb-6">
+					<div className="pt-6 pb-16 flex flex-col gap-6">
+						<h2 className="text-3xl font-semibold">
 							Categories
 						</h2>
 
 						<p>
 							{Object.keys(analytics.sums.cat).length} categories
 						</p>
+
+						<div className="space-y-2">
+							<div className="flex flex-row flex-wrap gap-2">
+								{
+									Object.keys(analytics.sums.cat)
+										.filter(catId => analytics.sums.cat[catId]?.inc)
+										.map(catId => (
+											<CategorySummaryChip
+												key={catId}
+												categoryId={catId}
+												sign="inc"
+											/>
+										))
+								}
+								{
+									Object.keys(analytics.sums.cat)
+										.filter(catId => analytics.sums.cat[catId]?.exp)
+										.map(catId => (
+											<CategorySummaryChip
+												key={catId}
+												categoryId={catId}
+												sign="exp"
+											/>
+										))
+								}
+							</div>
+						</div>
 					</div>
 
-					<div className="">
+					<div>
 						<h3 className="text-xl font-semibold pb-6">
 							Incomes per category
 						</h3>
@@ -112,7 +140,7 @@ export default function AnalyticsPage() {
 						<div className="h-24" />
 					</div>
 
-					<div className="">
+					<div>
 						<h3 className="text-xl font-semibold pb-6">
 							Expenses per category
 						</h3>

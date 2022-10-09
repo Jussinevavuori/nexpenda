@@ -199,12 +199,15 @@ module.exports = {
 		require('@headlessui/tailwindcss'),
 		require('@tailwindcss/typography'),
 		plugin(({ addVariant }) => {
+			addVariant(`d-inc`, `&[data-sign=inc]`);
+			addVariant(`d-exp`, `&[data-sign=exp]`);
+
 			const dataAttributes = ["active"]
 
 			dataAttributes.map((attribute) => {
 				addVariant(`d-${attribute}`, `&[data-${attribute}=true]`);
 				addVariant(`!d-${attribute}`, `&[data-${attribute}=false]`);
 			})
-		})
+		}),
 	],
 };
