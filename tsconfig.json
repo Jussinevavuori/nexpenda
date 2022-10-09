@@ -33,7 +33,7 @@
 		"**/*.tsx",
 		"**/*.cjs",
 		"**/*.mjs",
-		"src/scripts/reset-db.js",
+		"src/scripts/reset-db.Mjs",
 	],
 	"exclude": [
 		"node_modules",

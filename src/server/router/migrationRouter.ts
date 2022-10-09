@@ -12,10 +12,13 @@ export const migrationRouter = createProtectedRouter()
         session: { user },
       },
     }) {
+      console.log("[migration.userdata]: Starting user data migration");
+
       // Connect to old DB
       const _prisma = new (await (
         await import("@internal/prisma-next-prod/prisma/client")
       ).PrismaClient)();
+      console.log("[migration.userdata]: Connected to old db");
 
       // Find previous user
       const oldUser = await _prisma.dbUser.findFirst({
@@ -24,11 +27,13 @@ export const migrationRouter = createProtectedRouter()
         },
       });
       if (!oldUser) {
+        console.log("[migration.userdata]: No previous user found");
         throw new TRPCError({
           code: "NOT_FOUND",
           message: "No matching user was found",
         });
       }
+      console.log("[migration.userdata]: Found previous user");
 
       // Copy all user data
       await prisma.user.update({
@@ -40,6 +45,7 @@ export const migrationRouter = createProtectedRouter()
           name: oldUser.displayName,
         },
       });
+      console.log("[migration.userdata]: Updated user");
 
       return oldUser;
     },
@@ -53,21 +59,43 @@ export const migrationRouter = createProtectedRouter()
       },
     }) {
       // Wipe all user data
+      console.log("[migration.cleardata]: Starting clear data migration");
       if (process.env.NODE_ENV === "development") {
+        const del_bge = await prisma.budgetEntry.deleteMany({
+          where: { userId: user.id },
+        });
+        console.log(
+          "[migration.cleardata]: Deleted",
+          del_bge.count,
+          "budget entries"
+        );
         const del_bg = await prisma.budgetEntry.deleteMany({
           where: { userId: user.id },
         });
+        console.log("[migration.cleardata]: Deleted", del_bg.count, "budgets");
         const del_tx = await prisma.transaction.deleteMany({
           where: { userId: user.id },
         });
+        console.log(
+          "[migration.cleardata]: Deleted",
+          del_tx.count,
+          "transactions"
+        );
         const del_sc = await prisma.transactionSchedule.deleteMany({
           where: { userId: user.id },
         });
+        console.log(
+          "[migration.cleardata]: Deleted",
+          del_sc.count,
+          "transaction schedules"
+        );
         const del_cg = await prisma.category.deleteMany({
           where: { userId: user.id },
         });
         console.log(
-          `Deleted [${del_tx.count}, ${del_sc.count}, ${del_cg.count}, ${del_bg.count}] items`
+          "[migration.cleardata]: Deleted",
+          del_cg.count,
+          "categories"
         );
       }
     },
@@ -75,24 +103,39 @@ export const migrationRouter = createProtectedRouter()
   .mutation("migrate.getOldData", {
     input: z.object({ oldUserId: z.string() }),
     async resolve({ input: { oldUserId } }) {
+      console.log("[migration.getOldData]: Starting get old data migration");
+
       // Connect to old DB
       const _prisma = new (await (
         await import("@internal/prisma-next-prod/prisma/client")
       ).PrismaClient)();
 
+      console.log("[migration.getOldData]: Connected to old db");
+
       // Find all data for old user
       const oldTransactions = await _prisma.dbTransaction.findMany({
         where: { uid: oldUserId },
       });
+      console.log(
+        "[migration.getOldData]: Found",
+        oldTransactions.length,
+        "transactions"
+      );
       const oldCategories = await _prisma.dbCategory.findMany({
         where: { uid: oldUserId },
       });
+      console.log(
+        "[migration.getOldData]: Found",
+        oldCategories.length,
+        "categories"
+      );
       const oldSchedules = await _prisma.dbTransactionSchedule.findMany({
         where: { uid: oldUserId },
       });
-
       console.log(
-        `Found [${oldTransactions.length}, ${oldCategories.length}, ${oldSchedules.length}] items`
+        "[migration.getOldData]: Found",
+        oldSchedules.length,
+        "schedules"
       );
 
       return {
@@ -111,6 +154,7 @@ export const migrationRouter = createProtectedRouter()
         session: { user },
       },
     }) {
+      console.log("[migration.pushCategories]: Starting push categories");
       // Create categories
       const newCategories: Promise<Category>[] = [];
       for (const category of input.categories) {
@@ -127,7 +171,11 @@ export const migrationRouter = createProtectedRouter()
           })
         );
       }
-      console.log(`Created new`);
+      console.log(
+        "[migration.pushCategories]: Pushed",
+        newCategories.length,
+        "categories"
+      );
       return Promise.allSettled(newCategories);
     },
   })
@@ -142,6 +190,7 @@ export const migrationRouter = createProtectedRouter()
         session: { user },
       },
     }) {
+      console.log("[migration.pushSchedules]: Starting push schedules");
       // Create schedules
       const newSchedules: Promise<TransactionSchedule>[] = [];
       for (const schedule of input.schedules) {
@@ -164,6 +213,11 @@ export const migrationRouter = createProtectedRouter()
           })
         );
       }
+      console.log(
+        "[migration.pushSchedules]: Pushed",
+        newSchedules.length,
+        "schedules"
+      );
       return Promise.allSettled(newSchedules);
     },
   })
@@ -179,6 +233,7 @@ export const migrationRouter = createProtectedRouter()
       },
     }) {
       // Create transactions
+      console.log("[migration.pushTransactions]: Starting push transactions");
       const newTransactions: Promise<Transaction>[] = [];
       for (const transaction of input.transactions) {
         newTransactions.push(
@@ -199,6 +254,11 @@ export const migrationRouter = createProtectedRouter()
           })
         );
       }
+      console.log(
+        "[migration.pushTransactions]: Pushed",
+        newTransactions.length,
+        "transactions"
+      );
       return Promise.allSettled(newTransactions);
     },
   });
