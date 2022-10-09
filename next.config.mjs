@@ -1,5 +1,5 @@
-import { env } from "./src/env/server.mjs";
 import { withAxiom } from "next-axiom"
+import withPWA from "next-pwa"
 
 /**
  * Don't be scared of the generics here.
@@ -10,7 +10,12 @@ import { withAxiom } from "next-axiom"
  * @constraint {{import('next').NextConfig}}
  */
 function defineNextConfig(config) {
-	return withAxiom(config);
+	const layers = [
+		withPWA,
+		withAxiom
+	]
+
+	return layers.reduce((_conf, layer) => layer(_conf), config);
 }
 
 export default defineNextConfig({
