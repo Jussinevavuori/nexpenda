@@ -11,6 +11,7 @@ import { useInitialize } from "@/hooks/useInitialize";
 import { Notifications } from "@/features/Notifications/Notifications";
 import { Meta } from "@/features/Meta/Meta";
 import { GlobalModalManager } from "@/features/GlobalModalManager/GlobalModalManager";
+import { httpLink } from '@trpc/client/links/httpLink';
 
 const App: AppType = ({
 	Component,
@@ -52,6 +53,11 @@ export default withTRPC<AppRouter>({
 		return {
 			url,
 			transformer: superjson,
+			links: [
+				httpLink({
+					url: '/api/trpc',
+				}),
+			],
 		};
 	},
 	ssr: false,
