@@ -20,6 +20,9 @@ export const userRouter = createProtectedRouter()
           sessions: true,
           transactions: { select: { amount: true } },
           transactionSchedules: { select: { id: true } },
+          categories: { select: { id: true } },
+          budgets: { select: { id: true } },
+          budgetEntries: { select: { id: true } },
         },
       });
     },

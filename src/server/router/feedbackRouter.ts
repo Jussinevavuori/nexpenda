@@ -12,14 +12,24 @@ export const feedbackRouter = createProtectedRouter()
     async resolve({ ctx }) {
       requireRole("ADMIN", ctx);
 
-      return ctx.prisma.feedback.findMany({});
+      return ctx.prisma.feedback.findMany({
+        include: {
+          user: {
+            select: {
+              name: true,
+              image: true,
+              email: true,
+              createdAt: true,
+              id: true,
+            },
+          },
+        },
+      });
     },
   })
 
   /**
-   * Sennds a feedback email.
-   *
-   * Returns nothing.
+   * Sends a feedback email and saves feedback to DB
    */
   .mutation("send", {
     input: z.object({ message: z.string() }),
@@ -42,5 +52,19 @@ export const feedbackRouter = createProtectedRouter()
           })
         );
       }
+    },
+  })
+
+  /**
+   * Deletes a feedback
+   */
+  .mutation("delete", {
+    input: z.object({ id: z.string() }),
+    async resolve({ ctx, input }) {
+      requireRole("ADMIN", ctx);
+
+      await ctx.prisma.feedback.delete({
+        where: { id: input.id },
+      });
     },
   });
