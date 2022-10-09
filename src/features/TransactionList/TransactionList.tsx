@@ -54,10 +54,20 @@ export const TransactionList = Object.assign(memo(function TransactionList(props
 	// Grouped transactions, where upcoming items have been removed if they
 	// are enabled and grouped transactions for upcoming transaction group items
 	const transactionGroupItems = useMemo(() => {
-		return flatGroupByDate(visibleTransactions ?? [], t => t.time, { sort: true })
+		return flatGroupByDate(visibleTransactions ?? [], t => t.time, {
+			sort: true,
+			sortGroups(a, b) {
+				return b.createdAt.getTime() - a.createdAt.getTime()
+			},
+		})
 	}, [visibleTransactions])
 	const upcomingTransactionGroupItems = useMemo(() => {
-		return flatGroupByDate(upcomingTransactions ?? [], t => t.time, { sort: true })
+		return flatGroupByDate(upcomingTransactions ?? [], t => t.time, {
+			sort: true,
+			sortGroups(a, b) {
+				return b.createdAt.getTime() - a.createdAt.getTime()
+			},
+		})
 	}, [upcomingTransactions])
 
 	// Size estimators for transaction group items

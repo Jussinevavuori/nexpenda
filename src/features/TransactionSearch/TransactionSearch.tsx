@@ -50,6 +50,7 @@ export const TransactionSearch = Object.assign(function TransactionSearch() {
 				: <Icon.Material icon="search" />
 		}
 		placeholder="Search transactions..."
+		type="search"
 	/>
 
 }, {

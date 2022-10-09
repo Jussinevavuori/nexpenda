@@ -229,7 +229,6 @@ export function TransactionForm(props: TransactionFormProps) {
 				error={!!errors.amount}
 				endLabel={currency.toUpperCase()}
 				autoFocus
-				type="search" // attempt to hide android chrome password suggestions
 			/>
 			<Button
 				type="button"
@@ -288,7 +287,6 @@ export function TransactionForm(props: TransactionFormProps) {
 				placeholder="Description"
 				error={!!errors.comment}
 				endIcon={<Icon.Material icon="notes" />}
-				type="search" // attempt to hide android chrome password suggestions
 			/>
 		</div>
 
