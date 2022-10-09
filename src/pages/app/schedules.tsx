@@ -17,7 +17,7 @@ export default function SchedulesPage() {
 		<PageHead title="Schedules" />
 
 		<AppLayoutHeader>
-			<div className="flex flex-col gap-4 py-8 px-10">
+			<div className="px-6 d:px-10 py-4 d:py-8 flex flex-col gap-4">
 				<div className="flex justify-between items-start">
 					<h1 className="text-2xl font-bold">
 						Schedules
@@ -33,7 +33,7 @@ export default function SchedulesPage() {
 					<p>Loading schedules...</p>
 				</div>
 			) : schedules.length === 0 ? (
-				<div className="px-10 py-10 flex flex-col items-center gap-6 [&_b]:text-primary [&_b]:font-medium mx-auto max-w-xl text-center">
+				<div className="px-6 d:px-10 py-10 flex flex-col items-center gap-6 [&_b]:text-primary [&_b]:font-medium mx-auto max-w-xl text-center">
 					<div className="flex flex-col gap-4 items-center">
 						<Icon.Material icon="search" size={48} className="text-black-4 dark:text-white-4" />
 						<p className="text-xl text-black-3 dark:text-white-4">
@@ -61,7 +61,7 @@ export default function SchedulesPage() {
 					</p>
 				</div>
 			) : (
-				<div className="px-10 py-10 flex flex-col">
+				<div className="px-6 d:px-10 py-10 flex flex-col">
 					{
 						schedules.map((s, i, arr) => (<div key={s.id}>
 							<ScheduleItem schedule={s} />

@@ -29,7 +29,7 @@ export default function AnalyticsPage() {
 		<PageHead title="Analytics" />
 
 		<AppLayoutHeader>
-			<div className="px-10 py-8 flex flex-col gap-4">
+			<div className="px-6 d:px-10 py-4 d:py-8 flex flex-col gap-4">
 				<div className="flex items-start justify-between gap-4">
 					<div className="mr-auto">
 						<h1 className="text-2xl font-bold">
@@ -44,7 +44,7 @@ export default function AnalyticsPage() {
 
 		{
 			analytics ? (
-				<div className="px-10">
+				<div className="px-6 d:px-10">
 					<div className="py-6">
 						<h2 className="text-3xl font-semibold pb-6">
 							Summary

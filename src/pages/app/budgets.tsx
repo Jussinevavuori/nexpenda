@@ -27,7 +27,7 @@ export default function AnalyticsPage() {
 		<PageHead title="Budgets" />
 
 		<AppLayoutHeader>
-			<div className="px-10 py-8 flex flex-col gap-4">
+			<div className="px-6 d:px-10 py-4 d:py-8 flex flex-col gap-4">
 				<div className="flex items-start justify-between gap-4">
 					<div className="mr-auto">
 						<h1 className="text-2xl font-bold">
@@ -64,7 +64,7 @@ export default function AnalyticsPage() {
 			</div>
 		</div>
 
-		<div className="px-10 py-8 w-full">
+		<div className="px-6 d:px-10 py-8 w-full">
 			<BudgetSummary />
 		</div>
 	</AppLayout >

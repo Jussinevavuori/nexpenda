@@ -27,7 +27,7 @@ export function CategoryBarChart({ type }: CategoryBarChartProps) {
 		if (analytics) {
 			for (const cat of Object.values(analytics.sums.cat)) {
 				if (cat[type] !== 0) {
-					items.push({ label: cat.name, value: Math.abs(cat[type]) })
+					items.push({ label: cat.name, value: Math.abs(cat[type]) / 100 })
 				}
 			}
 		}
@@ -41,22 +41,11 @@ export function CategoryBarChart({ type }: CategoryBarChartProps) {
 		}
 	}, [analytics, type])
 
-	return <div className="flex">
-		<ul style={{ width: 200 }}>
-			{barChartData.labels.map(label => (
-				<li key={label} className="h-6 w-full whitespace-nowrap overflow-hidden text-ellipsis">
-					{label}
-				</li>
-			))}
-		</ul>
-		<div className="flex-1">
-			<Bar
-				data={barChartData}
-				options={barChartOptions}
-				style={{ maxHeight: barChartData.labels.length * BAR_HEIGHT + OVERHEAD_HEIGHT }}
-			/>
-		</div>
-	</div>
+	return <Bar
+		data={barChartData}
+		options={barChartOptions}
+		style={{ maxHeight: barChartData.labels.length * BAR_HEIGHT + OVERHEAD_HEIGHT }}
+	/>
 }
 
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
@@ -86,7 +75,11 @@ const chartOptions = (options: CategoryBarChartProps): ChartOptions<"bar"> => {
 				}
 			},
 			yAxis: {
-				display: false
+				display: true,
+				grid: {
+					borderColor: withOpacity(c.slate[500]!, 0.2),
+					color: withOpacity(c.slate[500]!, 0.2),
+				}
 			}
 		},
 	}
