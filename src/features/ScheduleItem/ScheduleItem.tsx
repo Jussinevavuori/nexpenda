@@ -124,18 +124,6 @@ export function ScheduleItem({ schedule }: ScheduleItemProps) {
 		</div>
 
 		<div className="flex items-center justify-end gap-6">
-			<Tooltip value={<div style={{ maxWidth: 260, padding: 8 }}>
-				<p className="text-sm font-bold">Not yet implemented.{" "}</p>
-				<p className="text-xs opacity-75 pt-2">To edit, please cancel and create new scheduled transaction.</p>
-			</div>}>
-				<Button
-					variant="flat"
-					disabled
-					startIcon={<Icon.Material icon="edit" />}
-				>
-					Edit
-				</Button>
-			</Tooltip>
 			<AlertDialog
 				title="Confirm cancel"
 				description="Are you sure you want to cancel this transaction? Canceli"
