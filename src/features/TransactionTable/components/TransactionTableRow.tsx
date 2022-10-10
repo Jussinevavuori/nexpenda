@@ -1,4 +1,5 @@
 import { Icon } from '@/components/Icon/Icon';
+import { Tooltip } from '@/components/Tooltip/Tooltip';
 import { useShouldFlashTransaction } from '@/stores/transactionFlashStore';
 import { getCategoryLabel } from '@/utils/category/getCategoryLabel';
 import { formatMoney } from '@/utils/currency/formatMoney';
@@ -63,8 +64,11 @@ export function TransactionTableRow(props: TransactionTableRowProps) {
 
 		<TransactionTableCell>
 			{
-				props.transaction.scheduleId &&
-				<Icon.Material icon="update" className="text-slate-400 dark:text-slate-600" />
+				props.transaction.scheduleId && <Tooltip value="Scheduled">
+					<div className="cursor-pointer">
+						<Icon.Material icon="update" className="text-slate-400 dark:text-slate-600" />
+					</div>
+				</Tooltip>
 			}
 			<p className="max-w-full truncate text-sm ml-auto mr-4 dark:text-slate-100">
 				{formatDateString(props.transaction.time)}

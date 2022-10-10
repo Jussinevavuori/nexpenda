@@ -6,7 +6,6 @@ import { AppLayoutHeader } from "@/layouts/app/components/AppLayoutHeader/AppLay
 import { usePeriodStore } from "@/stores/periodStore";
 import { formatBudgetDate } from "@/utils/budgets/formatBudgetDate";
 import { trpc } from "@/utils/trpc";
-import { EditBudgetButton } from "@/features/BudgetActions/EditBudgetButton";
 import { getPeriodStartDate } from "@/utils/dates/getPeriodStartDate";
 import { BudgetSummary } from "@/features/BudgetSummary/BudgetSummary";
 import { getPeriodLength } from "@/utils/dates/getPeriodLength";
@@ -15,7 +14,7 @@ import { PeriodLengthToggle } from "@/components/PeriodLengthToggle/PeriodLength
 import { useBreakpoint } from "@/hooks/useBreakpoint";
 import { Icon } from "@/components/Icon/Icon";
 
-export default function AnalyticsPage() {
+export default function BudgetsPage() {
 	useRequireAuth();
 	const isDesktop = useBreakpoint("desktop");
 

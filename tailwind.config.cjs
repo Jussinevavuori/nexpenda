@@ -202,12 +202,11 @@ module.exports = {
 			addVariant(`d-inc`, `&[data-sign=inc]`);
 			addVariant(`d-exp`, `&[data-sign=exp]`);
 
-			const dataAttributes = ["active"]
+			addVariant(`d-vertical`, `&[data-orientation=vertical]`);
+			addVariant(`d-horizontal`, `&[data-orientation=horizontal]`);
 
-			dataAttributes.map((attribute) => {
-				addVariant(`d-${attribute}`, `&[data-${attribute}=true]`);
-				addVariant(`!d-${attribute}`, `&[data-${attribute}=false]`);
-			})
+			addVariant(`d-active`, `&[data-active=true]`);
+			addVariant(`!d-active`, `&[data-active=false]`);
 		}),
 	],
 };
