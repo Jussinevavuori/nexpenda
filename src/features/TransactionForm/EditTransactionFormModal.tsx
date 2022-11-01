@@ -37,6 +37,8 @@ export function EditTransactionFormModal() {
 			title="Edit Transaction"
 		>
 			<TransactionForm
+				submitLabel="Save changes"
+				isLoading={!data}
 				key={data?.id} // Force remount when data ID changes
 				initialValues={data ? {
 					amount: Math.abs(data.amount / 100).toFixed(2),

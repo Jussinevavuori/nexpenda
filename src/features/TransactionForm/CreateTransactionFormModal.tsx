@@ -32,6 +32,7 @@ export function CreateTransactionFormModal() {
 	return (
 		<Dialog open={isOpen} onClose={close} title="New transaction">
 			<TransactionForm
+				submitLabel="Create"
 				onSubmit={async (values) => {
 					close();
 					// Update edit mutation

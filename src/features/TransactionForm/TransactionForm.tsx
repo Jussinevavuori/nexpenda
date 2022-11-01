@@ -63,6 +63,8 @@ export type TransactionFormProps = {
 	initialValues?: Partial<TransactionFormSchema>;
 	onSubmit(p: TransactionFormSchema): void;
 	disableScheduleForm?: boolean;
+	submitLabel: string;
+	isLoading?: boolean;
 }
 
 // Form only component
@@ -169,6 +171,10 @@ export function TransactionForm(props: TransactionFormProps) {
 		className="flex flex-col gap-4 pt-4 d:w-[520px]"
 	>
 
+		{props.isLoading && <div className="absolute z-10 inset-0 bg-white/20 dark:bg-black/20 flex items-center justify-center">
+			<LoadingSpinner />
+		</div>}
+
 		<Dialog
 			open={calculator.isOpen}
 			onClose={calculator.close}
@@ -217,6 +223,7 @@ export function TransactionForm(props: TransactionFormProps) {
 					setValue("sign", watchSign === "+" ? "-" : "+");
 					document.getElementById("amount")?.focus()
 				}}
+				disabled={props.isLoading}
 			>
 				<Icon.Material icon={watchSign === "+" ? "add" : "remove"} size={18} />
 			</Button>
@@ -229,12 +236,14 @@ export function TransactionForm(props: TransactionFormProps) {
 				error={!!errors.amount}
 				endLabel={currency.toUpperCase()}
 				autoFocus
+				disabled={props.isLoading}
 			/>
 			<Button
 				type="button"
 				style={{ width: "2.5rem" }}
 				variant="flat"
 				onClick={calculator.open}
+				disabled={props.isLoading}
 			>
 				<Icon.Material icon="calculate" size={18} />
 			</Button>
@@ -248,6 +257,7 @@ export function TransactionForm(props: TransactionFormProps) {
 				color={!!errors.icon ? "danger" : "monochrome"}
 				variant="flat"
 				onClick={emojiPicker.open}
+				disabled={props.isLoading}
 			>
 				{previewCategoryIcon}
 			</Button>
@@ -261,6 +271,7 @@ export function TransactionForm(props: TransactionFormProps) {
 					placeholder="Enter a category..."
 					onChange={e => setValue("category", e.target.value)}
 					error={!!errors.category}
+					disabled={props.isLoading}
 				/>
 
 				<Autocomplete.Options maxHeight={180}>
@@ -287,6 +298,7 @@ export function TransactionForm(props: TransactionFormProps) {
 				placeholder="Description"
 				error={!!errors.comment}
 				endIcon={<Icon.Material icon="notes" />}
+				disabled={props.isLoading}
 			/>
 		</div>
 
@@ -299,6 +311,7 @@ export function TransactionForm(props: TransactionFormProps) {
 				className="text-right"
 				error={!!errors.date}
 				endIcon={<Icon.Material icon="calendar_today" />}
+				disabled={props.isLoading}
 			/>
 		</div>
 
@@ -318,7 +331,7 @@ export function TransactionForm(props: TransactionFormProps) {
 				<div className="flex items-center gap-4 space-between">
 					<div className="flex-1">
 						<IntegerInput
-							disabled={!form.watch("scheduleEnabled")}
+							disabled={props.isLoading || !form.watch("scheduleEnabled")}
 							value={form.watch("scheduleEvery")}
 							onChange={value => setValue("scheduleEvery", value)}
 							min={0}
@@ -331,7 +344,7 @@ export function TransactionForm(props: TransactionFormProps) {
 							renderValue={(value) => capitalize(pluralize(form.watch("scheduleEvery"), value.toLowerCase()))}
 							value={form.watch("scheduleIntervals")}
 							onChange={value => setValue("scheduleIntervals", value)}
-							disabled={!form.watch("scheduleEnabled")}
+							disabled={props.isLoading || !form.watch("scheduleEnabled")}
 							{...selectProperties(register("scheduleIntervals"), ["onBlur"])}
 						>
 							<Select.Option<IntervalType> value="DAY">
@@ -366,7 +379,7 @@ export function TransactionForm(props: TransactionFormProps) {
 				<div className="flex items-center gap-4 space-between">
 					<div className="flex-1">
 						<IntegerInput
-							disabled={!form.watch("scheduleEnabled") || !form.watch("scheduleOccurrencesEnabled")}
+							disabled={props.isLoading || !form.watch("scheduleEnabled") || !form.watch("scheduleOccurrencesEnabled")}
 							value={form.watch("scheduleOccurrences")}
 							onChange={value => setValue("scheduleOccurrences", value)}
 							min={0}
@@ -386,13 +399,13 @@ export function TransactionForm(props: TransactionFormProps) {
 		<div className="flex gap-4 pt-4">
 			{
 				!props.disableScheduleForm &&
-				<Button type="button" onClick={scheduleEditor.toggle} variant="flat">
+				<Button type="button" onClick={scheduleEditor.toggle} disabled={props.isLoading} variant="flat">
 					<Icon.Material icon={scheduleEditor.isOpen ? "unfold_less" : "unfold_more"} />
 				</Button>
 			}
 
-			<Button type="submit" className="w-full">
-				Create
+			<Button type="submit" className="w-full" disabled={props.isLoading}>
+				{props.submitLabel}
 			</Button>
 		</div>
 	</form >

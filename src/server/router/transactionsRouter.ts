@@ -17,6 +17,7 @@ export const transactionsRouter = createProtectedRouter()
       id: z.string().min(1),
     }),
     async resolve({ ctx, input }) {
+      await new Promise((r) => setTimeout(r, 2000));
       return ctx.prisma.transaction.findFirst({
         where: {
           userId: ctx.session.user.id,
