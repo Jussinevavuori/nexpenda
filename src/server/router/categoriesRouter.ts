@@ -6,7 +6,13 @@ export const categoriesRouter = createProtectedRouter()
   .query("list", {
     async resolve({ ctx }) {
       return ctx.prisma.category.findMany({
-        where: { userId: ctx.session.user.id },
+        where: {
+          userId: ctx.session.user.id,
+          // List only categories for which one active transaction exists
+          transactions: {
+            some: { userId: ctx.session.user.id },
+          },
+        },
       });
     },
   })

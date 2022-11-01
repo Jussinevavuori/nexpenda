@@ -49,7 +49,7 @@ export function CurrencySelector() {
 			<div className="pointer-events-none absolute inset-0 flex items-center gap-4 pl-4 pr-12">
 				<span className="font-mono">{selectedCurrency.code}</span>
 				<span className="">{selectedCurrency.currency}</span>
-				<span className="ml-auto text-slate-500">{formatMoney(-12345)}</span>
+				<span className="ml-auto text-slate-500">{formatMoney(-1234567)}</span>
 			</div>
 		}
 

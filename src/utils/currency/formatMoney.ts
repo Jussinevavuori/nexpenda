@@ -28,12 +28,35 @@ export function formatMoney(
     .format(0)
     .split(/\s/g)[1];
 
-  // Format numeric to 2 decimals (divide to euros)
-  const numeric = (value / 100).toFixed(2);
+  // Format numeric to 2 decimals (divide to euros) and add spaces
+  // as thousand-separators
+  const numeric = thousandSeparate((value / 100).toFixed(2));
 
+  // If no currency, return only numeric part
   if (hideCurrency) return numeric;
 
-  if (flip) return `${currencySymbol} ${numeric}`;
+  // Return currency symbol and numeric part either flipped or not
+  return flip ? `${currencySymbol} ${numeric}` : `${numeric} ${currencySymbol}`;
+}
 
-  return `${numeric} ${currencySymbol}`;
+// Utility function to add thousand separators
+function thousandSeparate(numeric: string) {
+  const prefixLen = 0; // NO prefixes
+  const suffixLen = 3; // ".99" (cents)
+  const separator = " "; // Space as thousands
+  const groupLength = 3; // Separate every three digits
+
+  // Get integer part of string (remove prefix and suffix)
+  let insStr = numeric.substring(prefixLen, numeric.length - suffixLen);
+
+  // Get prefix and suffix
+  const prefix = numeric.substring(0, prefixLen);
+  const suffix = numeric.substring(numeric.length - suffixLen);
+
+  // Split substring into groups of three starting from the end
+  for (let i = insStr.length - groupLength; i >= 0; i -= groupLength) {
+    insStr = insStr.substring(0, i) + separator + insStr.substring(i);
+  }
+
+  return prefix + insStr + suffix;
 }
