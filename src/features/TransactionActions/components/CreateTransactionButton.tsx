@@ -37,12 +37,12 @@ export const CreateTransactionButton = Object.assign(function CreateTransactionB
 		// Hide when transactions selected
 		const hide = useTransactionSelectionStore(_ => _.selection)?.size > 0;
 
-		return <Tooltip value={{ title: "New transaction", keyCombination: { key: "n", shift: true } }}>
+		return <div aria-hidden={hide} className="fixed bottom-16 right-2 aria-hidden:pointer-events-none">
 			<motion.div animate={{ x: hide ? 100 : 0 }}>
 				<IconButton onClick={() => open({})} {...ButtonProps}>
 					<Icon.Material icon="add" className="m-2" />
 				</IconButton>
 			</motion.div>
-		</Tooltip>
+		</div>
 	}
 })
