@@ -4,7 +4,7 @@ import { PageHead } from "@/components/PageHead/PageHead";
 import { SiteLayout } from "@/layouts/SiteLayout/SiteLayout";
 import { pages } from "@/utils/pages";
 import { trpc } from "@/utils/trpc";
-import Image from "next/future/image";
+import Image from "next/image";
 
 export default function HomePage() {
 

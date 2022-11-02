@@ -2,7 +2,7 @@
 import { GradientOverlay } from "@/components/GradientOverlay/GradientOverlay";
 import { NexpendaLogo } from "@/components/NexpendaLogo/NexpendaLogo";
 import { pages } from "@/utils/pages";
-import Image from "next/future/image";
+import Image from "next/image";
 import Link from "next/link";
 import BgImage from "../../../public/assets/images/landing-bg.jpg";
 

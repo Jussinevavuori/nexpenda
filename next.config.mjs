@@ -1,4 +1,3 @@
-import { withAxiom } from "next-axiom"
 import withPWA from "next-pwa"
 
 /**
@@ -15,7 +14,7 @@ function defineNextConfig(config) {
 			dest: "public",
 			disable: process.env.NODE_ENV === 'development',
 		}),
-		withAxiom
+		// withAxiom
 	]
 
 	return layers.reduce((_conf, layer) => layer(_conf), config);
@@ -23,10 +22,8 @@ function defineNextConfig(config) {
 
 export default defineNextConfig({
 	reactStrictMode: true,
-	swcMinify: true,
 	experimental: {
-		newNextLinkBehavior: true,
-		images: { allowFutureImage: true }
+		appDir: true,
 	},
 	async rewrites() {
 		return [

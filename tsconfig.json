@@ -29,14 +29,15 @@
 	},
 	"include": [
 		"next-env.d.ts",
-		"**/*.ts",
-		"**/*.tsx",
-		"**/*.cjs",
-		"**/*.mjs",
+		"src/**/*.ts",
+		"src/**/*.tsx",
+		"src/**/*.cjs",
+		"src/**/*.mjs",
 		"src/scripts/reset-db.Mjs",
 	],
 	"exclude": [
 		"node_modules",
 		"/src/scripts",
+		"/legacy",
 	]
 }
