@@ -39,6 +39,7 @@ export type BudgetFormSchema = z.TypeOf<typeof budgetFormSchema>;
 
 export type BudgetFormProps = {
 	initialValues?: Partial<BudgetFormSchema>;
+	isLoading?: boolean;
 	onSubmit(p: BudgetFormSchema): void;
 }
 
@@ -129,6 +130,7 @@ export function BudgetForm(props: BudgetFormProps) {
 				fullWidth
 				placeholder="Untitled Budget"
 				error={!!errors.name}
+				disabled={props.isLoading}
 			/>
 		</div>
 
@@ -150,6 +152,7 @@ export function BudgetForm(props: BudgetFormProps) {
 				max={100}
 				value={watchSavingsTarget}
 				onValueChange={value => setValue("savingsTarget", value, { shouldTouch: true })}
+				disabled={props.isLoading}
 			/>
 			<p className="pt-2 text-sm text-black-2 dark:text-white-2">
 				Define how much of the money left over in your budget you would like to
@@ -197,6 +200,7 @@ export function BudgetForm(props: BudgetFormProps) {
 						fullWidth
 						error={!!errors.incomes?.[index]?.amount}
 						endLabel={currency.toUpperCase()}
+						disabled={props.isLoading}
 					/>
 				</React.Fragment>)
 			}
@@ -242,6 +246,7 @@ export function BudgetForm(props: BudgetFormProps) {
 						fullWidth
 						error={!!errors.expenses?.[index]?.amount}
 						endLabel={currency.toUpperCase()}
+						disabled={props.isLoading}
 					/>
 				</React.Fragment>)
 			}
@@ -251,7 +256,11 @@ export function BudgetForm(props: BudgetFormProps) {
 
 		{/* Submit button */}
 		< div className="flex gap-4 pt-4" >
-			<Button type="submit" className="w-full">
+			<Button
+				type="submit"
+				className="w-full"
+				loading={props.isLoading}
+			>
 				Create budget
 			</Button>
 		</div>

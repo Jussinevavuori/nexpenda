@@ -72,7 +72,7 @@ export const Slider = forwardRef<any, SliderProps | RangeSliderProps>(function S
 		value={_value}
 		defaultValue={_defaultValue}
 		onValueChange={_onValueChange}
-		className="relative flex items-center select-none touch-none w-full d-vertical:flex-col d-vertical:h-full d-vertical:w-4 d-horizontal:h-6"
+		className="group relative flex items-center select-none touch-none w-full d-vertical:flex-col d-vertical:h-full d-vertical:w-4 d-horizontal:h-6 data-[disabled]:opacity-50 data-[disabled]:pointer-events-none"
 	>
 		<RadixSlider.Track
 			className="bg-active-overlay relative flex-1 rounded-full d-horizontal:h-1 d-vertical:w-1"

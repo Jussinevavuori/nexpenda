@@ -1,4 +1,7 @@
 import { getPeriodEndDate } from "@/utils/dates/getPeriodEndDate";
+import { getPeriodLength } from "@/utils/dates/getPeriodLength";
+import { getPeriodStartDate } from "@/utils/dates/getPeriodStartDate";
+import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import { periodSchema } from "../utils/inputSchemas";
 import { createProtectedRouter } from "../utils/protectedRouter";
@@ -32,6 +35,7 @@ export const budgetsRouter = createProtectedRouter()
 
   .mutation("update", {
     input: z.object({
+      name: z.string(),
       period: periodSchema,
       savingsTarget: z.number().int().min(0).max(100),
       entries: z.array(
@@ -48,6 +52,7 @@ export const budgetsRouter = createProtectedRouter()
   })
   .mutation("create", {
     input: z.object({
+      name: z.string(),
       period: periodSchema,
       savingsTarget: z.number().int().min(0).max(100),
       entries: z.array(
@@ -58,7 +63,40 @@ export const budgetsRouter = createProtectedRouter()
         })
       ),
     }),
-    async resolve({}) {
-      return {};
+    async resolve({ ctx, input }) {
+      if (getPeriodLength(input.period) !== "month") {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "Can only create budget for month",
+        });
+      }
+
+      // Create budget
+      const budget = await ctx.prisma.budget.create({
+        data: {
+          savingsTarget: input.savingsTarget,
+          name: input.name,
+          date: getPeriodStartDate(input.period),
+          user: { connect: { id: ctx.session.user.id } },
+        },
+      });
+
+      // Create entries
+      await Promise.allSettled(
+        input.entries.map((entry) =>
+          ctx.prisma.budgetEntry.create({
+            data: {
+              amount: entry.amount,
+              averagedOverMonths: entry.averagedOverMonths,
+              budget: { connect: { id: budget.id } },
+              user: { connect: { id: ctx.session.user.id } },
+              category: { connect: { id: entry.categoryId } },
+            },
+          })
+        )
+      );
+
+      // Fetch final created budget with entries
+      return ctx.prisma.budget.findUnique({ where: { id: budget.id } });
     },
   });
