@@ -57,7 +57,7 @@ export const Sidebar = React.memo(function Sidebar(props: SidebarProps) {
 				<SidebarItem
 					item="budgets"
 					label="Budgets"
-					href={pages.budgets}
+					href={pages.budgets.dashboard}
 					shortcut={{ alt: true, key: "3" }}
 					icon="savings"
 					active={props.active}

@@ -5,6 +5,8 @@ import { Popover } from "@/components/Popover/Popover";
 import { usePeriodStore } from "@/stores/periodStore";
 import { formatBudgetDate } from "@/utils/budgets/formatBudgetDate";
 import { getPeriodStartDate } from "@/utils/dates/getPeriodStartDate";
+import { pages } from "@/utils/pages";
+import Link from "next/link";
 
 export type EditBudgetButtonProps = {
 	budget?: BudgetItem;
@@ -12,15 +14,6 @@ export type EditBudgetButtonProps = {
 
 export function EditBudgetButton({ budget }: EditBudgetButtonProps) {
 	const period = usePeriodStore(_ => _.period);
-
-
-	const handleCreate = () => {
-
-	}
-
-	const handleEdit = () => {
-
-	}
 
 	if (!budget) {
 		return <Popover
@@ -35,12 +28,10 @@ export function EditBudgetButton({ budget }: EditBudgetButtonProps) {
 			{
 				({ close }) => (
 					<div className="w-96">
-						<button
-							onClick={() => {
-								close();
-								handleCreate();
-							}}
-							className="hover:bg-hover-overlay active:bg-active-overlay p-4"
+						<Link
+							href={pages.budgets.create}
+							onClick={close}
+							className="block hover:bg-hover-overlay active:bg-active-overlay p-4"
 						>
 							<div className="flex gap-4">
 								<Icon.Material icon="playlist_add" />
@@ -54,7 +45,7 @@ export function EditBudgetButton({ budget }: EditBudgetButtonProps) {
 									</p>
 								</div>
 							</div>
-						</button>
+						</Link>
 					</div>
 				)
 			}
@@ -72,12 +63,10 @@ export function EditBudgetButton({ budget }: EditBudgetButtonProps) {
 	>
 		{
 			({ close }) => (<div className="w-96">
-				<button
-					onClick={() => {
-						close();
-						handleEdit();
-					}}
-					className="hover:bg-hover-overlay active:bg-active-overlay p-4"
+				<Link
+					href={pages.budgets.edit}
+					onClick={close}
+					className="block hover:bg-hover-overlay active:bg-active-overlay p-4"
 				>
 					<div className="flex gap-4">
 						<Icon.Material icon="edit_note" />
@@ -91,16 +80,14 @@ export function EditBudgetButton({ budget }: EditBudgetButtonProps) {
 							</p>
 						</div>
 					</div>
-				</button>
+				</Link>
 
 				<Divider disableMargin />
 
-				<button
-					onClick={() => {
-						close();
-						handleCreate();
-					}}
-					className="hover:bg-hover-overlay active:bg-active-overlay p-4"
+				<Link
+					href={pages.budgets.create}
+					onClick={close}
+					className="block hover:bg-hover-overlay active:bg-active-overlay p-4"
 				>
 					<div className="flex gap-4">
 						<Icon.Material icon="playlist_add" />
@@ -114,8 +101,8 @@ export function EditBudgetButton({ budget }: EditBudgetButtonProps) {
 							</p>
 						</div>
 					</div>
-				</button>
+				</Link>
 			</div>)
 		}
-	</Popover>
+	</Popover >
 }

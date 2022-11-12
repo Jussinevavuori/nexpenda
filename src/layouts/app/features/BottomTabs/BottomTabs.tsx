@@ -29,7 +29,7 @@ export function BottomTabs(props: BottomTabsProps) {
 		<BottomTabItem
 			label="Budgets"
 			active={props.active}
-			href={pages.budgets}
+			href={pages.budgets.dashboard}
 			items={["budgets"]}
 			icon={<Icon.Material icon="savings" />}
 		/>

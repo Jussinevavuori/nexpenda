@@ -9,10 +9,11 @@ export const defaultCategoryIcons = {
  * to the expense icon.
  */
 export function getDefaultedCategoryIcon<
-  CategoryLike extends { icon?: string | null | undefined }
->(category: CategoryLike, sign: number | "+" | "-" = "-") {
-  const isPositive = typeof sign === "number" ? sign > 0 : sign === "+";
+  CategoryLike extends { icon?: string | null | undefined } | undefined
+>(category: CategoryLike, sign: number | "+" | "-" | "inc" | "exp" = "-") {
+  const isPositive =
+    typeof sign === "number" ? sign > 0 : sign === "+" || sign === "inc";
   return (
-    category.icon || defaultCategoryIcons[isPositive ? "income" : "expense"]
+    category?.icon || defaultCategoryIcons[isPositive ? "income" : "expense"]
   );
 }

@@ -5,6 +5,8 @@ import { AppLayoutHeader } from "@/layouts/app/components/AppLayoutHeader/AppLay
 import { usePeriodStore } from "@/stores/periodStore";
 import { BudgetForm } from "@/features/BudgetForm/BudgetForm";
 import { formatPeriod } from "@/utils/dates/formatPeriod";
+import { Button } from "@/components/Button/Button";
+import { pages } from "@/utils/pages";
 
 export default function CreateBudgetPage() {
 	useRequireAuth();
@@ -20,11 +22,14 @@ export default function CreateBudgetPage() {
 				<h1 className="text-2xl font-bold">
 					Create budget
 				</h1>
-				<p>
+				<p className="flex gap-4 items-center">
 					<span className="text-black-2 dark:text-white-2">
 						Creating budget starting from{" "}
+						{formatPeriod(period)}
 					</span>
-					{formatPeriod(period)}
+					<Button.Link variant="flat" color="danger" href={pages.budgets.dashboard}>
+						Cancel
+					</Button.Link>
 				</p>
 			</div>
 		</AppLayoutHeader>

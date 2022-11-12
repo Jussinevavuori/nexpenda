@@ -3,9 +3,10 @@ import { Divider } from "@/components/Divider/Divider";
 import { Icon } from "@/components/Icon/Icon";
 import { Input } from "@/components/Input/Input";
 import { Slider } from "@/components/Slider/Slider";
-import { formatMoney } from "@/utils/currency/formatMoney";
+import { getDefaultedCategoryIcon } from "@/utils/category/getDefaultedCategoryIcon";
 import { trpc } from "@/utils/trpc";
 import { zodResolver } from "@hookform/resolvers/zod"
+import React, { useEffect, useMemo } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import shortid from "shortid";
 import { z } from "zod";
@@ -19,8 +20,7 @@ export const budgetFormSchema = z.object({
 		_internalId: z.string(),
 		amount: z
 			.string()
-			.regex(/^\+?-?\d*[.,]?\d{0,2}$/, "Invalid amount")
-			.min(1, "Please enter an amount"),
+			.regex(/^\+?-?\d*[.,]?\d{0,2}$/, "Invalid amount"),
 		categoryId: z.string().min(1),
 		averagedOverMonths: z.number().int().min(1),
 	})),
@@ -28,8 +28,7 @@ export const budgetFormSchema = z.object({
 		_internalId: z.string(),
 		amount: z
 			.string()
-			.regex(/^\d*[.,]?\d{0,2}$/, "Invalid amount")
-			.min(1, "Please enter an amount"),
+			.regex(/^\d*[.,]?\d{0,2}$/, "Invalid amount"),
 		categoryId: z.string().min(1),
 		averagedOverMonths: z.number().int().min(1),
 	}))
@@ -43,43 +42,77 @@ export type BudgetFormProps = {
 	onSubmit(p: BudgetFormSchema): void;
 }
 
-export function BudgetForm(props: BudgetFormProps) {
-	const currency = usePreference("currency");
+// Filter out empty inputs
+function parseBudgetFormSchemaForSubmit(form: BudgetFormSchema) {
+	return {
+		...form,
+		expenses: form.expenses.filter(_ => _.amount),
+		incomes: form.incomes.filter(_ => _.amount),
+	}
+}
 
-	// Fetch all categories for autofill
-	const { data: categories } = trpc.useQuery(["categories.list"]);
+export function BudgetForm(props: BudgetFormProps) {
+	const currency = usePreference("currency")
+	const { data: categoriesList } = trpc.useQuery(["categories.list"]);
+	const { data: categoriesByType } = trpc.useQuery(["categories.listByType"]);
+
+	const categoryById = useMemo(() => {
+		const map = new Map<string, CategoryItem>();
+		categoriesList?.forEach(cat => {
+			map.set(cat.id, cat);
+		})
+		return map;
+	}, [categoriesList])
 
 	// Form
-	const { register, setValue, control, formState: { errors }, ...form } = useForm<BudgetFormSchema>({
+	const {
+		register,
+		setValue,
+		control,
+		formState: { errors },
+		...form
+	} = useForm<BudgetFormSchema>({
 		resolver: zodResolver(budgetFormSchema),
 		defaultValues: {
 			name: "",
 			savingsTarget: 20,
-			incomes: [{
-				_internalId: shortid(),
-				amount: "",
-				categoryId: "",
-				averagedOverMonths: 1,
-			}],
-			expenses: [{
-				_internalId: shortid(),
-				amount: "",
-				categoryId: "",
-				averagedOverMonths: 1,
-			}],
+			incomes: [{}],
+			expenses: [{}],
 			...props.initialValues,
 		},
 		reValidateMode: "onBlur",
 	})
 
 	// Field array for entries
-	const incomeFields = useFieldArray({ control, name: "incomes" })
-	const expenseFields = useFieldArray({ control, name: "expenses" })
+	const { append: appendIncome, ...incomeFields } = useFieldArray({ control, name: "incomes" })
+	const { append: appendExpense, ...expenseFields } = useFieldArray({ control, name: "expenses" })
+
+	// Initialize form with categories
+	useEffect(() => {
+		setValue("incomes", []);
+		setValue("expenses", []);
+		categoriesByType?.incomeCategories.forEach((cat) => {
+			appendIncome({
+				_internalId: shortid(),
+				amount: "",
+				averagedOverMonths: 1,
+				categoryId: cat.id,
+			})
+		})
+		categoriesByType?.expenseCategories.forEach((cat) => {
+			appendExpense({
+				_internalId: shortid(),
+				amount: "",
+				averagedOverMonths: 1,
+				categoryId: cat.id,
+			})
+		})
+	}, [setValue, categoriesByType, appendIncome, appendExpense])
 
 	const watchSavingsTarget = form.watch("savingsTarget")
 
 	return <form
-		onSubmit={form.handleSubmit((values) => props.onSubmit(values))}
+		onSubmit={form.handleSubmit((values) => props.onSubmit(parseBudgetFormSchemaForSubmit(values)))}
 		className="flex flex-col gap-8 pt-4 w-full max-w-2xl mx-auto"
 	>
 
@@ -126,99 +159,93 @@ export function BudgetForm(props: BudgetFormProps) {
 
 		<Divider className="my-6" />
 
-		<p>
-			Incomes
-		</p>
-		<ul className="flex flex-col gap-8">
+		<div className="space-y-2">
+			<p>
+				Incomes
+			</p>
+			<p className="text-black-4 dark:text-white-4">
+				Estimate all your recurring incomes by category.
+			</p>
+		</div>
+		<ul className="gap-x-4 gap-y-4 grid grid-cols-[auto_1fr]">
 			{
-				incomeFields.fields.map((field, index) => {
-					return <li
-						className="border border-divider p-4 rounded-lg flex flex-col gap-4"
-						key={field._internalId}
-					>
-						<div className="flex gap-4 items-center">
-							<div className="h-10 w-10 flex items-center justify-center rounded-lg bg-emerald-500/20">
-								🖌
-							</div>
-							<Input
-								fullWidth
-								placeholder="Category"
-							/>
-							<Button
-								type="button"
-								color="danger"
-								variant="flat"
-								className="px-2"
-							>
-								<Icon.Material icon="clear" />
-							</Button>
-						</div>
-						<Input
-							{...register(`entries[${index}].amount` as any)} // eslint-disable-line
-							placeholder={formatMoney(0, { hideCurrency: true })}
-							fullWidth
-							error={!!errors.expenses?.[index]?.amount}
-							startIcon={<Icon.Material icon="add" />}
-							endLabel={currency.toUpperCase()}
-						/>
-					</li>
-				})
+				incomeFields.fields.map((field, index) => <React.Fragment key={field._internalId}>
+					<div className="flex md:hidden gap-2 flex-1 col-span-2">
+						<span>
+							{getDefaultedCategoryIcon(categoryById.get(field.categoryId), "+")}
+						</span>
+						<span>
+							{categoryById.get(field.categoryId)?.name}
+						</span>
+					</div>
+					<div className="rounded-lg bg-emerald-500/15 border border-emerald-500/20 py-2 px-2 md:px-4 flex gap-2 flex-1">
+						<span className="inline md:hidden">
+							<Icon.Material icon="add" className="text-emerald-900" />
+						</span>
+						<span className="hidden md:inline">
+							{getDefaultedCategoryIcon(categoryById.get(field.categoryId), "+")}
+						</span>
+						<span className="hidden md:inline">
+							{categoryById.get(field.categoryId)?.name}
+						</span>
+					</div>
+					<Input
+						style={{ borderTopLeftRadius: 0 }}
+						id="amount"
+						{...register(`incomes[${index}].amount` as any)} // eslint-disable-line
+						placeholder="Amount"
+						fullWidth
+						error={!!errors.incomes?.[index]?.amount}
+						endLabel={currency.toUpperCase()}
+					/>
+				</React.Fragment>)
 			}
 		</ul>
-		<Button
-			type="button"
-			variant="flat"
-			color="success"
-		>
-			Add income
-		</Button>
 
-		<p>
-			Expenses
-		</p>
-		<ul className="flex flex-col gap-8">
+		<Divider className="my-4" />
+
+		<div className="space-y-2">
+			<p>
+				Expenses
+			</p>
+			<p className="text-black-4 dark:text-white-4">
+				Estimate all your recurring expenses by category.
+			</p>
+		</div>
+		<ul className="gap-x-4 gap-y-4 grid grid-cols-[auto_1fr]">
 			{
-				expenseFields.fields.map((field, index) => {
-					return <li
-						className="border border-divider p-4 rounded-lg flex flex-col gap-4"
-						key={field._internalId}
-					>
-						<div className="flex gap-4 items-center">
-							<div className="h-10 w-10 flex items-center justify-center rounded-lg bg-rose-500/20">
-								🖌
-							</div>
-							<Input
-								fullWidth
-								placeholder="Category"
-							/>
-							<Button
-								type="button"
-								color="danger"
-								variant="flat"
-								className="px-2"
-							>
-								<Icon.Material icon="clear" />
-							</Button>
-						</div>
-						<Input
-							{...register(`entries[${index}].amount` as any)} // eslint-disable-line
-							placeholder={formatMoney(0, { hideCurrency: true })}
-							fullWidth
-							error={!!errors.expenses?.[index]?.amount}
-							startIcon={<Icon.Material icon="remove" />}
-							endLabel={currency.toUpperCase()}
-						/>
-					</li>
-				})
+				expenseFields.fields.map((field, index) => <React.Fragment key={field._internalId}>
+					<div className="flex md:hidden gap-2 flex-1 col-span-2">
+						<span>
+							{getDefaultedCategoryIcon(categoryById.get(field.categoryId), "-")}
+						</span>
+						<span>
+							{categoryById.get(field.categoryId)?.name}
+						</span>
+					</div>
+					<div className="rounded-lg bg-rose-500/15 border border-rose-500/20 py-2 px-2 md:px-4 flex gap-2 flex-1">
+						<span className="inline md:hidden">
+							<Icon.Material icon="remove" className="text-rose-900" />
+						</span>
+						<span className="hidden md:inline">
+							{getDefaultedCategoryIcon(categoryById.get(field.categoryId), "-")}
+						</span>
+						<span className="hidden md:inline">
+							{categoryById.get(field.categoryId)?.name}
+						</span>
+					</div>
+					<Input
+						style={{ borderTopLeftRadius: 0 }}
+						id="amount"
+						{...register(`expenses[${index}].amount` as any)} // eslint-disable-line
+						placeholder="Amount"
+						fullWidth
+						error={!!errors.expenses?.[index]?.amount}
+						endLabel={currency.toUpperCase()}
+					/>
+				</React.Fragment>)
 			}
 		</ul>
-		<Button
-			type="button"
-			variant="flat"
-			color="danger"
-		>
-			Add expense
-		</Button>
 
 		<Divider className="my-6" />
 
@@ -228,8 +255,5 @@ export function BudgetForm(props: BudgetFormProps) {
 				Create budget
 			</Button>
 		</div>
-
-
 	</form>
-
 }

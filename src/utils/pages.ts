@@ -6,7 +6,11 @@ export const pages = {
   },
   dashboard: "/app/dashboard",
   analytics: "/app/analytics",
-  budgets: "/app/budgets",
+  budgets: {
+    dashboard: "/app/budgets",
+    create: "/app/budgets/create",
+    edit: "/app/budgets/edit",
+  },
   schedules: "/app/schedules",
   login: "/auth/login",
   signout: "/auth/signout",

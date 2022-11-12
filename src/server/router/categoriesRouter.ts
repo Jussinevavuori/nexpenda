@@ -13,7 +13,42 @@ export const categoriesRouter = createProtectedRouter()
             some: { userId: ctx.session.user.id },
           },
         },
+        orderBy: { name: "asc" },
       });
+    },
+  })
+  .query("listByType", {
+    async resolve({ ctx }) {
+      const incomeCategories = await ctx.prisma.category.findMany({
+        where: {
+          userId: ctx.session.user.id,
+          // List only categories for which one active transaction exists
+          // and they have income transactions associated with them
+          transactions: {
+            some: {
+              userId: ctx.session.user.id,
+              amount: { gt: 0 },
+            },
+          },
+        },
+        orderBy: { name: "asc" },
+      });
+      const expenseCategories = await ctx.prisma.category.findMany({
+        where: {
+          userId: ctx.session.user.id,
+          // List only categories for which one active transaction exists
+          // and they have expense transactions associated with them
+          transactions: {
+            some: {
+              userId: ctx.session.user.id,
+              amount: { lt: 0 },
+            },
+          },
+        },
+        orderBy: { name: "asc" },
+      });
+
+      return { incomeCategories, expenseCategories };
     },
   })
   .mutation("updateIcon", {
