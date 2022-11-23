@@ -41,7 +41,7 @@ export function formatMoney(
 
 // Utility function to add thousand separators
 function thousandSeparate(numeric: string) {
-  const prefixLen = 0; // NO prefixes
+  const prefixLen = numeric.startsWith("-") ? 1 : 0; // "-" is considered a prefix if present
   const suffixLen = 3; // ".99" (cents)
   const separator = " "; // Space as thousands
   const groupLength = 3; // Separate every three digits
@@ -54,7 +54,7 @@ function thousandSeparate(numeric: string) {
   const suffix = numeric.substring(numeric.length - suffixLen);
 
   // Split substring into groups of three starting from the end
-  for (let i = insStr.length - groupLength; i >= 0; i -= groupLength) {
+  for (let i = insStr.length - groupLength; i > 0; i -= groupLength) {
     insStr = insStr.substring(0, i) + separator + insStr.substring(i);
   }
 
