@@ -27,7 +27,7 @@ export function BottomTabs(props: BottomTabsProps) {
 		/>
 
 		<BottomTabItem
-			label="Budgets"
+			label="Budget"
 			active={props.active}
 			href={pages.budgets.dashboard}
 			items={["budgets"]}

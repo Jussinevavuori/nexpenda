@@ -1,8 +1,6 @@
 import { EditBudgetButton } from "@/features/BudgetActions/EditBudgetButton";
 import { usePeriodStore } from "@/stores/periodStore";
-import { formatBudgetDate } from "@/utils/budgets/formatBudgetDate";
 import { getPeriodLength } from "@/utils/dates/getPeriodLength";
-import { getPeriodStartDate } from "@/utils/dates/getPeriodStartDate";
 import { trpc } from "@/utils/trpc";
 
 export function BudgetSummaryHeader() {
@@ -18,15 +16,10 @@ export function BudgetSummaryHeader() {
 							? "Loading budget..."
 							: budget
 								? `${budget.name ?? "Untitled budget"}`
-								: `No budget for ${formatBudgetDate(getPeriodStartDate(period))}`
+								: `No budget`
 						: "Go to month view"
 				}
 			</h2>
-			<p className="text-sm text-black-2 dark:text-white-2">
-				{
-					isLoadingBudget ? "Loading..." : budget ? `From ${formatBudgetDate(budget)}` : ""
-				}
-			</p>
 		</div>
 		<EditBudgetButton budget={budget} />
 	</div>

@@ -31,16 +31,17 @@ export const budgetFormSchema = z.object({
 			.regex(/^\d*[.,]?\d{0,2}$/, "Invalid amount"),
 		categoryId: z.string().min(1),
 		averagedOverMonths: z.number().int().min(1),
-	}))
+	})),
 })
 
 // Infer form type
 export type BudgetFormSchema = z.TypeOf<typeof budgetFormSchema>;
 
 export type BudgetFormProps = {
-	initialValues?: Partial<BudgetFormSchema>;
 	isLoading?: boolean;
 	onSubmit(p: BudgetFormSchema): void;
+	period: Period;
+	budget?: BudgetItem;
 }
 
 // Filter out empty inputs
@@ -79,7 +80,15 @@ export function BudgetForm(props: BudgetFormProps) {
 			savingsTarget: 20,
 			incomes: [{}],
 			expenses: [{}],
-			...props.initialValues,
+			...(
+				// Apply default values from current budget
+				props.budget
+					? {
+						name: props.budget.name ?? undefined,
+						savingsTarget: props.budget.savingsTarget,
+					}
+					: {}
+			)
 		},
 		reValidateMode: "onBlur",
 	})
@@ -92,29 +101,43 @@ export function BudgetForm(props: BudgetFormProps) {
 	useEffect(() => {
 		setValue("incomes", []);
 		setValue("expenses", []);
-		categoriesByType?.incomeCategories.forEach((cat) => {
+
+		// Sort alphabetically
+		const incomeCategories = [...(categoriesByType?.incomeCategories ?? [])].sort((a, b) => a.name.localeCompare(b.name))
+		const expenseCategories = [...(categoriesByType?.expenseCategories ?? [])].sort((a, b) => a.name.localeCompare(b.name))
+
+		incomeCategories.forEach((cat) => {
+			const existing = props.budget?.entries.find(entry => (
+				entry.categoryId === cat.id && entry.amount > 0
+			))
+
 			appendIncome({
 				_internalId: shortid(),
-				amount: "",
-				averagedOverMonths: 1,
+				amount: existing ? Math.abs(existing.amount / 100).toFixed(2) : "",
+				averagedOverMonths: existing ? existing.averagedOverMonths : 1,
 				categoryId: cat.id,
 			})
 		})
-		categoriesByType?.expenseCategories.forEach((cat) => {
+
+		expenseCategories.forEach((cat) => {
+			const existing = props.budget?.entries.find(entry => (
+				entry.categoryId === cat.id && entry.amount < 0
+			))
+
 			appendExpense({
 				_internalId: shortid(),
-				amount: "",
-				averagedOverMonths: 1,
+				amount: existing ? Math.abs(existing.amount / 100).toFixed(2) : "",
+				averagedOverMonths: existing ? existing.averagedOverMonths : 1,
 				categoryId: cat.id,
 			})
 		})
-	}, [setValue, categoriesByType, appendIncome, appendExpense])
+	}, [setValue, categoriesByType, appendIncome, appendExpense, props.budget])
 
 	const watchSavingsTarget = form.watch("savingsTarget")
 
 	return <form
 		onSubmit={form.handleSubmit((values) => props.onSubmit(parseBudgetFormSchemaForSubmit(values)))}
-		className="flex flex-col gap-8 pt-4 w-full max-w-2xl mx-auto"
+		className="flex flex-col gap-8 pt-4 w-full max-w-3xl mx-auto"
 	>
 
 		{/* Name input */}
@@ -205,6 +228,10 @@ export function BudgetForm(props: BudgetFormProps) {
 				</React.Fragment>)
 			}
 		</ul>
+		<p className="text-black-4 dark:text-white-4 italic text-sm">
+			Only categories which have transactions are shown here. To estimate a new
+			category, you first have to have a transaction in that category.
+		</p>
 
 		<Divider className="my-4" />
 
@@ -242,7 +269,7 @@ export function BudgetForm(props: BudgetFormProps) {
 						style={{ borderTopLeftRadius: 0 }}
 						id="amount"
 						{...register(`expenses[${index}].amount` as any)} // eslint-disable-line
-						placeholder="Amount"
+						placeholder="0"
 						fullWidth
 						error={!!errors.expenses?.[index]?.amount}
 						endLabel={currency.toUpperCase()}
@@ -251,6 +278,11 @@ export function BudgetForm(props: BudgetFormProps) {
 				</React.Fragment>)
 			}
 		</ul>
+		<p className="text-black-4 dark:text-white-4 italic text-sm">
+			Only categories which have transactions are shown here. To estimate a new
+			category, you first have to have a transaction in that category.
+		</p>
+
 
 		<Divider className="my-6" />
 
@@ -261,7 +293,7 @@ export function BudgetForm(props: BudgetFormProps) {
 				className="w-full"
 				loading={props.isLoading}
 			>
-				Create budget
+				Save budget
 			</Button>
 		</div>
 	</form>

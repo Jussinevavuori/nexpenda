@@ -8,8 +8,7 @@ export const pages = {
   analytics: "/app/analytics",
   budgets: {
     dashboard: "/app/budgets",
-    create: "/app/budgets/create",
-    edit: "/app/budgets/edit",
+    editor: "/app/budgets/editor",
   },
   schedules: "/app/schedules",
   login: "/auth/login",

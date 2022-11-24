@@ -1,5 +1,6 @@
 import { getPeriodEndDate } from "@/utils/dates/getPeriodEndDate";
 import { getPeriodLength } from "@/utils/dates/getPeriodLength";
+import { getPeriodPrismaFilter } from "@/utils/dates/getPeriodPrismaFilter";
 import { getPeriodStartDate } from "@/utils/dates/getPeriodStartDate";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
@@ -33,23 +34,6 @@ export const budgetsRouter = createProtectedRouter()
     },
   })
 
-  .mutation("update", {
-    input: z.object({
-      name: z.string(),
-      period: periodSchema,
-      savingsTarget: z.number().int().min(0).max(100),
-      entries: z.array(
-        z.object({
-          amount: z.number().int(),
-          categoryId: z.string().min(1),
-          averagedOverMonths: z.number().int().positive(),
-        })
-      ),
-    }),
-    async resolve({}) {
-      return {};
-    },
-  })
   .mutation("create", {
     input: z.object({
       name: z.string(),
@@ -69,6 +53,19 @@ export const budgetsRouter = createProtectedRouter()
           code: "BAD_REQUEST",
           message: "Can only create budget for month",
         });
+      }
+
+      // Check if a budget already exists for selected period and delete it
+      const existingBudget = await ctx.prisma.budget.findFirst({
+        where: {
+          date: getPeriodPrismaFilter(input.period),
+        },
+      });
+      if (existingBudget) {
+        await ctx.prisma.budgetEntry.deleteMany({
+          where: { budgetId: existingBudget.id },
+        });
+        await ctx.prisma.budget.delete({ where: { id: existingBudget.id } });
       }
 
       // Create budget

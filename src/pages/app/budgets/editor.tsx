@@ -4,7 +4,6 @@ import { AppLayout } from "@/layouts/app/AppLayout";
 import { AppLayoutHeader } from "@/layouts/app/components/AppLayoutHeader/AppLayoutHeader";
 import { usePeriodStore } from "@/stores/periodStore";
 import { BudgetForm, BudgetFormSchema } from "@/features/BudgetForm/BudgetForm";
-import { formatPeriod } from "@/utils/dates/formatPeriod";
 import { Button } from "@/components/Button/Button";
 import { pages } from "@/utils/pages";
 import { trpc } from "@/utils/trpc";
@@ -13,10 +12,11 @@ import { parseAmountStringWithSign } from "@/utils/transaction/parseAmountString
 import { useRouter } from "next/router";
 import { useNotify } from "@/stores/notificationStore";
 
-export default function CreateBudgetPage() {
+export default function BudgetEditorPage() {
 	useRequireAuth();
 
 	const period = usePeriodStore(_ => _.period);
+	const { data: budget } = trpc.useQuery(["budgets.get", { period }]);
 
 	const notify = useNotify();
 	const router = useRouter();
@@ -26,7 +26,7 @@ export default function CreateBudgetPage() {
 			utils.invalidateQueries("budgets.get")
 			utils.invalidateQueries("budgets.summary.get")
 			router.push(pages.budgets.dashboard)
-			notify.success("New budget created");
+			notify.success("Budget updated");
 		}
 	})
 
@@ -57,24 +57,21 @@ export default function CreateBudgetPage() {
 		<AppLayoutHeader>
 			<div className="px-6 d:px-10 py-4 d:py-8 flex items-center justify-between gap-4">
 				<h1 className="text-2xl font-bold">
-					Create budget
+					Budget editor
 				</h1>
-				<p className="flex gap-4 items-center">
-					<span className="text-black-2 dark:text-white-2">
-						Creating budget starting from{" "}
-						{formatPeriod(period)}
-					</span>
-					<Button.Link variant="flat" color="danger" href={pages.budgets.dashboard}>
-						Cancel
-					</Button.Link>
-				</p>
+				<Button.Link variant="flat" color="danger" href={pages.budgets.dashboard}>
+					Cancel
+				</Button.Link>
 			</div>
 		</AppLayoutHeader>
 
 		<div className="px-10 py-10">
 			<BudgetForm
+				period={period}
+				budget={budget}
 				isLoading={createMutation.isLoading}
 				onSubmit={handleSubmit}
+				key={budget?.id}
 			/>
 		</div>
 	</AppLayout >

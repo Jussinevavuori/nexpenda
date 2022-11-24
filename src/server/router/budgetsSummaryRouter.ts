@@ -175,7 +175,8 @@ export const budgetsSummaryRouter = createProtectedRouter().query("get", {
 
     // Assuming the user hits the estimation targets exactly, shows how much
     // the user will have left to spend at the end of the month.
-    const realFinalSpendingAmount = realFinalAmount - realFinalSavingsAmount;
+    const realFinalSpendingAmount =
+      realFinalAmount > 0 ? realFinalAmount - realFinalSavingsAmount : 0;
 
     return {
       digested: {
