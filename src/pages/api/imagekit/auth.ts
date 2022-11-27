@@ -1,5 +1,5 @@
 import { NextApiHandler } from "next";
-import { imageKit } from "../../../server/context/imageKit";
+import { imageKit } from "../../../server/trpc/context/imageKit";
 
 const handler: NextApiHandler = (req, res) => {
   const auth = imageKit.getAuthenticationParameters();

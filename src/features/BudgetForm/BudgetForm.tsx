@@ -4,6 +4,7 @@ import { Icon } from "@/components/Icon/Icon";
 import { Input } from "@/components/Input/Input";
 import { Slider } from "@/components/Slider/Slider";
 import { getDefaultedCategoryIcon } from "@/utils/category/getDefaultedCategoryIcon";
+import { formatMoney } from "@/utils/currency/formatMoney";
 import { trpc } from "@/utils/trpc";
 import { zodResolver } from "@hookform/resolvers/zod"
 import React, { useEffect, useMemo } from "react";
@@ -55,8 +56,8 @@ function parseBudgetFormSchemaForSubmit(form: BudgetFormSchema) {
 
 export function BudgetForm(props: BudgetFormProps) {
 	const currency = usePreference("currency")
-	const { data: categoriesList } = trpc.useQuery(["categories.list"]);
-	const { data: categoriesByType } = trpc.useQuery(["categories.listByType"]);
+	const { data: categoriesList } = trpc.useQuery(["categories.list", {}]);
+	const { data: categoriesByType } = trpc.useQuery(["categories.listByType", {}]);
 
 	const categoryById = useMemo(() => {
 		const map = new Map<string, CategoryItem>();

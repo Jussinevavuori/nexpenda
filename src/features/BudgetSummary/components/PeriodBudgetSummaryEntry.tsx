@@ -31,14 +31,15 @@ export function PeriodBudgetSummaryEntry({ entry, variant }: PeriodBudgetSummary
 	return <li
 		className="border rounded-lg flex flex-col md:flex-row"
 	>
-		<div className="md:flex-1 bg-slate-50 border-b sm:border-b-0 border-r dark:bg-black-3 py-2 px-4">
+		<div
+			className="md:flex-1 bg-slate-50 border-b sm:border-b-0 border-r dark:bg-black-3 py-2 px-4">
 			{getCategoryLabel(entry.category, variant === "exp" ? "-" : "+")}
 		</div>
 		<div className="md:flex-[3] py-2 px-4 flex flex-col justify-start md:flex-row md:justify-between gap-1">
 			<p className="flex items-center gap-2">
 				<span
 					data-sign={entry.currentAmount >= entry.estimatedAmount ? "inc" : "exp"}
-					className="font-medium d-exp:text-rose-600 d-inc:text-emerald-600"
+					className="font-medium d-exp:text-yellow-600 d-inc:text-emerald-600"
 				>
 					{formatMoney(Math.abs(entry.currentAmount))}
 				</span>

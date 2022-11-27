@@ -2,8 +2,8 @@ import { getPeriodPrismaFilter } from "@/utils/dates/getPeriodPrismaFilter";
 import { filterTransactions } from "@/utils/transaction/filterTransactions";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
-import { periodSchema } from "../utils/inputSchemas";
-import { createProtectedRouter } from "../utils/protectedRouter";
+import { periodSchema } from "../../utils/inputSchemas";
+import { createProtectedRouter } from "../../utils/protectedRouter";
 
 export const transactionsRouter = createProtectedRouter()
   /**

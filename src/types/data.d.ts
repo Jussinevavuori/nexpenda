@@ -1,8 +1,19 @@
 // App router type
 
-type AppRouter = typeof import("@/server/router/index").appRouter;
+type AppRouter = typeof import("@/server/trpc/router/_app").appRouter;
 type AppRouterQueries = AppRouter["_def"]["queries"];
 type AppRouterMutations = AppRouter["_def"]["mutations"];
+
+/**
+ * Inference helper for inputs
+ * @example type HelloInput = TrpcInput['example']['hello']
+ **/
+type TrpcInput = import("@trpc/server").inferRouterInputs<AppRouter>;
+/**
+ * Inference helper for outputs
+ * @example type HelloOutput = TrpcOutput['example']['hello']
+ **/
+type TrpcOutput = import("@trpc/server").inferRouterOutputs<AppRouter>;
 
 // Inferring utils
 

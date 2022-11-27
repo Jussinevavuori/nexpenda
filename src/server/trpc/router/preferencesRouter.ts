@@ -1,41 +1,37 @@
 import { z } from "zod";
-import { createProtectedRouter } from "../utils/protectedRouter";
+import { procedure, router } from "../trpc";
 
-export const preferencesRouter = createProtectedRouter()
+export const preferencesRouter = router({
   /**
    * Get a preference's value for the current user.
    */
-  .query("get", {
-    input: z.string(),
-    async resolve({ ctx, input }) {
-      const preference = await ctx.prisma.preference.findUnique({
-        where: {
-          userId_key: {
-            key: input,
-            userId: ctx.session.user.id,
-          },
-        },
-      });
 
-      return preference?.value ?? null;
-    },
-  })
+  get: procedure.protected.input(z.string()).query(async ({ ctx, input }) => {
+    const preference = await ctx.prisma.preference.findUnique({
+      where: {
+        userId_key: {
+          key: input,
+          userId: ctx.session.user.id,
+        },
+      },
+    });
+
+    return preference?.value ?? null;
+  }),
 
   /**
    * List all of a  user's preferences.
    */
-  .query("list", {
-    async resolve({ ctx }) {
-      return ctx.prisma.preference.findMany({
-        where: { userId: ctx.session.user.id },
-        select: {
-          key: true,
-          value: true,
-          updatedAt: true,
-        },
-      });
-    },
-  })
+  list: procedure.protected.query(async ({ ctx }) => {
+    return ctx.prisma.preference.findMany({
+      where: { userId: ctx.session.user.id },
+      select: {
+        key: true,
+        value: true,
+        updatedAt: true,
+      },
+    });
+  }),
 
   /**
    * Update a preference for the current user. Providing null as the value
@@ -43,12 +39,14 @@ export const preferencesRouter = createProtectedRouter()
    *
    * Returns the new value.
    */
-  .mutation("update", {
-    input: z.object({
-      key: z.string(),
-      value: z.string().nullable(),
-    }),
-    async resolve({ ctx, input }) {
+  update: procedure.protected
+    .input(
+      z.object({
+        key: z.string(),
+        value: z.string().nullable(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
       if (input.value === null) {
         ctx.prisma.preference.delete({
           where: {
@@ -76,5 +74,5 @@ export const preferencesRouter = createProtectedRouter()
       });
 
       return update.value;
-    },
-  });
+    }),
+});

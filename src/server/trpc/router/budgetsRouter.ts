@@ -4,17 +4,17 @@ import { getPeriodPrismaFilter } from "@/utils/dates/getPeriodPrismaFilter";
 import { getPeriodStartDate } from "@/utils/dates/getPeriodStartDate";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
-import { periodSchema } from "../utils/inputSchemas";
-import { createProtectedRouter } from "../utils/protectedRouter";
+import { periodSchema } from "../../utils/inputSchemas";
+import { procedure, router } from "../trpc";
 
-export const budgetsRouter = createProtectedRouter()
+export const budgetsRouter = router({
   /**
    * For a given month (only for month periods currently),
    * fetch the latest created budget to be used.
    */
-  .query("get", {
-    input: z.object({ period: periodSchema }),
-    async resolve({ ctx, input: { period } }) {
+  get: procedure.protected
+    .input(z.object({ period: periodSchema }))
+    .query(async ({ ctx, input: { period } }) => {
       if (!("month" in period)) return undefined;
 
       const endDate = getPeriodEndDate(period);
@@ -31,23 +31,27 @@ export const budgetsRouter = createProtectedRouter()
       });
 
       return result || undefined;
-    },
-  })
-
-  .mutation("create", {
-    input: z.object({
-      name: z.string(),
-      period: periodSchema,
-      savingsTarget: z.number().int().min(0).max(100),
-      entries: z.array(
-        z.object({
-          amount: z.number().int(),
-          categoryId: z.string().min(1),
-          averagedOverMonths: z.number().int().positive(),
-        })
-      ),
     }),
-    async resolve({ ctx, input }) {
+
+  /**
+   * Create a new budget
+   */
+  create: procedure.protected
+    .input(
+      z.object({
+        name: z.string(),
+        period: periodSchema,
+        savingsTarget: z.number().int().min(0).max(100),
+        entries: z.array(
+          z.object({
+            amount: z.number().int(),
+            categoryId: z.string().min(1),
+            averagedOverMonths: z.number().int().positive(),
+          })
+        ),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
       if (getPeriodLength(input.period) !== "month") {
         throw new TRPCError({
           code: "BAD_REQUEST",
@@ -95,5 +99,5 @@ export const budgetsRouter = createProtectedRouter()
 
       // Fetch final created budget with entries
       return ctx.prisma.budget.findUnique({ where: { id: budget.id } });
-    },
-  });
+    }),
+});

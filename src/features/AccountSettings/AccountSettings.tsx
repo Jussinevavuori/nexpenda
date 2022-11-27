@@ -17,16 +17,16 @@ export function AccountSettings() {
 	const notify = useNotify();
 	const utils = trpc.useContext();
 
-	const { data: user } = trpc.useQuery(["user.me"], {
+	const { data: user } = trpc.user.me.useQuery(undefined, {
 		onSuccess(data) {
 			if (data.name) setName(data.name);
 		}
 	});
 
-	const updateUserMutation = trpc.useMutation("user.update", {
+	const updateUserMutation = trpc.user.update.useMutation({
 		onSuccess(_, vars) {
 			if (vars.name) notify.success("Name updated");
-			utils.invalidateQueries("user.me");
+			utils.user.me.invalidate();
 		}
 	})
 
