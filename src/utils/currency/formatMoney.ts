@@ -1,5 +1,4 @@
 import { readPersistedPreference } from "@/features/Preferences/utils/readPersistedPreference";
-import { selectableCurrencies } from "./selectableCurrencies";
 
 export function formatMoney(
   value: number,

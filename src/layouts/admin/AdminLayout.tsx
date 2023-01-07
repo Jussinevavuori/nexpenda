@@ -1,6 +1,5 @@
 import { Icon } from "@/components/Icon/Icon";
 import { IconButton } from "@/components/IconButton/IconButton";
-import { c } from "@/utils/generic/classnames";
 import { pages } from "@/utils/pages";
 
 export type AdminLayoutProps = {

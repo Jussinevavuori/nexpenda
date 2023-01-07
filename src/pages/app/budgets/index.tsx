@@ -7,7 +7,6 @@ import { BudgetSummary } from "@/features/BudgetSummary/BudgetSummary";
 import { PeriodSelectorCarousel } from "@/components/PeriodSelectorCarousel/PeriodSelectorCarousel";
 import { PeriodLengthToggle } from "@/components/PeriodLengthToggle/PeriodLengthToggle";
 import { useBreakpoint } from "@/hooks/useBreakpoint";
-import { Icon } from "@/components/Icon/Icon";
 
 export default function BudgetsPage() {
 	useRequireAuth();

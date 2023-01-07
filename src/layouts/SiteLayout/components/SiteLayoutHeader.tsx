@@ -7,10 +7,7 @@ import { c } from "@/utils/generic/classnames";
 import { pages } from "@/utils/pages";
 import { trpc } from "@/utils/trpc";
 
-export type SiteLayoutHeaderProps = {
-}
-
-export function SiteLayoutHeader(props: SiteLayoutHeaderProps) {
+export function SiteLayoutHeader() {
 	const isLargeScreen = useBreakpoint("sm");
 	const isPageScrolled = useIsPageScrolled(20);
 

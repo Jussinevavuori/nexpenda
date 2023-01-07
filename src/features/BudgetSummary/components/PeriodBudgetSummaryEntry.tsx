@@ -1,4 +1,3 @@
-import { Chip } from "@/components/Chip/Chip";
 import { getCategoryLabel } from "@/utils/category/getCategoryLabel";
 import { formatMoney } from "@/utils/currency/formatMoney";
 

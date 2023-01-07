@@ -1,7 +1,8 @@
 // src/pages/_app.tsx
 // export { reportWebVitals } from "next-axiom";
+import { type Session } from "next-auth";
 import { withTRPC } from "@trpc/next";
-import type { AppType } from "next/dist/shared/lib/utils";
+import { type AppType } from "next/app";
 import superjson from "superjson";
 import { SessionProvider } from "next-auth/react";
 import "../styles/globals.css";
@@ -13,7 +14,7 @@ import { Meta } from "@/features/Meta/Meta";
 import { GlobalModalManager } from "@/features/GlobalModalManager/GlobalModalManager";
 import { httpLink } from '@trpc/client/links/httpLink';
 
-const App: AppType = ({
+const App: AppType<{ session: Session | null }> = ({
 	Component,
 	pageProps: { session, ...pageProps },
 }) => {
