@@ -5,7 +5,7 @@ type SelectableTheme = "dark" | "light" | "system";
 
 // Main color varinats
 
-type ColorVariant = "primary" | "success" | "warning" | "danger";
+type ColorVariant = "default" | "primary" | "success" | "warning" | "danger";
 
 // Shades
 
