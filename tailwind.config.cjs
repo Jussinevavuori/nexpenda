@@ -29,9 +29,9 @@ module.exports = {
 			},
 			minHeight: {
 				"button": "2.25rem",
-				"tabs": "calc(3.5rem + env(safe-ar0ea-inset-bottom))",
+				"tabs": "calc(3.5rem + env(safe-area-inset-bottom))",
 				"screen": "var(--full-vh, 100vh)",
-				"screenMinusTabs": "calc(var(--full-vh, 100vh) - calc(env(safe-ar0ea-inset-bottom)))",
+				"screenMinusTabs": "calc(var(--full-vh, 100vh) - calc(env(safe-area-inset-bottom)))",
 			},
 			maxHeight: {
 				"button": "2.25rem",

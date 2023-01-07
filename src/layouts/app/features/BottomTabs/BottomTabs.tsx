@@ -8,7 +8,7 @@ export interface BottomTabsProps {
 }
 
 export function BottomTabs(props: BottomTabsProps) {
-	return <div className="bg-white-bg-2 dark:bg-black-bg flex items-stretch shadow-lg pb-[env(safe-ar0ea-inset-bottom)]">
+	return <div className="bg-white-bg-2 dark:bg-black-bg flex items-stretch shadow-lg pb-[env(safe-area-inset-bottom)]">
 
 		<BottomTabItem
 			label="Home"
