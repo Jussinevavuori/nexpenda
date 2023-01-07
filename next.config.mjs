@@ -1,4 +1,4 @@
-import { withAxiom } from "next-axiom"
+// import { withAxiom } from "next-axiom"
 import withPWA from "next-pwa"
 
 /**
@@ -15,7 +15,7 @@ function defineNextConfig(config) {
 			dest: "public",
 			disable: process.env.NODE_ENV === 'development',
 		}),
-		withAxiom
+		// withAxiom
 	]
 
 	return layers.reduce((_conf, layer) => layer(_conf), config);
