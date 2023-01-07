@@ -25,25 +25,26 @@ module.exports = {
 				85: "0.85",
 			},
 			spacing: {
-				"tabs": "3.5rem",
+				"tabs": "calc(3.5rem + env(safe-area-inset-bottom))",
 			},
 			minHeight: {
 				"button": "2.25rem",
 				"tabs": "calc(3.5rem + env(safe-area-inset-bottom))",
 				"screen": "var(--full-vh, 100vh)",
-				"screenMinusTabs": "calc(var(--full-vh, 100vh) - calc(env(safe-area-inset-bottom)))",
+				"screenMinusTabs": "calc(var(--full-vh, 100vh) - calc(3.5rem + env(safe-area-inset-bottom)))",
 			},
 			maxHeight: {
 				"button": "2.25rem",
-				"tabs": "3.5rem",
-				"screenMinusTabs": "calc(var(--full-vh, 100vh) - 3.5rem)",
+				"tabs": "calc(3.5rem + env(safe-area-inset-bottom))",
 				"screen": "var(--full-vh, 100vh)",
+				"screenMinusTabs": "calc(var(--full-vh, 100vh) - calc(3.5rem + env(safe-area-inset-bottom)))",
 			},
 			height: {
 				"button": "2.25rem",
-				"tabs": "3.5rem",
-				"screenMinusTabs": "calc(var(--full-vh, 100vh) - 3.5rem)",
+				"fixedTabs": "3.5rem",
+				"tabs": "calc(3.5rem + env(safe-area-inset-bottom))",
 				"screen": "var(--full-vh, 100vh)",
+				"screenMinusTabs": "calc(var(--full-vh, 100vh) - calc(3.5rem + env(safe-area-inset-bottom)))",
 			},
 			screens: {
 				// Mobile and alias "m" for mobile

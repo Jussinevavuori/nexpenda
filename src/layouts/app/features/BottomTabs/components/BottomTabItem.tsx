@@ -38,7 +38,7 @@ export function BottomTabItem(props: BottomTabItemProps) {
 						{props.label}
 					</motion.div>
 					<motion.div
-						className="bg-primary-600 rounded-t absolute h-3 left-0 -bottom-2 right-0"
+						className="bg-primary-600 rounded absolute h-1 left-0 bottom-0 right-0"
 						initial={{ y: 30 }}
 						animate={{ y: 0 }}
 						exit={{ y: 10 }}
@@ -49,14 +49,14 @@ export function BottomTabItem(props: BottomTabItemProps) {
 	</button>
 
 	if (props.href) {
-		return <div className="h-tabs flex-1">
+		return <div className="h-fixedTabs flex-1">
 			<Link href={props.href}>
 				{element}
 			</Link>
 		</div>
 	}
 
-	return <div className="h-tabs flex-1">
+	return <div className="h-fixedTabs flex-1">
 		{element}
 	</div>
 }
