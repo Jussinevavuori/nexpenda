@@ -236,6 +236,7 @@ export function TransactionForm(props: TransactionFormProps) {
 				error={!!errors.amount}
 				endLabel={currency.toUpperCase()}
 				autoFocus
+				type="number"
 				disabled={props.isLoading}
 			/>
 			<Button
