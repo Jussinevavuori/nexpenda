@@ -1,0 +1,17 @@
+{
+  "version": "0.3.14-fixed",
+  "steps": [
+    {
+      "tag": "UpdateField",
+      "model": "StripePrice",
+      "field": "nickname",
+      "arity": "Optional"
+    },
+    {
+      "tag": "UpdateField",
+      "model": "StripePrice",
+      "field": "recurringInterval",
+      "arity": "Optional"
+    }
+  ]
+}

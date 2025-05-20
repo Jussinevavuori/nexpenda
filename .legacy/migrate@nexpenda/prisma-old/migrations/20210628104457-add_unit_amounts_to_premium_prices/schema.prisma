@@ -1,0 +1,263 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource postgresql {
+  provider = "postgresql"
+  url = "***"
+}
+
+// Each user is connected to a user account, which contains their ID, login
+// details and other authentication details. The user account may also specify
+// the user's google account and stripe customer ID. All other user data is
+// linked back to the user object with a UID field. Each user is also connected
+// to a profile.
+model User {
+  id               String   @id @default(uuid())
+  email            String?  @unique
+  emailVerified    Boolean  @default(false) @map("email_verified")
+  password         String?
+  tokenVersion     Int      @default(1) @map("token_version")
+  disabled         Boolean  @default(false)
+  isAdmin          Boolean  @default(false) @map("is_admin")
+  googleId         String?  @unique @map("google_id")
+  stripeCustomerId String?  @map("stripe_customer_id")
+  createdAt        DateTime @default(now()) @map("created_at")
+  updatedAt        DateTime @default(now()) @updatedAt @map("updated_at")
+
+  Transactions        Transaction[]
+  Categories          Category[]
+  Budgets             Budget[]
+  Feedback            Feedback[]
+  Profile             Profile?
+  Log                 Log[]
+  TransactionSchedule TransactionSchedule[]
+  Subscription        UserSubscription?
+
+  @@map(name: "users")
+}
+
+// Profile contains public user data such as the user's id, name, photo,
+// optional google photo and settings.
+model Profile {
+  uid            String   @id
+  displayName    String?  @map("display_name")
+  photoUrl       String?  @map("photo_url")
+  googlePhotoUrl String?  @map("google_photo_url")
+  themeColor     String?  @map("theme_color")
+  themeMode      String?  @map("theme_mode")
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @default(now()) @updatedAt @map("updated_at")
+
+  User User @relation(fields: [uid], references: [id])
+
+  @@map(name: "profiles")
+}
+
+// Transactions contain all incomes and expenses and other details. All
+// transactions belong to a category and a user and may optionally specify
+// that they belong to a specific transaction schedule.
+model Transaction {
+  id            String   @id @default(uuid())
+  uid           String
+  categoryId    String   @map("category_id")
+  comment       String?
+  integerAmount Int      @map("integer_amount")
+  time          DateTime
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @default(now()) @updatedAt @map("updated_at")
+  scheduleId    String?  @map("schedule_id")
+
+  User     User                 @relation(fields: [uid], references: [id])
+  Category Category             @relation(fields: [categoryId], references: [id])
+  Schedule TransactionSchedule? @relation(fields: [scheduleId], references: [id])
+
+  @@map(name: "transactions")
+}
+
+// All transaction schedules specify template data for creating transactions
+// and the intervalType, intervalLength, firstOccurrence and occurrences
+// fields that model when transactions according to the template should be
+// created.
+model TransactionSchedule {
+  id                      String       @id @default(uuid())
+  uid                     String
+  categoryId              String       @map("category_id")
+  comment                 String?
+  integerAmount           Int          @map("integer_amount")
+  intervalType            IntervalType @map("interval_type")
+  intervalEvery           Int          @default(1) @map("interval_every")
+  firstOccurrence         DateTime     @map("first_occurrence")
+  occurrences             Int?
+  createdAt               DateTime     @default(now()) @map("created_at")
+  updatedAt               DateTime     @default(now()) @updatedAt @map("updated_at")
+  latestCreatedOccurrence DateTime?    @map("latest_created_occurrence")
+
+  User         User          @relation(fields: [uid], references: [id])
+  Category     Category      @relation(fields: [categoryId], references: [id])
+  Transactions Transaction[]
+
+  @@map(name: "transaction_schedules")
+}
+
+// Possible interval types for transaction schedules
+enum IntervalType {
+  DAY
+  WEEK
+  MONTH
+  YEAR
+}
+
+// All budgets are used to analyze transactions and measure if their sum
+// exceed the set limit in integerAmount. A budget only measures transactions
+// that belong to categories specified by the budget category inclusiosn field.
+model Budget {
+  id            String   @id @default(uuid())
+  uid           String
+  label         String?
+  integerAmount Int      @map("integer_amount")
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @default(now()) @updatedAt @map("updated_at")
+  periodMonths  Int      @default(1) @map("period_months")
+
+  BudgetCategoryInclusions BudgetCategoryInclusion[]
+
+  User User @relation(fields: [uid], references: [id])
+
+  @@map(name: "budgets")
+}
+
+// Intermediate table for manually connecting budgets to categories.
+model BudgetCategoryInclusion {
+  budgetId   String @map("budget_id")
+  categoryId String @map("category_id")
+
+  Budget   Budget   @relation(fields: [budgetId], references: [id])
+  Category Category @relation(fields: [categoryId], references: [id])
+
+  @@id([categoryId, budgetId])
+}
+
+// Categories contain their name in the value field, an optional icon and
+// metadata. All transactions belong to a category and categories are linked
+// to budgets with budget category inclusions.
+model Category {
+  id        String   @id @default(uuid())
+  uid       String
+  value     String
+  icon      String?
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+
+  Transactions             Transaction[]
+  BudgetCategoryInclusions BudgetCategoryInclusion[]
+  TransactionSchedule      TransactionSchedule[]
+
+  User User @relation(fields: [uid], references: [id])
+
+  @@unique([uid, value], name: "unique_uid_value")
+  @@unique([uid, id], name: "unique_uid_id")
+  @@map(name: "categories")
+}
+
+// All simple feedback items include the user who left the message and the
+// feedback message itself.
+model Feedback {
+  id      String  @id @default(uuid())
+  uid     String
+  message String?
+
+  User User @relation(fields: [uid], references: [id])
+}
+
+// Shape of logs that are saved to the database.
+model Log {
+  id         String   @id @default(uuid())
+  uid        String?
+  type       String
+  message    String
+  data       String
+  stackTrace String   @map("stack_trace")
+  device     String
+  timestamp  Int
+  timestring String
+  createdAt  DateTime @default(now()) @map("created_at")
+  href       String
+
+  User User? @relation(fields: [uid], references: [id])
+}
+
+// All configuration values are string key-value pairs that are further
+// processed on the server.
+model Config {
+  key   String @id
+  value String
+}
+
+// Subscriptions
+model UserSubscription {
+  id               String              @id @default(uuid())
+  uid              String              @unique
+  product          SubscribableProduct
+  currentPeriodEnd DateTime?           @map("current_period_end")
+  createdAt        DateTime            @default(now()) @map("created_at")
+  updatedAt        DateTime            @default(now()) @updatedAt @map("updated_at")
+
+  User User @relation(fields: [uid], references: [id])
+
+  @@map(name: "subscriptions")
+}
+
+// Possible subscription items
+enum SubscribableProduct {
+  PREMIUM
+}
+
+// Copies of stripe products
+model StripeProduct {
+  id          String   @id
+  active      Boolean
+  description String
+  name        String
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @default(now()) @updatedAt @map("updated_at")
+
+  ProductPrice StripePrice[]
+
+  @@map(name: "stripe_products")
+}
+
+// Copies of stripe prices
+model StripePrice {
+  id                String   @id
+  productId         String   @map("product_id")
+  active            Boolean
+  currency          String
+  nickname          String?
+  type              String
+  recurringInterval String?  @map("recurring_interval")
+  createdAt         DateTime @default(now()) @map("created_at")
+  updatedAt         DateTime @default(now()) @updatedAt @map("updated_at")
+
+  Product StripeProduct @relation(fields: [productId], references: [id])
+
+  @@map(name: "stripe_prices")
+}
+
+// Copies of stripe prices
+model PremiumPrice {
+  id                     String   @id
+  unitAmount             Int      @default(1) @map("unit_amount")
+  unitAmountDecimal      String   @default("") @map("unit_amount_decimal")
+  productId              String   @map("product_id")
+  active                 Boolean
+  currency               String
+  nickname               String?
+  type                   String
+  recurringInterval      String?  @map("recurring_interval")
+  recurringIntervalCount Int?     @map("recurring_interval_count")
+  createdAt              DateTime @default(now()) @map("created_at")
+  updatedAt              DateTime @default(now()) @updatedAt @map("updated_at")
+
+  @@map(name: "premium_prices")
+}

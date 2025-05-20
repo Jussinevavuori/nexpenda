@@ -1,5 +1,5 @@
 // import { withAxiom } from "next-axiom"
-import withPWA from "next-pwa"
+import withPWA from "next-pwa";
 
 /**
  * Don't be scared of the generics here.
@@ -10,34 +10,29 @@ import withPWA from "next-pwa"
  * @constraint {{import('next').NextConfig}}
  */
 function defineNextConfig(config) {
-	const layers = [
-		withPWA({
-			dest: "public",
-			disable: process.env.NODE_ENV === 'development',
-		}),
-		// withAxiom
-	]
+  const layers = [
+    withPWA({
+      dest: "public",
+      disable: process.env.NODE_ENV === "development",
+    }),
+    // withAxiom
+  ];
 
-	return layers.reduce((_conf, layer) => layer(_conf), config);
+  return layers.reduce((_conf, layer) => layer(_conf), config);
 }
 
 export default defineNextConfig({
-	reactStrictMode: true,
-	swcMinify: true,
-	experimental: {
-		newNextLinkBehavior: true,
-		images: { allowFutureImage: true }
-	},
-	async rewrites() {
-		return [
-			{
-				source: "/login",
-				destination: "/auth/login",
-			},
-			{
-				source: "/app",
-				destination: "/app/dashboard",
-			}
-		]
-	}
+  reactStrictMode: true,
+  async rewrites() {
+    return [
+      {
+        source: "/login",
+        destination: "/auth/login",
+      },
+      {
+        source: "/app",
+        destination: "/app/dashboard",
+      },
+    ];
+  },
 });

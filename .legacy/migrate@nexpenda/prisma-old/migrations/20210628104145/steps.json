@@ -1,0 +1,69 @@
+{
+  "version": "0.3.14-fixed",
+  "steps": [
+    {
+      "tag": "CreateField",
+      "model": "PremiumPrice",
+      "field": "unitAmount",
+      "type": "Int",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "PremiumPrice",
+          "field": "unitAmount"
+        },
+        "directive": "map"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "PremiumPrice",
+          "field": "unitAmount"
+        },
+        "directive": "map"
+      },
+      "argument": "",
+      "value": "\"unit_amount\""
+    },
+    {
+      "tag": "CreateField",
+      "model": "PremiumPrice",
+      "field": "unitAmountDecimal",
+      "type": "String",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "PremiumPrice",
+          "field": "unitAmountDecimal"
+        },
+        "directive": "map"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "PremiumPrice",
+          "field": "unitAmountDecimal"
+        },
+        "directive": "map"
+      },
+      "argument": "",
+      "value": "\"unit_amount_decimal\""
+    }
+  ]
+}

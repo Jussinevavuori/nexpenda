@@ -1,0 +1,240 @@
+{
+  "version": "0.3.14-fixed",
+  "steps": [
+    {
+      "tag": "CreateEnum",
+      "enum": "IntervalType",
+      "values": [
+        "DAY",
+        "WEEK",
+        "MONTH",
+        "YEAR"
+      ]
+    },
+    {
+      "tag": "CreateField",
+      "model": "Transaction",
+      "field": "recurrenceId",
+      "type": "String",
+      "arity": "Optional"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "Transaction",
+          "field": "recurrenceId"
+        },
+        "directive": "map"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Transaction",
+          "field": "recurrenceId"
+        },
+        "directive": "map"
+      },
+      "argument": "",
+      "value": "\"recurrence_id\""
+    },
+    {
+      "tag": "CreateField",
+      "model": "Transaction",
+      "field": "Recurrence",
+      "type": "TransactionRecurrence",
+      "arity": "Optional"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "Transaction",
+          "field": "Recurrence"
+        },
+        "directive": "relation"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Transaction",
+          "field": "Recurrence"
+        },
+        "directive": "relation"
+      },
+      "argument": "fields",
+      "value": "[recurrenceId]"
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Transaction",
+          "field": "Recurrence"
+        },
+        "directive": "relation"
+      },
+      "argument": "references",
+      "value": "[id]"
+    },
+    {
+      "tag": "CreateField",
+      "model": "User",
+      "field": "TransactionRecurrences",
+      "type": "TransactionRecurrence",
+      "arity": "List"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "User",
+      "field": "TransactionRecurrence"
+    },
+    {
+      "tag": "CreateField",
+      "model": "TransactionRecurrence",
+      "field": "intervalType",
+      "type": "IntervalType",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "TransactionRecurrence",
+          "field": "intervalType"
+        },
+        "directive": "map"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "TransactionRecurrence",
+          "field": "intervalType"
+        },
+        "directive": "map"
+      },
+      "argument": "",
+      "value": "\"interval_type\""
+    },
+    {
+      "tag": "CreateField",
+      "model": "TransactionRecurrence",
+      "field": "intervalLength",
+      "type": "Int",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "TransactionRecurrence",
+          "field": "intervalLength"
+        },
+        "directive": "map"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "TransactionRecurrence",
+          "field": "intervalLength"
+        },
+        "directive": "map"
+      },
+      "argument": "",
+      "value": "\"interval_length\""
+    },
+    {
+      "tag": "CreateField",
+      "model": "TransactionRecurrence",
+      "field": "firstOccurence",
+      "type": "DateTime",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "TransactionRecurrence",
+          "field": "firstOccurence"
+        },
+        "directive": "map"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "TransactionRecurrence",
+          "field": "firstOccurence"
+        },
+        "directive": "map"
+      },
+      "argument": "",
+      "value": "\"first_occurence\""
+    },
+    {
+      "tag": "CreateField",
+      "model": "TransactionRecurrence",
+      "field": "lastOccurence",
+      "type": "DateTime",
+      "arity": "Optional"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "TransactionRecurrence",
+          "field": "lastOccurence"
+        },
+        "directive": "map"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "TransactionRecurrence",
+          "field": "lastOccurence"
+        },
+        "directive": "map"
+      },
+      "argument": "",
+      "value": "\"last_occurence\""
+    },
+    {
+      "tag": "CreateField",
+      "model": "TransactionRecurrence",
+      "field": "Transaction",
+      "type": "Transaction",
+      "arity": "List"
+    }
+  ]
+}

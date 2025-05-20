@@ -1,0 +1,23 @@
+{
+  "name": "migrate-nexpenda",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "migrate-dev": "node index.js --env dev",
+    "migrate-prod": "node index.js --env prod",
+    "clear-dev": "node index.js --env dev --clear-only",
+    "clear-prod": "node index.js --env prod --clear-only",
+    "generate-old": "prisma generate --schema prisma-old/schema.prisma",
+    "generate-next": "prisma generate --schema prisma-next/schema.prisma",
+    "generate-next-prod": "prisma generate --schema prisma-next-prod/schema.prisma",
+    "generate": "npm run generate-old && npm run generate-next && npm run generate-next-prod"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@prisma/client": "^3.14.0",
+    "chalk": "^4.1.2",
+    "prisma": "^3.14.0"
+  }
+}
